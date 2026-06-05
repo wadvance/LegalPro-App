@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getItem, setItem, removeItem } from '../src/utils/storage';
 import { AUTH_STORAGE_KEY, SESSION_KEY } from './config';
 
 const getUsers = async () => {
   try {
-    const json = await AsyncStorage.getItem(AUTH_STORAGE_KEY);
+    const json = await getItem(AUTH_STORAGE_KEY);
     return json ? JSON.parse(json) : [];
   } catch {
     return [];
@@ -11,7 +11,7 @@ const getUsers = async () => {
 };
 
 const saveUsers = async (users) => {
-  await AsyncStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(users));
+  await setItem(AUTH_STORAGE_KEY, JSON.stringify(users));
 };
 
 export const registerUser = async (email, password, userData) => {
@@ -35,7 +35,7 @@ export const registerUser = async (email, password, userData) => {
     await saveUsers(users);
 
     const session = { uid: newUser.uid, email: newUser.email, nombre: newUser.nombre, rol: newUser.rol };
-    await AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    await setItem(SESSION_KEY, JSON.stringify(session));
 
     return { success: true, user: { uid: newUser.uid, email: newUser.email, displayName: `${newUser.nombre} ${newUser.apellido}` } };
   } catch (error) {
@@ -53,7 +53,7 @@ export const loginUser = async (email, password) => {
     await saveUsers(users);
 
     const session = { uid: user.uid, email: user.email, nombre: user.nombre, rol: user.rol };
-    await AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    await setItem(SESSION_KEY, JSON.stringify(session));
 
     return { success: true, user: { uid: user.uid, email: user.email, displayName: `${user.nombre} ${user.apellido}` } };
   } catch (error) {
@@ -63,7 +63,7 @@ export const loginUser = async (email, password) => {
 
 export const logoutUser = async () => {
   try {
-    await AsyncStorage.removeItem(SESSION_KEY);
+    await removeItem(SESSION_KEY);
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -83,7 +83,7 @@ export const resetPassword = async (email) => {
 
 export const getCurrentUser = async () => {
   try {
-    const json = await AsyncStorage.getItem(SESSION_KEY);
+    const json = await getItem(SESSION_KEY);
     if (!json) return null;
     const session = JSON.parse(json);
     return { uid: session.uid, email: session.email, displayName: session.nombre };

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getItem, setItem, removeItem, getAllKeys, multiRemove } from '../utils/storage';
 
 const COLLECTION_PREFIX = '@arauz_carrillo_';
 
@@ -9,7 +9,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const getAllFromCollection = async (collectionName) => {
   try {
     const key = getCollectionKey(collectionName);
-    const json = await AsyncStorage.getItem(key);
+    const json = await getItem(key);
     const data = json ? JSON.parse(json) : [];
     return { success: true, data };
   } catch (error) {
@@ -20,7 +20,7 @@ export const getAllFromCollection = async (collectionName) => {
 export const saveToCollection = async (collectionName, data) => {
   try {
     const key = getCollectionKey(collectionName);
-    await AsyncStorage.setItem(key, JSON.stringify(data));
+    await setItem(key, JSON.stringify(data));
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -120,7 +120,7 @@ export const subscribeCollection = (collectionName, callback, filters = {}) => {
 export const clearCollection = async (collectionName) => {
   try {
     const key = getCollectionKey(collectionName);
-    await AsyncStorage.removeItem(key);
+    await removeItem(key);
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -129,9 +129,9 @@ export const clearCollection = async (collectionName) => {
 
 export const clearAllData = async () => {
   try {
-    const keys = await AsyncStorage.getAllKeys();
+    const keys = await getAllKeys();
     const appKeys = keys.filter((k) => k.startsWith(COLLECTION_PREFIX));
-    await AsyncStorage.multiRemove(appKeys);
+    await multiRemove(appKeys);
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
