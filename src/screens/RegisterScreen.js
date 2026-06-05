@@ -201,7 +201,7 @@ const RegisterScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.primary },
-  scrollContent: { flexGrow: 1 },
+  scrollContent: { flexGrow: 1, minHeight: '100%' },
   header: {
     padding: 30,
     paddingTop: 60,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     paddingHorizontal: 25,
     paddingTop: 30,
-    paddingBottom: 40,
+    paddingBottom: 100,
   },
   row: { flexDirection: 'row' },
   inputContainer: {
