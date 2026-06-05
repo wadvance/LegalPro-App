@@ -1,7 +1,5 @@
-const CACHE_NAME = 'arauz-barraza-v1';
+const CACHE_NAME = 'arauz-barraza-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
   '/favicon.ico',
   '/manifest.json',
 ];
@@ -29,6 +27,16 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const isNavigate = event.request.mode === 'navigate';
+  const url = new URL(event.request.url);
+
+  if (isNavigate || url.pathname === '/' || url.pathname.endsWith('.html')) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       if (response) return response;
@@ -41,8 +49,6 @@ self.addEventListener('fetch', (event) => {
           cache.put(event.request, responseToCache);
         });
         return response;
-      }).catch(() => {
-        return caches.match('/index.html');
       });
     })
   );
