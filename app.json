@@ -25,7 +25,12 @@
       "package": "com.arauzcarrillo.abogados"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "meta": {
+        "apple-mobile-web-app-capable": "yes",
+        "apple-mobile-web-app-status-bar-style": "black-translucent",
+        "apple-mobile-web-app-title": "Arauz Barraza"
+      }
     },
     "plugins": [
       "expo-notifications"
