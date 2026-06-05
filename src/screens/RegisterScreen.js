@@ -223,8 +223,9 @@ const styles = StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: SIZES.md,
-    color: 'rgba(255,255,255,0.7)',
+    color: 'rgba(255,255,255,0.9)',
     marginTop: 5,
+    fontWeight: '600',
   },
   formSection: {
     backgroundColor: COLORS.surface,
@@ -245,13 +246,13 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     justifyContent: 'center',
   },
-  input: { fontSize: SIZES.md, color: COLORS.text },
+  input: { fontSize: SIZES.md, color: COLORS.text, fontWeight: '600' },
   label: {
     fontSize: SIZES.sm,
     color: COLORS.textSecondary,
     marginBottom: 8,
     marginTop: 5,
-    fontWeight: '500',
+    fontWeight: '700',
   },
   rolContainer: {
     flexDirection: 'row',
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderColor: COLORS.primary,
   },
-  rolText: { color: COLORS.textSecondary, fontSize: SIZES.sm, fontWeight: '500' },
+  rolText: { color: COLORS.textSecondary, fontSize: SIZES.sm, fontWeight: '700' },
   rolTextActive: { color: COLORS.textLight },
   registerButton: {
     backgroundColor: COLORS.primary,
@@ -294,8 +295,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   loginLink: { alignItems: 'center', marginTop: 20 },
-  loginText: { color: COLORS.textSecondary, fontSize: SIZES.sm },
-  loginHighlight: { color: COLORS.primary, fontWeight: '600' },
+  loginText: { color: COLORS.textSecondary, fontSize: SIZES.sm, fontWeight: '600' },
+  loginHighlight: { color: COLORS.primary, fontWeight: 'bold' },
 });
 
 export default RegisterScreen;
