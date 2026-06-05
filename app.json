@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Arauz Carrillo Abogados",
+    "slug": "arauz-carrillo-abogados",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "arauzcarrillo",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1A237E"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.arauzcarrillo.abogados"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1A237E"
+      },
+      "package": "com.arauzcarrillo.abogados"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-notifications"
+    ]
+  }
+}
