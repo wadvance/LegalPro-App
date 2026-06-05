@@ -68,11 +68,11 @@ const RegisterScreen = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-            <Text style={styles.backText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Crear Cuenta</Text>
-          <Text style={styles.headerSubtitle}>Únase a Arauz Carrillo Abogados</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.backBtn}>
+              <Text style={styles.backText}>←</Text>
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Crear Cuenta</Text>
+          <Text style={styles.headerSubtitle}>Únase a Arauz Barraza Abogados</Text>
         </View>
 
         <View style={styles.formSection}>
@@ -186,7 +186,7 @@ const RegisterScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('Login')}
             style={styles.loginLink}
           >
             <Text style={styles.loginText}>

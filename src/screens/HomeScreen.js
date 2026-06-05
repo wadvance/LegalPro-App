@@ -86,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Header
         title={`Hola, ${profile?.nombre || 'Usuario'}`}
-        subtitle={profile?.rol ? `Rol: ${profile.rol}` : 'Arauz Carrillo Abogados'}
+        subtitle={profile?.rol ? `Rol: ${profile.rol}` : 'Arauz Barraza Abogados'}
         rightIcon="🚪"
         rightAction={handleLogout}
       />

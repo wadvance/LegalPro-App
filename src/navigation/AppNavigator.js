@@ -107,8 +107,8 @@ export default function AppNavigator() {
           cardStyle: { backgroundColor: COLORS.background },
         }}
       >
-        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Companies" component={CompaniesScreen} />
         <Stack.Screen name="Reports" component={ReportsScreen} />
