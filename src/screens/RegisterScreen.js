@@ -81,7 +81,7 @@ const RegisterScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 placeholder="Nombre *"
-                placeholderTextColor={COLORS.disabled}
+                placeholderTextColor="#555555"
                 value={form.nombre}
                 onChangeText={(v) => updateForm('nombre', v)}
               />
@@ -90,7 +90,7 @@ const RegisterScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 placeholder="Apellido *"
-                placeholderTextColor={COLORS.disabled}
+                placeholderTextColor="#555555"
                 value={form.apellido}
                 onChangeText={(v) => updateForm('apellido', v)}
               />
@@ -101,7 +101,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Correo electrónico *"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor="#555555"
               value={form.email}
               onChangeText={(v) => updateForm('email', v)}
               keyboardType="email-address"
@@ -113,7 +113,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Teléfono"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor="#555555"
               value={form.telefono}
               onChangeText={(v) => updateForm('telefono', v)}
               keyboardType="phone-pad"
@@ -124,7 +124,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Cédula (ej: 8-xxx-xxxx)"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor="#555555"
               value={form.cedula}
               onChangeText={(v) => updateForm('cedula', v)}
             />
@@ -134,7 +134,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Contraseña * (mín. 6 caracteres)"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor="#555555"
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
               secureTextEntry
@@ -145,7 +145,7 @@ const RegisterScreen = ({ navigation }) => {
             <TextInput
               style={styles.input}
               placeholder="Confirmar contraseña *"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor="#555555"
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
               secureTextEntry
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: SIZES.md,
-    color: 'rgba(255,255,255,0.9)',
+    color: '#FFFFFF',
     marginTop: 5,
     fontWeight: '600',
   },
