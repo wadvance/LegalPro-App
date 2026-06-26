@@ -84,7 +84,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={[styles.welcomeText, { color: colors.text }]}>Iniciar Sesión</Text>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <Text style={styles.inputIcon}>✉️</Text>
+            <Text style={[styles.inputIcon, { color: colors.textSecondary }]}>✉️</Text>
             <TextInput
               style={[styles.input, { color: colors.text }]}
               placeholder="Correo electrónico"
@@ -99,7 +99,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <Text style={styles.inputIcon}>🔒</Text>
+            <Text style={[styles.inputIcon, { color: colors.textSecondary }]}>🔒</Text>
             <TextInput
               style={[styles.input, { color: colors.text }]}
               placeholder="Contraseña"
@@ -113,7 +113,7 @@ const LoginScreen = ({ navigation }) => {
               onPress={() => setShowPassword(!showPassword)}
               style={styles.eyeButton}
             >
-              <Text>{showPassword ? '🙈' : '👁️'}</Text>
+              <Text style={{ color: colors.textSecondary }}>{showPassword ? '🙈' : '👁️'}</Text>
             </TouchableOpacity>
           </View>
 
