@@ -5,6 +5,7 @@ import {
 import { onAuthChange } from '../../firebase/auth';
 import { createDocument, updateDocument, deleteDocument, subscribeToCollection } from '../services/firestoreService';
 import { sendWelcomeMessage } from '../services/whatsapp';
+import { navigateToAddress } from '../services/maps';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import { SIZES } from '../utils/theme';
@@ -110,7 +111,14 @@ const ClientsScreen = ({ navigation }) => {
         subtitle={`${item.tipo || 'Persona Natural'} • ${item.cedula || 'Sin cédula'}`}
         badge={item.telefono}
       >
-        <Text style={[styles.clientInfo, { color: colors.textSecondary }]}>{item.email || 'Sin email'} · {item.direccion || 'Sin dirección'}</Text>
+        <View style={styles.clientInfoRow}>
+          <Text style={[styles.clientInfo, { color: colors.textSecondary, flex: 1 }]}>{item.email || 'Sin email'} · {item.direccion || 'Sin dirección'}</Text>
+          {item.direccion ? (
+            <TouchableOpacity onPress={() => navigateToAddress(item.direccion, `${item.nombre} ${item.apellido}`)}>
+              <Text style={[styles.mapIcon, { color: colors.primary }]}>📍</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </Card>
     </TouchableOpacity>
   );
@@ -213,6 +221,8 @@ const styles = StyleSheet.create({
   searchInput: { flex: 1, fontSize: SIZES.md },
   list: { paddingHorizontal: SIZES.padding, paddingBottom: 20 },
   clientInfo: { fontSize: SIZES.xs, marginTop: 2 },
+  clientInfoRow: { flexDirection: 'row', alignItems: 'center' },
+  mapIcon: { fontSize: 18, marginLeft: 8, padding: 2 },
   emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: {
     flex: 1,

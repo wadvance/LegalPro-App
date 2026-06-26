@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { onAuthChange } from '../../firebase/auth';
 import { createDocument, updateDocument, deleteDocument, subscribeToCollection } from '../services/firestoreService';
+import { navigateToAddress } from '../services/maps';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import { SIZES } from '../utils/theme';
@@ -92,9 +93,16 @@ const CompaniesScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => openEdit(item)} onLongPress={() => handleDelete(item.id)}>
       <Card icon="🏢" title={item.nombre} subtitle={`RUC: ${item.ruc || 'N/A'}`} badge={item.tipo}>
-        <Text style={[styles.compInfo, { color: colors.textSecondary }]}>
-          Rep. Legal: {item.representanteLegal || 'N/A'} · {item.telefono || 'Sin teléfono'}
-        </Text>
+        <View style={styles.compInfoRow}>
+          <Text style={[styles.compInfo, { color: colors.textSecondary, flex: 1 }]}>
+            Rep. Legal: {item.representanteLegal || 'N/A'} · {item.telefono || 'Sin teléfono'}
+          </Text>
+          {item.direccion ? (
+            <TouchableOpacity onPress={() => navigateToAddress(item.direccion, item.nombre)}>
+              <Text style={[styles.mapIcon, { color: colors.primary }]}>📍</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </Card>
     </TouchableOpacity>
   );
@@ -180,6 +188,8 @@ const styles = StyleSheet.create({
   searchInput: { flex: 1, fontSize: SIZES.md },
   list: { paddingHorizontal: SIZES.padding, paddingBottom: 20 },
   compInfo: { fontSize: SIZES.xs, marginTop: 2 },
+  compInfoRow: { flexDirection: 'row', alignItems: 'center' },
+  mapIcon: { fontSize: 18, marginLeft: 8, padding: 2 },
   emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalContent: {

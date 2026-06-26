@@ -8,6 +8,7 @@ import { onAuthChange } from '../../firebase/auth';
 import { createDocument, updateDocument, deleteDocument, subscribeToCollection } from '../services/firestoreService';
 import { scheduleAppointmentReminder } from '../services/notifications';
 import { sendAppointmentConfirmation, sendWhatsAppMessage } from '../services/whatsapp';
+import { navigateToAddress } from '../services/maps';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import { SIZES } from '../utils/theme';
@@ -149,6 +150,14 @@ const AppointmentsScreen = ({ navigation }) => {
         badge={item.estado}
       >
         <Text style={[styles.apptDetail, { color: colors.textSecondary }]}>{item.titulo || item.notas || 'Sin descripción'}</Text>
+        <View style={styles.locationRow}>
+          <Text style={[styles.apptDetail, { color: colors.textSecondary, flex: 1 }]}>📍 {item.ubicacion || 'Oficina'}</Text>
+          {item.ubicacion && item.ubicacion !== 'Oficina' ? (
+            <TouchableOpacity onPress={() => navigateToAddress(item.ubicacion, item.clienteNombre)}>
+              <Text style={[styles.mapIcon, { color: colors.primary }]}>🗺️</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
         <View style={styles.statusRow}>
           {['pendiente', 'completado', 'cancelado'].map((s) => (
             <TouchableOpacity
@@ -286,6 +295,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   apptDetail: { fontSize: SIZES.sm, marginTop: 4 },
+  locationRow: { flexDirection: 'row', alignItems: 'center', marginTop: 4 },
+  mapIcon: { fontSize: 18, marginLeft: 8, padding: 2 },
   statusRow: { flexDirection: 'row', marginTop: 8, gap: 6 },
   statusBtn: {
     paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12,
