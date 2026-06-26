@@ -37,19 +37,12 @@ const headTags = `
         if (d) d.innerHTML = '<div style="padding:40px;font-family:sans-serif;background:#fff;min-height:100vh"><h2 style="color:#D32F2F">Error de carga</h2><pre style="white-space:pre-wrap;color:#333;font-size:14px">' + (e.message || (e.error && e.error.message) || 'Unknown error') + '</pre><p style="color:#888;font-size:12px">' + (e.filename || '') + ':' + (e.lineno || '') + ':' + (e.colno || '') + '</p></div>';
         return false;
       });
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(regs) {
-          var hadSw = regs.length > 0;
-          regs.forEach(function(r) { r.unregister(); });
-          caches.keys().then(function(names) {
-            if (names.length) { names.forEach(function(n) { caches.delete(n); }); }
-            if (hadSw && window.location.search.indexOf('swcleared') === -1) {
-              window.location.search = 'swcleared=1';
-            }
-          });
-        });
-        window.addEventListener('load', function() { navigator.serviceWorker.register('${basePath}/sw.js'); });
-      }
+      (function() { try {
+        if ('caches' in window) { caches.keys().then(function(ks) { ks.forEach(function(k) { caches.delete(k); }); }); }
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(rs) { rs.forEach(function(r) { r.unregister(); }); });
+        }
+      } catch(e) {} })();
     </script>`;
 
 html = html.replace('</head>', headTags + '\n  </head>');
