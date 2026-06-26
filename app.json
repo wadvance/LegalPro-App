@@ -26,6 +26,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
+      "basePath": "/arauz-barraza-abogados",
       "meta": {
         "apple-mobile-web-app-capable": "yes",
         "apple-mobile-web-app-status-bar-style": "black-translucent",
