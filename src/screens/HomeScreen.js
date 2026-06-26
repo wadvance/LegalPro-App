@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl,
 } from 'react-native';
@@ -32,6 +32,12 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [proximasCitas, setProximasCitas] = useState([]);
 
+  const navigationRef = useRef(navigation);
+
+  useEffect(() => {
+    navigationRef.current = navigation;
+  }, [navigation]);
+
   useEffect(() => {
     const unsubscribe = onAuthChange(async (currentUser) => {
       if (currentUser) {
@@ -49,6 +55,12 @@ const HomeScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (!user && !loading) {
+      navigationRef.current?.reset({ index: 0, routes: [{ name: 'Login' }] });
+    }
+  }, [user, loading]);
 
   const loadStats = async (userId) => {
     const result = await getDashboardStats(userId);
@@ -75,15 +87,13 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(false);
   };
 
-  const handleLogout = () => {
-    logoutUser();
+  const handleLogout = async () => {
+    await logoutUser();
+    navigationRef.current?.reset({ index: 0, routes: [{ name: 'Login' }] });
   };
 
   if (loading) return <Loading message="Cargando aplicación..." />;
-  if (!user) {
-    navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
-    return null;
-  }
+  if (!user) return null;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
