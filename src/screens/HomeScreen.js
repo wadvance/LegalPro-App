@@ -10,7 +10,6 @@ import Loading from '../components/Loading';
 import { SIZES } from '../utils/theme';
 import { useTheme } from '../context/ThemeContext';
 import { formatCurrency, parseDate } from '../utils/helpers';
-import { bumpLoginKey } from '../navigation/AppNavigator';
 
 const QUICK_ACTIONS = [
   { key: 'Clients', icon: '👥', label: 'Clientes', color: '#1976D2' },
@@ -59,7 +58,6 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (!user && !loading) {
-      bumpLoginKey();
       navigationRef.current?.reset({ index: 0, routes: [{ name: 'Login' }] });
     }
   }, [user, loading]);
@@ -91,7 +89,6 @@ const HomeScreen = ({ navigation }) => {
 
   const handleLogout = async () => {
     await logoutUser();
-    bumpLoginKey();
     navigationRef.current?.reset({ index: 0, routes: [{ name: 'Login' }] });
   };
 
