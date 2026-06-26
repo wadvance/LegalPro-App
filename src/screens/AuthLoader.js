@@ -1,36 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { getCurrentUser } from '../../firebase/auth';
 
 const AuthLoader = ({ navigation }) => {
-  const [checked, setChecked] = useState(false);
+  const mounted = useRef(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      current: true
-    };
-
     const run = async () => {
-      if (!checkAuth.current) return;
       try {
         const user = await getCurrentUser();
-        if (!checkAuth.current) return;
+        if (!mounted.current) return;
         if (user) {
           navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
         } else {
           navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
         }
       } catch {
-        if (checkAuth.current) {
+        if (mounted.current) {
           navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
         }
-      } finally {
-        if (checkAuth.current) setChecked(true);
       }
     };
 
     run();
-    return () => { checkAuth.current = false; };
+    return () => { mounted.current = false; };
   }, [navigation]);
 
   return (
