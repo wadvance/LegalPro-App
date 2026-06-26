@@ -1,40 +1,27 @@
-function getStorage() {
-  try {
-    localStorage.getItem('__test');
-    return localStorage;
-  } catch {
-    return null;
-  }
-}
-
-const storage = getStorage();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getItem = async (key) => {
-  try { const v = storage.getItem(key); return v } catch { return null }
+  try { return await AsyncStorage.getItem(key) } catch { return null }
 };
 
 export const setItem = async (key, value) => {
-  try { storage.setItem(key, value) } catch {}
+  try { await AsyncStorage.setItem(key, value) } catch {}
 };
 
 export const removeItem = async (key) => {
-  try { storage.removeItem(key) } catch {}
+  try { await AsyncStorage.removeItem(key) } catch {}
 };
 
 export const getAllKeys = async () => {
-  try {
-    const keys = [];
-    for (let i = 0; i < storage.length; i++) keys.push(storage.key(i));
-    return keys;
-  } catch { return [] }
+  try { return await AsyncStorage.getAllKeys() } catch { return [] }
 };
 
 export const multiRemove = async (keys) => {
-  try { keys.forEach(k => storage.removeItem(k)) } catch {}
+  try { await AsyncStorage.multiRemove(keys) } catch {}
 };
 
 export const clear = async () => {
-  try { storage.clear() } catch {}
+  try { await AsyncStorage.clear() } catch {}
 };
 
 export default { getItem, setItem, removeItem, getAllKeys, multiRemove, clear };

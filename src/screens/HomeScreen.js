@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { onAuthChange, getUserProfile, logoutUser } from '../../firebase/auth';
 import { getDashboardStats, subscribeToCollection } from '../services/firestoreService';
 import Card from '../components/Card';
@@ -23,6 +24,7 @@ const QUICK_ACTIONS = [
 
 const HomeScreen = ({ navigation }) => {
   const { colors, isDark, toggleTheme } = useTheme();
+  const insets = useSafeAreaInsets();
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [stats, setStats] = useState(null);
@@ -85,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.headerBg }]}>
+      <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
         <View style={styles.headerRow}>
           <View style={styles.headerText}>
             <Text style={styles.greeting}>Hola, {profile?.nombre || 'Usuario'}</Text>
@@ -170,7 +172,6 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   header: {
-    paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 16,
     borderBottomLeftRadius: 24,

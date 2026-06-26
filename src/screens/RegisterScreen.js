@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { registerUser } from '../../firebase/auth';
 import { COLORS, SIZES } from '../utils/theme';
 import { validateEmail } from '../utils/helpers';
 
 const RegisterScreen = ({ navigation }) => {
   const { height: windowHeight } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
@@ -66,7 +68,7 @@ const RegisterScreen = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={true}
       >
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
           <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.backBtn}>
             <Text style={styles.backText}>←</Text>
           </TouchableOpacity>
@@ -204,7 +206,6 @@ const styles = StyleSheet.create({
   scrollContent: { flexGrow: 1, paddingBottom: 120 },
   header: {
     padding: 30,
-    paddingTop: 60,
   },
   backBtn: {
     width: 40,

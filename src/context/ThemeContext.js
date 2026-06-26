@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const THEME_KEY = '@arauz_theme';
 
@@ -62,27 +63,26 @@ export const darkColors = {
 
 const ThemeContext = createContext();
 
-const storage = {
-  getItem(key) {
-    try { return Promise.resolve(localStorage.getItem(key)) } catch { return Promise.resolve(null) }
-  },
-  setItem(key, value) {
-    try { localStorage.setItem(key, value) } catch {}
-  },
-};
-
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(() => {
-    try { return localStorage.getItem(THEME_KEY) === 'dark' } catch { return false }
-  });
+  const [isDark, setIsDark] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem(THEME_KEY).then((value) => {
+      setIsDark(value === 'dark');
+      setLoaded(true);
+    }).catch(() => setLoaded(true));
+  }, []);
 
   const toggleTheme = () => {
     const next = !isDark;
     setIsDark(next);
-    storage.setItem(THEME_KEY, next ? 'dark' : 'light');
+    AsyncStorage.setItem(THEME_KEY, next ? 'dark' : 'light').catch(() => {});
   };
 
   const colors = isDark ? darkColors : lightColors;
+
+  if (!loaded) return null;
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme, colors }}>

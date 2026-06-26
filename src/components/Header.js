@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
 import { SIZES } from '../utils/theme';
 
 const Header = ({ title, subtitle, onBack, rightAction, rightIcon }) => {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.container, { backgroundColor: colors.headerBg }]}>
-      <StatusBar backgroundColor={colors.headerBg} barStyle={isDark ? 'light-content' : 'light-content'} />
+    <View style={[styles.container, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
       <View style={styles.content}>
         <View style={styles.leftSection}>
           {onBack && (
@@ -32,7 +33,6 @@ const Header = ({ title, subtitle, onBack, rightAction, rightIcon }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
     paddingBottom: 16,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,

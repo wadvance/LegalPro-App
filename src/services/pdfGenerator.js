@@ -173,7 +173,21 @@ export const generatePDF = async (title, content) => {
 
 export const sharePDF = async (uri, filename) => {
   if (isWeb) {
-    return { success: true };
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = (filename || 'documento') + '.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
   try {
     const { moveAsync, documentDirectory } = await import('expo-file-system');
