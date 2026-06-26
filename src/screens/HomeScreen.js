@@ -10,12 +10,14 @@ import Loading from '../components/Loading';
 import { SIZES } from '../utils/theme';
 import { useTheme } from '../context/ThemeContext';
 import { formatCurrency, parseDate } from '../utils/helpers';
+import { openGoogleMaps, openWaze } from '../services/maps';
 
 const QUICK_ACTIONS = [
   { key: 'Clients', icon: '👥', label: 'Clientes', color: '#1976D2' },
   { key: 'Expedientes', icon: '📁', label: 'Expedientes', color: '#388E3C' },
   { key: 'Appointments', icon: '📅', label: 'Citas', color: '#F57C00' },
   { key: 'Payments', icon: '💰', label: 'Cobros', color: '#D32F2F' },
+  { key: 'GPS', icon: '📍', label: 'Navegación', color: '#E91E63' },
   { key: 'Calculators', icon: '🧮', label: 'Calculadoras', color: '#7B1FA2' },
   { key: 'Laws', icon: '⚖️', label: 'Leyes', color: '#1A237E' },
   { key: 'Chat', icon: '💬', label: 'Chatbot', color: '#00897B' },
@@ -206,7 +208,17 @@ const HomeScreen = ({ navigation }) => {
               <TouchableOpacity
                 key={action.key}
                 style={[styles.quickCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, shadowColor: colors.cardShadow }]}
-                onPress={() => navigation.navigate(action.key)}
+                onPress={() => {
+                  if (action.key === 'GPS') {
+                    Alert.alert('Navegación GPS', 'Abrir mapas para navegación', [
+                      { text: 'Google Maps', onPress: () => openGoogleMaps('') },
+                      { text: 'Waze', onPress: () => openWaze('') },
+                      { text: 'Cancelar', style: 'cancel' },
+                    ]);
+                  } else {
+                    navigation.navigate(action.key);
+                  }
+                }}
               >
                 <View style={[styles.quickIconBg, { backgroundColor: action.color + (isDark ? '25' : '12') }]}>
                   <Text style={styles.quickIcon}>{action.icon}</Text>
