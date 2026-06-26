@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Alert,
 } from 'react-native';
@@ -6,16 +6,24 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { onAuthChange } from '../../firebase/auth';
 import { subscribeToCollection } from '../services/firestoreService';
 import { openGoogleMaps, openWaze, navigateToAddress } from '../services/maps';
+import { PANAMA_LOCATIONS } from '../data/panamaLocations';
 import Card from '../components/Card';
-import Header from '../components/Header';
 import { SIZES } from '../utils/theme';
 import { useTheme } from '../context/ThemeContext';
+
+const FILTERS = [
+  { key: 'all', label: 'Todas' },
+  { key: 'Provincia', label: 'Provincias' },
+  { key: 'Distrito', label: 'Distritos' },
+  { key: 'Lugar', label: 'Lugares' },
+];
 
 const NavigationScreen = ({ navigation }) => {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const [user, setUser] = useState(null);
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
   const [savedAddresses, setSavedAddresses] = useState([]);
 
   useEffect(() => {
@@ -64,10 +72,19 @@ const NavigationScreen = ({ navigation }) => {
     return () => { unsubClients(); unsubCompanies(); };
   }, [user]);
 
-  const filtered = savedAddresses.filter((item) =>
-    `${item.label} ${item.address} ${item.type}`
-      .toLowerCase().includes(search.toLowerCase())
-  );
+  const allLocations = useMemo(() => {
+    let items = [...PANAMA_LOCATIONS, ...savedAddresses];
+    if (filter !== 'all') {
+      items = items.filter((i) => i.type === filter);
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      items = items.filter((i) =>
+        `${i.label} ${i.address} ${i.type}`.toLowerCase().includes(q)
+      );
+    }
+    return items;
+  }, [savedAddresses, filter, search]);
 
   const handleNavigateNow = () => {
     if (!search.trim()) {
@@ -135,7 +152,7 @@ const NavigationScreen = ({ navigation }) => {
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
             style={[styles.searchInput, { color: colors.text }]}
-            placeholder="Escribe una dirección..."
+            placeholder="Busca una dirección o lugar..."
             placeholderTextColor={colors.disabled}
             value={search}
             onChangeText={setSearch}
@@ -165,15 +182,40 @@ const NavigationScreen = ({ navigation }) => {
             <Text style={styles.actionLabel}>Waze</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.filterRow}>
+          {FILTERS.map((f) => (
+            <TouchableOpacity
+              key={f.key}
+              style={[
+                styles.filterChip,
+                {
+                  backgroundColor: filter === f.key ? colors.primary : colors.surface,
+                  borderColor: filter === f.key ? colors.primary : colors.border,
+                },
+              ]}
+              onPress={() => setFilter(f.key)}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  { color: filter === f.key ? '#FFFFFF' : colors.textSecondary },
+                ]}
+              >
+                {f.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <View style={styles.savedSection}>
         <View style={styles.savedHeader}>
-          <Text style={[styles.savedTitle, { color: colors.text }]}>Direcciones guardadas</Text>
-          <Text style={[styles.savedCount, { color: colors.textSecondary }]}>{filtered.length}</Text>
+          <Text style={[styles.savedTitle, { color: colors.text }]}>Lugares de Panamá</Text>
+          <Text style={[styles.savedCount, { color: colors.textSecondary }]}>{allLocations.length}</Text>
         </View>
         <FlatList
-          data={filtered}
+          data={allLocations}
           renderItem={renderAddressItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
@@ -182,8 +224,8 @@ const NavigationScreen = ({ navigation }) => {
             <Card>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
                 {search
-                  ? 'No se encontraron direcciones'
-                  : 'No hay direcciones guardadas. Las direcciones de clientes y empresas aparecerán aquí.'}
+                  ? 'No se encontraron lugares'
+                  : 'No hay lugares disponibles.'}
               </Text>
             </Card>
           }
@@ -258,6 +300,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: SIZES.sm,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 12,
+  },
+  filterChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  filterChipText: {
+    fontSize: SIZES.sm,
+    fontWeight: '600',
   },
   savedSection: { flex: 1, paddingHorizontal: 16 },
   savedHeader: {
