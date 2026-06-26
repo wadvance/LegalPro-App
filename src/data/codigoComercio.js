@@ -1,6 +1,12 @@
 export const codigoComercio = {
   titulo: 'Código de Comercio de la República de Panamá',
   descripcion: 'Ley 5 de 2 de septiembre de 1916, modificado por Ley 52 de 2016 (Ley de Sociedades) y otras.',
+  info: {
+    anio: '1916',
+    ultimaReforma: '2016',
+    importancia: 'Regula la actividad comercial, sociedades y títulos de crédito',
+    conceptosClave: ['Comerciante', 'Sociedad', 'Acciones', 'Letra de Cambio', 'Quiebra', 'Contratos Mercantiles'],
+  },
   articulos: [
     { id: 'CCOM-1', articulo: 1, titulo: 'Comerciantes', contenido: 'Son comerciantes: las personas naturales que ejercen el comercio en forma habitual, y las personas jurídicas constituidas con arreglo a la ley.', libro: 'Libro I', categoria: 'Disposiciones Generales' },
     { id: 'CCOM-2', articulo: 2, titulo: 'Capacidad para Comerciar', contenido: 'Toda persona mayor de 18 años y con capacidad legal puede ejercer el comercio.', libro: 'Libro I', categoria: 'Disposiciones Generales' },

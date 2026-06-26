@@ -1,6 +1,13 @@
 export const codigoCivil = {
   titulo: 'Código Civil de la República de Panamá',
   descripcion: 'Ley 2 de 22 de agosto de 1916, con sus modificaciones hasta la fecha.',
+  info: {
+    anio: '1916',
+    ultimaReforma: '2022',
+    importancia: 'Fundamento del ordenamiento jurídico panameño',
+    conceptosClave: ['Persona', 'Bienes', 'Obligaciones', 'Contratos', 'Sucesiones'],
+    libros: ['Título Preliminar', 'Libro I - Personas', 'Libro II - Bienes', 'Libro III - Obligaciones', 'Libro IV - Sucesiones'],
+  },
   articulos: [
     { id: 'CC-1', articulo: 1, titulo: 'Fuentes del Derecho', contenido: 'Las fuentes del ordenamiento jurídico panameño son: la ley, la costumbre, la jurisprudencia y los principios generales del derecho.', libro: 'Título Preliminar', categoria: 'Disposiciones Generales' },
     { id: 'CC-2', articulo: 2, titulo: 'Ignorancia de la Ley', contenido: 'La ignorancia de la ley no excusa su cumplimiento.', libro: 'Título Preliminar', categoria: 'Disposiciones Generales' },

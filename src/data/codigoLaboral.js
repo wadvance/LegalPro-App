@@ -1,6 +1,12 @@
 export const codigoLaboral = {
   titulo: 'Código de Trabajo de la República de Panamá',
   descripcion: 'Decreto de Gabinete 252 de 30 de diciembre de 1971, modificado por Ley 7 de 2023 y otras.',
+  info: {
+    anio: '1971',
+    ultimaReforma: '2023',
+    importancia: 'Regula las relaciones laborales entre trabajadores y empleadores',
+    conceptosClave: ['Jornada', 'Salario', 'Contrato', 'Prestaciones', 'Sindicatos', 'Riesgos Profesionales'],
+  },
   articulos: [
     { id: 'CL-1', articulo: 1, titulo: 'Ámbito de Aplicación', contenido: 'El Código de Trabajo regula las relaciones de trabajo entre trabajadores y empleadores en el territorio de la República de Panamá.', libro: 'Título I', categoria: 'Disposiciones Fundamentales' },
     { id: 'CL-2', articulo: 2, titulo: 'Definición de Trabajador', contenido: 'Trabajador es toda persona natural que presta servicios personales, materiales o intelectuales, en virtud de un contrato de trabajo.', libro: 'Título I', categoria: 'Disposiciones Fundamentales' },

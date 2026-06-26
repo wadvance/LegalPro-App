@@ -1,6 +1,12 @@
 ﻿export const constitucion = {
   titulo: 'Constitución de la República de Panamá',
   descripcion: 'Constitución Política de 1972, reformada por los Actos Reformatorios de 1983, 1994 y 2004. Es la norma suprema del ordenamiento jurídico panameño.',
+  info: {
+    anio: '1972',
+    ultimaReforma: '2004',
+    importancia: 'Norma suprema del ordenamiento jurídico panameño',
+    conceptosClave: ['Soberanía', 'Derechos Humanos', 'División de Poderes', 'Garantías Constitucionales'],
+  },
   articulos: [
     { id: 'CN-1', articulo: 1, titulo: 'Soberanía', contenido: 'La Nación panameña está organizada en Estado soberano e independiente, cuya denominación es República de Panamá. El poder público emana del pueblo y se ejerce por medio de sus representantes.', libro: 'Título I', categoria: 'Disposiciones Fundamentales' },
     { id: 'CN-2', articulo: 2, titulo: 'División de Poderes', contenido: 'El Gobierno de la República de Panamá se ejerce por tres órganos: el Legislativo, el Ejecutivo y el Judicial, coordinados entre sí y con funciones separadas pero armónicas. Ninguno de ellos puede arrogarse funciones que no le corresponden.', libro: 'Título I', categoria: 'Disposiciones Fundamentales' },
@@ -42,6 +48,12 @@
 export const codigoFamilia = {
   titulo: 'Código de la Familia de la República de Panamá',
   descripcion: 'Ley 3 de 17 de mayo de 1994, que regula las relaciones jurídicas derivadas de la familia, los menores y las instituciones familiares en Panamá.',
+  info: {
+    anio: '1994',
+    ultimaReforma: '2017',
+    importancia: 'Regula las relaciones familiares y la protección de menores',
+    conceptosClave: ['Matrimonio', 'Divorcio', 'Filiación', 'Patria Potestad', 'Alimentos', 'Adopción'],
+  },
   articulos: [
     { id: 'CF-1', articulo: 1, titulo: 'Objeto del Código de la Familia', contenido: 'El presente Código tiene por objeto regular las relaciones jurídicas derivadas de la familia y de los menores, así como proteger los derechos fundamentales de sus miembros dentro del marco de la Constitución y las leyes panameñas.', libro: 'Libro I', categoria: 'Disposiciones Generales' },
     { id: 'CF-2', articulo: 2, titulo: 'Protección Estatal de la Familia', contenido: 'El Estado protege a la familia como institución fundamental de la sociedad panameña. La familia debe fundarse en el respeto mutuo, la solidaridad, la igualdad de derechos y deberes entre sus integrantes, y el interés superior del menor.', libro: 'Libro I', categoria: 'Disposiciones Generales' },
@@ -71,6 +83,12 @@ export const codigoFamilia = {
 export const codigoFiscal = {
   titulo: 'Código Fiscal de la República de Panamá',
   descripcion: 'Ley 8 de 1956, Código Fiscal de la República de Panamá, modificado por Ley 57 de 2021 y otras disposiciones tributarias.',
+  info: {
+    anio: '1956',
+    ultimaReforma: '2021',
+    importancia: 'Regula el sistema tributario y fiscal panameño',
+    conceptosClave: ['ISR', 'ITBMS', 'Impuesto de Inmueble', 'Aduanas', 'Facturación Electrónica'],
+  },
   articulos: [
     { id: 'CFI-1', articulo: 1, titulo: 'Principios del Sistema Tributario', contenido: 'El sistema tributario panameño se fundamenta en los principios de legalidad, igualdad, equidad, capacidad contributiva y no confiscatoriedad. Los tributos solo pueden crearse, modificarse o suprimirse mediante ley formal.', libro: 'Libro I', categoria: 'Principios Tributarios' },
     { id: 'CFI-2', articulo: 2, titulo: 'Impuesto sobre la Renta (ISR)', contenido: 'Toda persona natural o jurídica que obtenga ingresos de fuente panameña está sujeta al impuesto sobre la renta. El impuesto se calcula sobre la renta neta gravable, que es la renta bruta menos las deducciones permitidas por la ley.', libro: 'Libro II', categoria: 'Impuesto sobre la Renta' },
@@ -97,6 +115,12 @@ export const codigoFiscal = {
 export const leyesEspeciales = {
   titulo: 'Leyes Especiales de la República de Panamá',
   descripcion: 'Compilación de leyes especiales panameñas que regulan materias específicas como sociedades, fundaciones, fideicomisos, zonas francas y propiedad intelectual.',
+  info: {
+    anio: '1927',
+    ultimaReforma: '2022',
+    importancia: 'Leyes sectoriales de gran relevancia práctica',
+    conceptosClave: ['Sociedades', 'Fundaciones', 'Fideicomiso', 'Propiedad Industrial', 'Datos Personales'],
+  },
   articulos: [
     { id: 'LE-1', articulo: 1, titulo: 'Ley General de Sociedades (Ley 32 de 1927)', contenido: 'La sociedad anónima se constituye mediante escritura pública inscrita en el Registro Público. El capital social se divide en acciones nominativas. La responsabilidad de los accionistas se limita al valor de sus acciones.', libro: 'Derecho Societario', categoria: 'Sociedades Anónimas' },
     { id: 'LE-2', articulo: 2, titulo: 'Sociedades de Responsabilidad Limitada (SRL)', contenido: 'La SRL se constituye con un mínimo de dos socios y un máximo de veinte. El capital se divide en cuotas de participación nominativas. Los socios responden hasta el monto de sus aportaciones.', libro: 'Derecho Societario', categoria: 'Sociedades de Responsabilidad Limitada' },
@@ -134,6 +158,12 @@ export const leyesEspeciales = {
 export const normasInternacionales = {
   titulo: 'Normas Internacionales Aplicables en Panamá',
   descripcion: 'Tratados y convenciones internacionales ratificados por la República de Panamá, que forman parte del ordenamiento jurídico nacional conforme al artículo 4 de la Constitución.',
+  info: {
+    anio: '1945',
+    ultimaReforma: '2018',
+    importancia: 'Instrumentos internacionales que forman parte del derecho panameño',
+    conceptosClave: ['DDHH', 'OEA', 'OIT', 'TLC', 'CDI', 'Arbitraje'],
+  },
   articulos: [
     { id: 'NI-1', articulo: 1, titulo: 'Convención de Viena sobre el Derecho de los Tratados (1969)', contenido: 'Los tratados internacionales ratificados por Panamá deben interpretarse de buena fe, conforme al sentido corriente de sus términos y teniendo en cuenta su objeto y fin. Panamá adoptó esta Convención en 1982.', libro: 'Derecho Internacional Público', categoria: 'Tratados y Convenciones' },
     { id: 'NI-2', articulo: 2, titulo: 'Carta de las Naciones Unidas (1945)', contenido: 'Panamá es miembro fundador de la ONU y se compromete a mantener la paz y seguridad internacionales, fomentar relaciones de amistad entre naciones, y promover el progreso social y los derechos humanos.', libro: 'Derecho Internacional Público', categoria: 'Tratados y Convenciones' },
@@ -169,6 +199,12 @@ export const normasInternacionales = {
 export const decretosImportantes = {
   titulo: 'Decretos Importantes de la República de Panamá',
   descripcion: 'Decretos ejecutivos y reglamentarios de especial relevancia para la práctica jurídica en Panamá.',
+  info: {
+    anio: '1970',
+    ultimaReforma: '2021',
+    importancia: 'Reglamentación detallada de leyes principales',
+    conceptosClave: ['Reglamentos', 'Ejecutivos', 'Decretos de Gabinete', 'Normas Técnicas'],
+  },
   articulos: [
     { id: 'DC-1', articulo: 1, titulo: 'Decreto Ejecutivo 170 de 1993 - Reglamento de la Ley de Sociedades', contenido: 'Este decreto reglamenta la constitución, funcionamiento y disolución de sociedades anónimas. Establece los requisitos para la inscripción de actos societarios en el Registro Público y las formalidades de las asambleas de accionistas.', libro: 'Derecho Societario', categoria: 'Reglamentos Societarios' },
     { id: 'DC-2', articulo: 2, titulo: 'Decreto Ejecutivo 305 de 2010 - Reglamento de Fondos de Inversión', contenido: 'Regula la constitución, administración y supervisión de los fondos de inversión en Panamá. Establece los requisitos de capital mínimo, diversificación de inversiones, y las obligaciones de los gestores y custodios.', libro: 'Derecho Financiero', categoria: 'Reglamentos Financieros' },
@@ -186,6 +222,12 @@ export const decretosImportantes = {
 export const acuerdosImportantes = {
   titulo: 'Acuerdos y Resoluciones Importantes de Panamá',
   descripcion: 'Acuerdos del Gabinete, resoluciones de entidades reguladoras y otras disposiciones administrativas de relevancia jurídica.',
+  info: {
+    anio: '2012',
+    ultimaReforma: '2022',
+    importancia: 'Resoluciones y acuerdos de entes reguladores',
+    conceptosClave: ['SMV', 'SBP', 'ACODECO', 'ASEP', 'Gabinete'],
+  },
   articulos: [
     { id: 'AC-1', articulo: 1, titulo: 'Acuerdo de Gabinete 27 de 2012 - Código de Ética de la Administración Pública', contenido: 'Establece los principios y reglas de conducta ética que deben observar los servidores públicos: transparencia, eficiencia, imparcialidad, responsabilidad, integridad y rendición de cuentas en el ejercicio de la función pública.', libro: 'Derecho Administrativo', categoria: 'Acuerdos de Gabinete' },
     { id: 'AC-2', articulo: 2, titulo: 'Resolución SMV 51-2021 - Reglamento del Mercado de Valores', contenido: 'La Superintendencia del Mercado de Valores reglamenta la oferta pública de valores, los requisitos de inscripción de emisores y valores, la información financiera requerida y las normas de conducta de los participantes del mercado.', libro: 'Derecho Financiero', categoria: 'Resoluciones SMV' },
@@ -201,6 +243,12 @@ export const acuerdosImportantes = {
 export const competenciaYConsumidor = {
   titulo: 'Competencia y Defensa del Consumidor en Panamá',
   descripcion: 'Normas de libre competencia, protección al consumidor y regulación de prácticas comerciales en la República de Panamá.',
+  info: {
+    anio: '2007',
+    ultimaReforma: '2020',
+    importancia: 'Regula la libre competencia y protección al consumidor',
+    conceptosClave: ['Monopolio', 'ACODECO', 'Publicidad', 'Garantías', 'Consumidor'],
+  },
   articulos: [
     { id: 'CC-1', articulo: 1, titulo: 'Ley de Competencia (Ley 45 de 2007)', contenido: 'La ley protege y promueve la libre competencia económica. Prohíbe las prácticas monopolísticas absolutas (acuerdos entre competidores para fijar precios, limitar producción o repartirse mercados) y las prácticas monopolísticas relativas.', libro: 'Libro I', categoria: 'Libre Competencia' },
     { id: 'CC-2', articulo: 2, titulo: 'Concentraciones Económicas', contenido: 'Las concentraciones económicas (fusiones, adquisiciones y alianzas) que excedan umbrales definidos deben ser notificadas a la Autoridad de Competencia para su evaluación previa. Se prohíben las concentraciones que reduzcan sustancialmente la competencia.', libro: 'Libro I', categoria: 'Libre Competencia' },
@@ -217,6 +265,12 @@ export const competenciaYConsumidor = {
 export const tribunalesSuperiores = {
   titulo: 'Organización de los Tribunales Superiores de Panamá',
   descripcion: 'Estructura, competencia y funcionamiento de los tribunales superiores de justicia, incluyendo la Corte Suprema, tribunales superiores de distrito y tribunales especializados de la República de Panamá.',
+  info: {
+    anio: '1972',
+    ultimaReforma: '2020',
+    importancia: 'Organización y competencia del sistema judicial panameño',
+    conceptosClave: ['Corte Suprema', 'Tribunales', 'Juzgados', 'Competencia', 'Jurisdicción'],
+  },
   articulos: [
     { id: 'TS-1', articulo: 1, titulo: 'Corte Suprema de Justicia - Sala Primera (Civil)', contenido: 'La Sala Primera de lo Civil conoce de los recursos de casación en materia civil, comercial y de familia. Conoce también de los procesos de mayor cuantía y de las demandas contra el Estado en materia civil.', libro: 'Corte Suprema', categoria: 'Sala Civil' },
     { id: 'TS-2', articulo: 2, titulo: 'Corte Suprema de Justicia - Sala Segunda (Penal)', contenido: 'La Sala Segunda de lo Penal conoce del recurso de casación penal, del recurso de revisión penal y de las excusas y recusaciones de los magistrados de tribunales superiores en materia penal.', libro: 'Corte Suprema', categoria: 'Sala Penal' },

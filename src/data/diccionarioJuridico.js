@@ -72,6 +72,22 @@ export const CATEGORIAS_POR_CODIGO = Object.fromEntries(
   ])
 );
 
+export const obtenerArticulosRelacionados = (tipoCodigo, articuloId, max = 5) => {
+  const codigo = CODIGOS[tipoCodigo];
+  if (!codigo?.articulos) return [];
+  const articulo = codigo.articulos.find((a) => a.id === articuloId);
+  if (!articulo) return [];
+  return codigo.articulos
+    .filter((a) => a.id !== articuloId && a.categoria === articulo.categoria)
+    .slice(0, max);
+};
+
+export const obtenerInfoCodigo = (tipoCodigo) => {
+  const codigo = CODIGOS[tipoCodigo];
+  if (!codigo) return null;
+  return codigo.info || null;
+};
+
 export {
   codigoCivil, codigoPenal, codigoLaboral, codigoComercio,
   constitucion, codigoFamilia, codigoFiscal, leyesEspeciales,

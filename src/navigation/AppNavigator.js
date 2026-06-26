@@ -20,6 +20,7 @@ import LegalDictionaryScreen from '../screens/LegalDictionaryScreen';
 import LegalCalculatorsScreen from '../screens/LegalCalculatorsScreen';
 import CaseTrackingScreen from '../screens/CaseTrackingScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
+import NavigationScreen from '../screens/NavigationScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -100,14 +101,21 @@ function MainTabs() {
           tabBarIcon: ({ focused }) => <TabIcon icon="💰" label="Cobros" focused={focused} colors={colors} />,
         }}
       />
+      <Tab.Screen
+        name="Navigation"
+        component={NavigationScreen}
+        options={{
+          tabBarIcon: ({ focused }) => <TabIcon icon="📍" label="GPS" focused={focused} colors={colors} />,
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
-export default function AppNavigator() {
+export default function AppNavigator({ navigationRef }) {
   const { colors } = useTheme();
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

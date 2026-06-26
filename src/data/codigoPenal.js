@@ -1,6 +1,12 @@
 export const codigoPenal = {
   titulo: 'Código Penal de la República de Panamá',
   descripcion: 'Ley 14 de 18 de mayo de 2007, modificado por la Ley 7 de 2022 y otras.',
+  info: {
+    anio: '2007',
+    ultimaReforma: '2022',
+    importancia: 'Regula los delitos, penas y medidas de seguridad',
+    conceptosClave: ['Dolo', 'Culpa', 'Tentativa', 'Autoría', 'Penas', 'Prescripción'],
+  },
   articulos: [
     { id: 'CP-1', articulo: 1, titulo: 'Principio de Legalidad', contenido: 'Nadie será sancionado por un acto que no esté expresamente previsto como delito o falta con anterioridad a su realización. No se aplicará sanción penal que no esté prevista en una ley anterior.', libro: 'Libro I', categoria: 'Principios Generales' },
     { id: 'CP-2', articulo: 2, titulo: 'Tipicidad', contenido: 'No hay delito sin tipicidad. La conducta debe estar expresamente descrita en la ley penal.', libro: 'Libro I', categoria: 'Principios Generales' },

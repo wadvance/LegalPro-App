@@ -5,6 +5,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { onAuthChange, getUserProfile, logoutUser } from '../../firebase/auth';
 import { getDashboardStats, subscribeToCollection } from '../services/firestoreService';
+import { fetchCurrentWeather } from '../services/weather';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import { SIZES } from '../utils/theme';
@@ -33,6 +34,7 @@ const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [proximasCitas, setProximasCitas] = useState([]);
+  const [weather, setWeather] = useState(null);
 
   const navigationRef = useRef(navigation);
 
@@ -81,11 +83,16 @@ const HomeScreen = ({ navigation }) => {
     return unsubscribe;
   };
 
+  useEffect(() => {
+    fetchCurrentWeather().then(setWeather);
+  }, []);
+
   const onRefresh = async () => {
     setRefreshing(true);
     if (user) {
       await loadStats(user.uid);
     }
+    fetchCurrentWeather().then(setWeather);
     setRefreshing(false);
   };
 
@@ -129,6 +136,31 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[colors.primary]} tintColor={colors.primary} />
         }
       >
+        {weather && (
+          <View style={[styles.weatherCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, shadowColor: colors.cardShadow }]}>
+            <View style={styles.weatherLeft}>
+              <Text style={styles.weatherIcon}>{weather.icon}</Text>
+              <View>
+                <Text style={[styles.weatherTemp, { color: colors.text }]}>{weather.temp}°C</Text>
+                <Text style={[styles.weatherDesc, { color: colors.textSecondary }]}>{weather.description}</Text>
+              </View>
+            </View>
+            <View style={styles.weatherRight}>
+              <View style={styles.weatherDetail}>
+                <Text style={styles.weatherDetailIcon}>🤔</Text>
+                <Text style={[styles.weatherDetailText, { color: colors.textSecondary }]}>{weather.feelsLike}°C</Text>
+              </View>
+              <View style={styles.weatherDetail}>
+                <Text style={styles.weatherDetailIcon}>💧</Text>
+                <Text style={[styles.weatherDetailText, { color: colors.textSecondary }]}>{weather.humidity}%</Text>
+              </View>
+              <View style={styles.weatherDetail}>
+                <Text style={styles.weatherDetailIcon}>💨</Text>
+                <Text style={[styles.weatherDetailText, { color: colors.textSecondary }]}>{weather.windSpeed} km/h</Text>
+              </View>
+            </View>
+          </View>
+        )}
         <View style={styles.metricsGrid}>
           <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#1976D2', borderLeftWidth: 4, shadowColor: colors.cardShadow }]}>
             <View style={styles.metricTop}>
@@ -210,11 +242,7 @@ const HomeScreen = ({ navigation }) => {
                 style={[styles.quickCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, shadowColor: colors.cardShadow }]}
                 onPress={() => {
                   if (action.key === 'GPS') {
-                    Alert.alert('Navegación GPS', 'Abrir mapas para navegación', [
-                      { text: 'Google Maps', onPress: () => openGoogleMaps('') },
-                      { text: 'Waze', onPress: () => openWaze('') },
-                      { text: 'Cancelar', style: 'cancel' },
-                    ]);
+                    navigation.navigate('Navigation');
                   } else {
                     navigation.navigate(action.key);
                   }
@@ -458,6 +486,46 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xs,
     fontStyle: 'italic',
     marginTop: 2,
+  },
+  weatherCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginBottom: 16,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  weatherLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  weatherIcon: { fontSize: 38 },
+  weatherTemp: {
+    fontSize: SIZES.xxl,
+    fontWeight: 'bold',
+  },
+  weatherDesc: {
+    fontSize: SIZES.sm,
+    marginTop: 1,
+  },
+  weatherRight: {
+    flexDirection: 'column',
+    gap: 4,
+  },
+  weatherDetail: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  weatherDetailIcon: { fontSize: 14 },
+  weatherDetailText: {
+    fontSize: SIZES.xs,
   },
 });
 
