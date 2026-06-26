@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Arauz Barraza Abogados",
-    "slug": "arauz-barraza-abogados",
+    "slug": "LegalPro-App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -26,7 +26,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
-      "basePath": "/arauz-barraza-abogados",
+      "basePath": "/LegalPro-App",
       "meta": {
         "apple-mobile-web-app-capable": "yes",
         "apple-mobile-web-app-status-bar-style": "black-translucent",
