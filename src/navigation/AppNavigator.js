@@ -6,6 +6,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { SIZES } from '../utils/theme';
 
+let loginKeyCounter = 0;
+export const bumpLoginKey = () => { loginKeyCounter++; };
+
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AuthLoader from '../screens/AuthLoader';
@@ -116,7 +119,7 @@ export default function AppNavigator() {
       >
         <Stack.Screen name="AuthLoader" component={AuthLoader} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} key={`Login_${loginKeyCounter}`} />
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Companies" component={CompaniesScreen} />
         <Stack.Screen name="Reports" component={ReportsScreen} />
