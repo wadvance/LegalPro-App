@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
+      <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16, shadowColor: colors.cardShadow }]}>
         <View style={styles.headerRow}>
           <View style={styles.headerUser}>
             <View style={[styles.avatar, { backgroundColor: colors.overlay }]}>
@@ -118,28 +118,28 @@ const HomeScreen = ({ navigation }) => {
         }
       >
         <View style={styles.metricsGrid}>
-          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#1976D2', borderLeftWidth: 4 }]}>
+          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#1976D2', borderLeftWidth: 4, shadowColor: colors.cardShadow }]}>
             <View style={styles.metricTop}>
               <Text style={styles.metricIcon}>👥</Text>
               <Text style={[styles.metricValue, { color: colors.text }]}>{stats?.totalClientes || 0}</Text>
             </View>
             <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>Clientes Registrados</Text>
           </View>
-          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#388E3C', borderLeftWidth: 4 }]}>
+          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#388E3C', borderLeftWidth: 4, shadowColor: colors.cardShadow }]}>
             <View style={styles.metricTop}>
               <Text style={styles.metricIcon}>📁</Text>
               <Text style={[styles.metricValue, { color: colors.text }]}>{stats?.totalExpedientes || 0}</Text>
             </View>
             <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>Expedientes Activos</Text>
           </View>
-          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#F57C00', borderLeftWidth: 4 }]}>
+          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#F57C00', borderLeftWidth: 4, shadowColor: colors.cardShadow }]}>
             <View style={styles.metricTop}>
               <Text style={styles.metricIcon}>📅</Text>
               <Text style={[styles.metricValue, { color: colors.text }]}>{stats?.citasPendientes || 0}</Text>
             </View>
             <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>Citas Pendientes</Text>
           </View>
-          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#D32F2F', borderLeftWidth: 4 }]}>
+          <View style={[styles.metricCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, borderLeftColor: '#D32F2F', borderLeftWidth: 4, shadowColor: colors.cardShadow }]}>
             <View style={styles.metricTop}>
               <Text style={styles.metricIcon}>💰</Text>
               <Text style={[styles.metricValue, { color: colors.text }]}>{formatCurrency(stats?.cobrosDelMes || 0)}</Text>
@@ -162,7 +162,7 @@ const HomeScreen = ({ navigation }) => {
             {proximasCitas.map((cita) => (
               <TouchableOpacity
                 key={cita.id}
-                style={[styles.citaCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder }]}
+                style={[styles.citaCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, shadowColor: colors.cardShadow }]}
                 onPress={() => navigation.navigate('Appointments')}
               >
                 <View style={[styles.citaBadge, { backgroundColor: colors.primary + '15' }]}>
@@ -195,7 +195,7 @@ const HomeScreen = ({ navigation }) => {
             {QUICK_ACTIONS.map((action) => (
               <TouchableOpacity
                 key={action.key}
-                style={[styles.quickCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder }]}
+                style={[styles.quickCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder, shadowColor: colors.cardShadow }]}
                 onPress={() => navigation.navigate(action.key)}
               >
                 <View style={[styles.quickIconBg, { backgroundColor: action.color + (isDark ? '25' : '12') }]}>
@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
     shadowRadius: 12,
@@ -307,7 +306,6 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 14,
     borderWidth: 1,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
@@ -358,7 +356,6 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     marginBottom: 8,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
     shadowRadius: 3,
@@ -407,7 +404,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRadius: 14,
     borderWidth: 1,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.06,
     shadowRadius: 3,

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
   KeyboardAvoidingView, Platform, Alert, ScrollView,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { loginUser, resetPassword } from '../../firebase/auth';
 import { SIZES } from '../utils/theme';
 import { useTheme } from '../context/ThemeContext';
@@ -14,13 +15,13 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+  useFocusEffect(
+    useCallback(() => {
       setEmail('');
       setPassword('');
-    });
-    return unsubscribe;
-  }, [navigation]);
+      setShowPassword(false);
+    }, [])
+  );
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
