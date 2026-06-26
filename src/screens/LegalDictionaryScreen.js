@@ -58,14 +58,22 @@ const LegalDictionaryScreen = ({ navigation }) => {
 
   const results = useMemo(() => {
     if (viewArticle) return { [viewArticle.codigo]: [viewArticle.articulo] };
-    if (selectedCode && selectedCategory) {
-      const codigo = CODIGOS[selectedCode];
-      const articulos = codigo?.articulos?.filter((a) => a.categoria === selectedCategory) || [];
-      return { [selectedCode]: articulos };
-    }
     if (selectedCode) {
       const codigo = CODIGOS[selectedCode];
-      return { [selectedCode]: codigo?.articulos || [] };
+      if (!codigo) return {};
+      let articulos = codigo.articulos || [];
+      if (selectedCategory) {
+        articulos = articulos.filter((a) => a.categoria === selectedCategory);
+      }
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        articulos = articulos.filter((a) =>
+          (a.titulo || '').toLowerCase().includes(q) ||
+          (a.contenido || '').toLowerCase().includes(q) ||
+          (a.categoria || '').toLowerCase().includes(q)
+        );
+      }
+      return { [selectedCode]: articulos };
     }
     if (search.trim().length > 0) {
       return buscarEnTodosLosCodigos(search);
@@ -168,9 +176,10 @@ const LegalDictionaryScreen = ({ navigation }) => {
                 <Text style={[styles.codeConceptsLabel, { color: colors.textSecondary }]}>Conceptos clave:</Text>
                 <View style={styles.codeConceptsRow}>
                   {info.conceptosClave.map((c, i) => (
-                    <View key={i} style={[styles.conceptChip, { backgroundColor: colors.overlay }]}>
+                    <TouchableOpacity key={i} style={[styles.conceptChip, { backgroundColor: colors.overlay }]}
+                      onPress={() => { setSearch(c); setShowSuggestions(false); }}>
                       <Text style={[styles.conceptChipText, { color: colors.textSecondary }]}>{c}</Text>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </View>
               </View>
