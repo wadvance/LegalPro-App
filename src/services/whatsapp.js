@@ -29,7 +29,7 @@ export const sendWhatsAppMessage = async (to, message) => {
 
 export const sendAppointmentConfirmation = async (phone, cliente, fecha, hora) => {
   const message = `Hola ${cliente}, ✅ *Cita Confirmada*\n\n` +
-    `Estimado(a) ${cliente}, su cita con *Arauz Carrillo Abogados* ha sido confirmada.\n\n` +
+    `Estimado(a) ${cliente}, su cita con *Bufete de Abogados* ha sido confirmada.\n\n` +
     `📅 *Fecha:* ${fecha}\n⏰ *Hora:* ${hora}\n📍 *Lugar:* Oficina Central\n\n` +
     `Si necesita reagendar, contáctenos al +507 0000-0000.\n\n` +
     `*Arauz Carrillo Abogados* - Su confianza, nuestro compromiso.`;
@@ -64,7 +64,7 @@ export const sendInvoiceNotification = async (phone, cliente, factura, monto) =>
 };
 
 export const sendWelcomeMessage = async (phone, nombre) => {
-  const message = `🎉 *Bienvenido a Arauz Carrillo Abogados*\n\n` +
+  const message = `🎉 *Bienvenido a Bufete de Abogados*\n\n` +
     `Hola ${nombre}, gracias por confiar en nosotros.\n\n` +
     `A partir de ahora recibirá notificaciones sobre:\n` +
     `✅ Confirmación de citas\n` +
@@ -136,7 +136,7 @@ export const getChatbotResponse = async (message) => {
       '¿En qué área necesita asistencia?';
   }
 
-  return '🤖 Gracias por contactar a *Arauz Carrillo Abogados*.\n\n' +
+  return '🤖 Gracias por contactar a *Bufete de Abogados*.\n\n' +
     'Puedo ayudarle con:\n' +
     '• 📅 Agendar citas\n' +
     '• ⚖️ Consultar expedientes\n' +

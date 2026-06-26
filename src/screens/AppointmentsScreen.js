@@ -118,7 +118,7 @@ const AppointmentsScreen = ({ navigation }) => {
     await updateDocument('citas', appt.id, { estado: newStatus });
     if (newStatus === 'completado' && appt.clienteTelefono) {
       sendWhatsAppMessage(appt.clienteTelefono,
-        `✅ *Cita Completada*\n\nSu cita con Arauz Carrillo Abogados ha sido registrada como completada. Gracias por su visita.`);
+        `✅ *Cita Completada*\n\nSu cita con Bufete de Abogados ha sido registrada como completada. Gracias por su visita.`);
     }
   };
 

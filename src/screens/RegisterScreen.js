@@ -73,7 +73,7 @@ const RegisterScreen = ({ navigation }) => {
             <Text style={styles.backText}>←</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Crear Cuenta</Text>
-          <Text style={styles.headerSubtitle}>Únase a Arauz Barraza Abogados</Text>
+          <Text style={styles.headerSubtitle}>Únase a Bufete de Abogados</Text>
         </View>
 
         <View style={styles.formSection}>

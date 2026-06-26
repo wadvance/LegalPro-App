@@ -9,7 +9,7 @@ import HeaderComponent from '../components/Header';
 import { COLORS, SIZES } from '../utils/theme';
 
 const initialMessages = [
-  { id: '0', text: '🤖 ¡Hola! Soy el asistente virtual de *Arauz Carrillo Abogados*. ¿En qué puedo ayudarle hoy?', sender: 'bot', timestamp: new Date() },
+  { id: '0', text: '🤖 ¡Hola! Soy el asistente virtual de *Bufete de Abogados*. ¿En qué puedo ayudarle hoy?', sender: 'bot', timestamp: new Date() },
   { id: '1', text: 'Puede preguntarme sobre:\n📅 Citas\n⚖️ Casos\n💰 Cobros\n📋 Horarios\n👔 Abogados', sender: 'bot', timestamp: new Date() },
 ];
 

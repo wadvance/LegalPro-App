@@ -91,7 +91,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.headerRow}>
           <View style={styles.headerText}>
             <Text style={styles.greeting}>Hola, {profile?.nombre || 'Usuario'}</Text>
-            <Text style={styles.role}>{profile?.rol ? `Rol: ${profile.rol}` : 'Arauz Barraza Abogados'}</Text>
+            <Text style={styles.role}>{profile?.rol ? `Rol: ${profile.rol}` : 'Bufete de Abogados'}</Text>
           </View>
           <View style={styles.headerActions}>
             <TouchableOpacity onPress={toggleTheme} style={[styles.iconBtn, { backgroundColor: colors.overlay, marginRight: 8 }]}>

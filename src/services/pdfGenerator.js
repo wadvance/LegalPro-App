@@ -131,7 +131,7 @@ const generateHTML = (title, content) => {
 </head>
 <body>
   <div class="header">
-    <h1>Arauz Barraza Abogados</h1>
+    <h1>Bufete de Abogados</h1>
     <p>Vía España, Edificio Arauz Barraza • Piso 8, Oficina 801</p>
     <p>Ciudad de Panamá, Panamá • Tel: +507 0000-0000</p>
     <span class="badge">${title}</span>
@@ -139,7 +139,7 @@ const generateHTML = (title, content) => {
   <div class="title">${title}</div>
   ${content}
   <div class="footer">
-    <p><strong>Arauz Barraza Abogados</strong> - Su confianza, nuestro compromiso</p>
+    <p><strong>Bufete de Abogados</strong> - Su confianza, nuestro compromiso</p>
     <p>Documento generado el ${new Date().toLocaleDateString('es-PA', {
       year: 'numeric', month: 'long', day: 'numeric',
       hour: '2-digit', minute: '2-digit'
