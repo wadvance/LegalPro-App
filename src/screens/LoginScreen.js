@@ -63,9 +63,8 @@ const LoginScreen = ({ navigation }) => {
       >
         <View style={styles.logoSection}>
           <Text style={styles.logoIcon}>⚖️</Text>
-          <Text style={styles.appName}>Arauz Carrillo</Text>
-          <Text style={styles.appSubtitle}>Abogados</Text>
-          <Text style={styles.tagline}>Su confianza, nuestro compromiso</Text>
+          <Text style={styles.appName}>Bufete de Abogados</Text>
+          <Text style={styles.tagline}>Bufete de Abogados</Text>
         </View>
 
         <View style={styles.formSection}>
