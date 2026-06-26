@@ -8,6 +8,7 @@ import { SIZES } from '../utils/theme';
 
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import AuthLoader from '../screens/AuthLoader';
 import HomeScreen from '../screens/HomeScreen';
 import ClientsScreen from '../screens/ClientsScreen';
 import CompaniesScreen from '../screens/CompaniesScreen';
@@ -113,6 +114,7 @@ export default function AppNavigator() {
           cardStyle: { backgroundColor: colors.background, flex: 1 },
         }}
       >
+        <Stack.Screen name="AuthLoader" component={AuthLoader} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainTabs} />
