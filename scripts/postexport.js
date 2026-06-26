@@ -38,7 +38,16 @@ const headTags = `
         return false;
       });
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          var hadSw = regs.length > 0;
+          regs.forEach(function(r) { r.unregister(); });
+          caches.keys().then(function(names) {
+            if (names.length) { names.forEach(function(n) { caches.delete(n); }); }
+            if (hadSw && window.location.search.indexOf('swcleared') === -1) {
+              window.location.search = 'swcleared=1';
+            }
+          });
+        });
         window.addEventListener('load', function() { navigator.serviceWorker.register('${basePath}/sw.js'); });
       }
     </script>`;
