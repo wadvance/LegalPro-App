@@ -94,6 +94,7 @@ const LoginScreen = ({ navigation }) => {
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
+              autoComplete="off"
             />
           </View>
 
@@ -106,6 +107,7 @@ const LoginScreen = ({ navigation }) => {
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
+              autoComplete="new-password"
             />
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}
