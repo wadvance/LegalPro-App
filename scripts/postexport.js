@@ -3,6 +3,7 @@ const path = require('path');
 
 const distDir = path.join(__dirname, '..', 'dist');
 const webDir = path.join(__dirname, '..', 'web');
+const basePath = '/LegalPro-App';
 
 fs.copyFileSync(path.join(webDir, 'manifest.json'), path.join(distDir, 'manifest.json'));
 fs.copyFileSync(path.join(webDir, 'sw.js'), path.join(distDir, 'sw.js'));
@@ -10,11 +11,21 @@ fs.copyFileSync(path.join(webDir, 'sw.js'), path.join(distDir, 'sw.js'));
 const indexPath = path.join(distDir, 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
 
+function prefixPaths(html, basePath) {
+  return html
+    .replace(/href="\//g, `href="${basePath}/`)
+    .replace(/src="\//g, `src="${basePath}/`)
+    .replace(/href='\//g, `href='${basePath}/`)
+    .replace(/src='\//g, `src='${basePath}/`);
+}
+
+html = prefixPaths(html, basePath);
+
 const headTags = `
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="${basePath}/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="apple-touch-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="${basePath}/favicon.ico" />
     <style>
       #root .loading-message { display: flex; align-items: center; justify-content: center; height: 100%; font-family: sans-serif; color: #FFFFFF; background: #1A237E; font-size: 18px; font-weight: bold; }
     </style>
@@ -28,7 +39,7 @@ const headTags = `
       });
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(function(regs) { regs.forEach(function(r) { r.unregister(); }); });
-        window.addEventListener('load', function() { navigator.serviceWorker.register('/sw.js'); });
+        window.addEventListener('load', function() { navigator.serviceWorker.register('${basePath}/sw.js'); });
       }
     </script>`;
 
@@ -36,4 +47,4 @@ html = html.replace('</head>', headTags + '\n  </head>');
 
 fs.writeFileSync(indexPath, html);
 
-console.log('PWA setup complete');
+console.log('PWA setup complete with basePath:', basePath);
