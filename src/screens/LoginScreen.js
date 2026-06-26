@@ -80,6 +80,26 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.formSection}>
+          {/* Decoy inputs - MUST be first in DOM to absorb autofill */}
+          {Platform.OS === 'web' && (
+            <View style={{ position: 'absolute', top: -9999, left: -9999, height: 1, width: 1, overflow: 'hidden' }}>
+              <TextInput
+                autoComplete="username"
+                autoCorrect={false}
+                autoCapitalize="none"
+                style={{ height: 0, borderWidth: 0 }}
+                tabIndex={-1}
+              />
+              <TextInput
+                autoComplete="current-password"
+                secureTextEntry
+                autoCorrect={false}
+                autoCapitalize="none"
+                style={{ height: 0, borderWidth: 0 }}
+                tabIndex={-1}
+              />
+            </View>
+          )}
           <Text style={styles.welcomeText}>Iniciar Sesión</Text>
 
           <View style={styles.inputContainer}>
@@ -90,10 +110,10 @@ const LoginScreen = ({ navigation }) => {
               placeholderTextColor={COLORS.disabled}
               value={email}
               onChangeText={setEmail}
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
-              autoComplete="off"
+              autoComplete="nope-username"
+              inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
           </View>
@@ -107,7 +127,8 @@ const LoginScreen = ({ navigation }) => {
               value={password}
               onChangeText={setPassword}
               secureTextEntry={Platform.OS !== 'web' && !showPassword}
-              autoComplete="off"
+              autoComplete="nope-password"
+              inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
             <TouchableOpacity

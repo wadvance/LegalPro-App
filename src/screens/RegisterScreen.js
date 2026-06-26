@@ -79,6 +79,26 @@ const RegisterScreen = ({ navigation }) => {
         </View>
 
         <View style={[styles.formSection, { backgroundColor: colors.surface }]}>
+          {/* Decoy inputs - MUST be first in DOM to absorb autofill */}
+          {Platform.OS === 'web' && (
+            <View style={{ position: 'absolute', top: -9999, left: -9999, height: 1, width: 1, overflow: 'hidden' }}>
+              <TextInput
+                autoComplete="username"
+                autoCorrect={false}
+                autoCapitalize="none"
+                style={{ height: 0, borderWidth: 0 }}
+                tabIndex={-1}
+              />
+              <TextInput
+                autoComplete="current-password"
+                secureTextEntry
+                autoCorrect={false}
+                autoCapitalize="none"
+                style={{ height: 0, borderWidth: 0 }}
+                tabIndex={-1}
+              />
+            </View>
+          )}
           <View style={styles.row}>
             <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border, flex: 1, marginRight: 8 }]}>
               <TextInput
@@ -87,6 +107,8 @@ const RegisterScreen = ({ navigation }) => {
                 placeholderTextColor={colors.textSecondary}
                 value={form.nombre}
                 onChangeText={(v) => updateForm('nombre', v)}
+                autoComplete="nope-name"
+                inputMode="text"
               />
             </View>
             <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border, flex: 1, marginLeft: 8 }]}>
@@ -96,6 +118,8 @@ const RegisterScreen = ({ navigation }) => {
                 placeholderTextColor={colors.textSecondary}
                 value={form.apellido}
                 onChangeText={(v) => updateForm('apellido', v)}
+                autoComplete="nope-lastname"
+                inputMode="text"
               />
             </View>
           </View>
@@ -107,9 +131,9 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.email}
               onChangeText={(v) => updateForm('email', v)}
-              keyboardType="email-address"
               autoCapitalize="none"
-              autoComplete="off"
+              autoComplete="nope-email"
+              inputMode="email"
               dataSet={{ lpignore: 'true' }}
             />
           </View>
@@ -122,6 +146,8 @@ const RegisterScreen = ({ navigation }) => {
               value={form.telefono}
               onChangeText={(v) => updateForm('telefono', v)}
               keyboardType="phone-pad"
+              autoComplete="nope-tel"
+              inputMode="tel"
             />
           </View>
 
@@ -132,6 +158,8 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.cedula}
               onChangeText={(v) => updateForm('cedula', v)}
+              autoComplete="nope-id"
+              inputMode="text"
             />
           </View>
 
@@ -143,7 +171,8 @@ const RegisterScreen = ({ navigation }) => {
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
               secureTextEntry={Platform.OS !== 'web'}
-              autoComplete="off"
+              autoComplete="nope-password"
+              inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
           </View>
@@ -156,7 +185,8 @@ const RegisterScreen = ({ navigation }) => {
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
               secureTextEntry={Platform.OS !== 'web'}
-              autoComplete="off"
+              autoComplete="nope-confirm"
+              inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
           </View>
