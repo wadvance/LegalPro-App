@@ -1,7 +1,8 @@
-const CACHE_NAME = 'arauz-barraza-v2';
+const BASE_PATH = '/LegalPro-App';
+const CACHE_NAME = 'legalpro-app-v1';
 const urlsToCache = [
-  '/favicon.ico',
-  '/manifest.json',
+  `${BASE_PATH}/favicon.ico`,
+  `${BASE_PATH}/manifest.json`,
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,7 +33,7 @@ self.addEventListener('fetch', (event) => {
 
   if (isNavigate || url.pathname === '/' || url.pathname.endsWith('.html')) {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match('/index.html'))
+      fetch(event.request).catch(() => caches.match(`${BASE_PATH}/index.html`))
     );
     return;
   }
