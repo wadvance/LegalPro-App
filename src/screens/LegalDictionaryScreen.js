@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import Card from '../components/Card';
 import Header from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { buscarEnTodosLosCodigos, CODIGOS, CATEGORIAS_POR_CODIGO } from '../data/diccionarioJuridico';
 import { generateCodePDF, sharePDF } from '../services/pdfGenerator';
 
@@ -36,6 +37,7 @@ const SUGERENCIAS = [
 const getTotalArticulos = (key) => CODIGOS[key]?.articulos?.length || 0;
 
 const LegalDictionaryScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [search, setSearch] = useState('');
   const [selectedCode, setSelectedCode] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -87,15 +89,15 @@ const LegalDictionaryScreen = ({ navigation }) => {
   if (!selectedCode) {
     const hasResults = search.trim().length > 0 && totalResults > 0;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Header title="Leyes de Panamá" onBack={() => navigation.goBack()} />
-        <View style={styles.searchContainer}>
+        <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <Text style={styles.searchIcon}>🔍</Text>
-          <TextInput style={styles.searchInput} placeholder="Buscar en todas las leyes..."
-            value={search} onChangeText={handleSearch} placeholderTextColor={COLORS.disabled} />
+          <TextInput style={[styles.searchInput, { color: colors.text }]} placeholder="Buscar en todas las leyes..."
+            value={search} onChangeText={handleSearch} placeholderTextColor={colors.disabled} />
           {search ? (
             <TouchableOpacity onPress={() => { setSearch(''); setShowSuggestions(true); }}>
-              <Text style={styles.clearBtn}>✕</Text>
+              <Text style={[styles.clearBtn, { color: colors.textSecondary }]}>✕</Text>
             </TouchableOpacity>
           ) : null}
         </View>
@@ -103,9 +105,9 @@ const LegalDictionaryScreen = ({ navigation }) => {
         {showSuggestions && !search && (
           <ScrollView horizontal style={styles.suggestionsRow} showsHorizontalScrollIndicator={false}>
             {SUGERENCIAS.map((s) => (
-              <TouchableOpacity key={s.term} style={styles.suggestionChip}
+              <TouchableOpacity key={s.term} style={[styles.suggestionChip, { backgroundColor: colors.primary + '25', borderColor: colors.primary + '40' }]}
                 onPress={() => { setSearch(s.term); setShowSuggestions(false); }}>
-                <Text style={styles.suggestionText}>{s.label}</Text>
+                <Text style={[styles.suggestionText, { color: colors.primary }]}>{s.label}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -120,27 +122,27 @@ const LegalDictionaryScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => handleViewArticle(item.codigoKey, item)}>
                 <Card icon="📖" title={`Art. ${item.articulo} - ${item.titulo}`}
                   subtitle={`${CODIGOS_DISPONIBLES.find((c) => c.key === item.codigoKey)?.label} • ${item.categoria}`}>
-                  <Text style={styles.articleText}>{item.contenido}</Text>
+                  <Text style={[styles.articleText, { color: colors.textSecondary }]}>{item.contenido}</Text>
                 </Card>
               </TouchableOpacity>
             )}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.list}
-            ListEmptyComponent={<Card><Text style={styles.noData}>Sin resultados. Intente otro término.</Text></Card>}
+            ListEmptyComponent={<Card><Text style={[styles.noData, { color: colors.textSecondary }]}>Sin resultados. Intente otro término.</Text></Card>}
           />
         ) : search ? (
-          <Card><Text style={styles.noData}>Sin resultados. Intente otro término.</Text></Card>
+          <Card><Text style={[styles.noData, { color: colors.textSecondary }]}>Sin resultados. Intente otro término.</Text></Card>
         ) : (
           <ScrollView contentContainerStyle={styles.gridContainer}>
-            <Text style={styles.sectionTitle}>Códigos y Leyes</Text>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Códigos y Leyes</Text>
             <View style={styles.codeGrid}>
               {CODIGOS_DISPONIBLES.map((code) => (
-                <TouchableOpacity key={code.key} style={styles.codeCard}
+                <TouchableOpacity key={code.key} style={[styles.codeCard, { backgroundColor: colors.surface, shadowColor: colors.cardShadow }]}
                   onPress={() => { setSelectedCode(code.key); setShowSuggestions(true); }}>
                   <Text style={styles.codeIcon}>{code.icon}</Text>
-                  <Text style={styles.codeLabel}>{code.label}</Text>
-                  <Text style={styles.codeDesc}>{code.desc}</Text>
-                  <Text style={styles.codeCount}>{getTotalArticulos(code.key)} artículos</Text>
+                  <Text style={[styles.codeLabel, { color: colors.text }]}>{code.label}</Text>
+                  <Text style={[styles.codeDesc, { color: colors.textSecondary }]}>{code.desc}</Text>
+                  <Text style={[styles.codeCount, { color: colors.primary }]}>{getTotalArticulos(code.key)} artículos</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -179,18 +181,18 @@ const LegalDictionaryScreen = ({ navigation }) => {
       : [];
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Header title={getTitle()} onBack={handleBack} />
-        <View style={styles.searchContainer}>
+        <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
           <Text style={styles.searchIcon}>🔍</Text>
-          <TextInput style={styles.searchInput}
+          <TextInput style={[styles.searchInput, { color: colors.text }]}
             placeholder={`Buscar en ${CODIGOS_DISPONIBLES.find((c) => c.key === selectedCode)?.label}...`}
-            value={search} onChangeText={setSearch} placeholderTextColor={COLORS.disabled} />
-          <TouchableOpacity onPress={handleGeneratePDF} style={styles.pdfBtn}>
+            value={search} onChangeText={setSearch} placeholderTextColor={colors.disabled} />
+          <TouchableOpacity onPress={handleGeneratePDF} style={[styles.pdfBtn, { backgroundColor: colors.primary + '25' }]}>
             <Text style={styles.pdfBtnText}>📄</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.sectionTitle}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
           {search.trim() ? `Resultados (${totalResults})` : 'Categorías'}
         </Text>
         <FlatList
@@ -199,7 +201,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
             search.trim() ? (
               <TouchableOpacity onPress={() => handleViewArticle(selectedCode, item)}>
                 <Card icon="📖" title={`Art. ${item.articulo} - ${item.titulo}`} subtitle={item.categoria}>
-                  <Text style={styles.articleText}>{item.contenido}</Text>
+                  <Text style={[styles.articleText, { color: colors.textSecondary }]}>{item.contenido}</Text>
                 </Card>
               </TouchableOpacity>
             ) : (
@@ -218,17 +220,17 @@ const LegalDictionaryScreen = ({ navigation }) => {
   if (viewArticle) {
     const codeInfo = CODIGOS_DISPONIBLES.find((c) => c.key === viewArticle.codigo);
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Header title={getTitle()} onBack={handleBack} />
         <ScrollView contentContainerStyle={styles.list}>
           <Card icon="📖" title={`Artículo ${viewArticle.articulo.articulo}`}
             subtitle={viewArticle.articulo.titulo}
             badge={viewArticle.articulo.categoria}>
             <View style={styles.metaRow}>
-              <Text style={styles.meta}>{codeInfo?.label}</Text>
-              <Text style={styles.meta}>{viewArticle.articulo.libro}</Text>
+              <Text style={[styles.meta, { color: colors.textSecondary, backgroundColor: colors.background }]}>{codeInfo?.label}</Text>
+              <Text style={[styles.meta, { color: colors.textSecondary, backgroundColor: colors.background }]}>{viewArticle.articulo.libro}</Text>
             </View>
-            <Text style={styles.articleFullText}>{viewArticle.articulo.contenido}</Text>
+            <Text style={[styles.articleFullText, { color: colors.text }]}>{viewArticle.articulo.contenido}</Text>
           </Card>
         </ScrollView>
       </View>
@@ -236,14 +238,14 @@ const LegalDictionaryScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header title={getTitle()} onBack={handleBack} />
       <FlatList
         data={Object.values(results).flat()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleViewArticle(selectedCode, item)}>
             <Card icon="📖" title={`Art. ${item.articulo} - ${item.titulo}`} subtitle={item.categoria}>
-              <Text style={styles.articleText}>{item.contenido}</Text>
+              <Text style={[styles.articleText, { color: colors.textSecondary }]}>{item.contenido}</Text>
             </Card>
           </TouchableOpacity>
         )}
@@ -255,46 +257,45 @@ const LegalDictionaryScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   searchContainer: {
-    flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.surface,
+    flexDirection: 'row', alignItems: 'center',
     margin: SIZES.padding, borderRadius: 12, paddingHorizontal: 12, height: 45,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderWidth: 1,
   },
   searchIcon: { fontSize: 16, marginRight: 8 },
-  searchInput: { flex: 1, fontSize: SIZES.md, color: COLORS.text },
-  clearBtn: { fontSize: 16, color: COLORS.textSecondary, padding: 4 },
+  searchInput: { flex: 1, fontSize: SIZES.md },
+  clearBtn: { fontSize: 16, padding: 4 },
   suggestionsRow: { paddingHorizontal: SIZES.padding, marginBottom: 8 },
   suggestionChip: {
     paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16,
-    backgroundColor: COLORS.primary + '15', marginRight: 8,
-    borderWidth: 1, borderColor: COLORS.primary + '30',
+    marginRight: 8, borderWidth: 1,
   },
-  suggestionText: { fontSize: SIZES.xs, color: COLORS.primary, fontWeight: '500' },
+  suggestionText: { fontSize: SIZES.xs, fontWeight: '500' },
   list: { padding: SIZES.padding, paddingBottom: 30 },
   gridContainer: { padding: SIZES.padding },
   sectionTitle: {
-    fontSize: SIZES.lg, fontWeight: 'bold', color: COLORS.text,
+    fontSize: SIZES.lg, fontWeight: 'bold',
     marginHorizontal: SIZES.padding, marginTop: 8, marginBottom: 10,
   },
   codeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   codeCard: {
-    width: '47%', backgroundColor: COLORS.surface, borderRadius: 16,
+    width: '47%', borderRadius: 16,
     padding: 16, marginBottom: 8,
-    shadowColor: COLORS.cardShadow, shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25, shadowRadius: 4, elevation: 3,
   },
   codeIcon: { fontSize: 32 },
-  codeLabel: { fontSize: SIZES.md, fontWeight: '600', color: COLORS.text, marginTop: 6 },
-  codeDesc: { fontSize: SIZES.xs, color: COLORS.textSecondary, marginTop: 2 },
-  codeCount: { fontSize: SIZES.xs, color: COLORS.primary, marginTop: 6, fontWeight: '500' },
-  articleText: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginTop: 4, fontStyle: 'italic' },
-  articleFullText: { fontSize: SIZES.md, color: COLORS.text, marginTop: 12, lineHeight: 24, textAlign: 'justify' },
+  codeLabel: { fontSize: SIZES.md, fontWeight: '600', marginTop: 6 },
+  codeDesc: { fontSize: SIZES.xs, marginTop: 2 },
+  codeCount: { fontSize: SIZES.xs, marginTop: 6, fontWeight: '500' },
+  articleText: { fontSize: SIZES.sm, marginTop: 4, fontStyle: 'italic' },
+  articleFullText: { fontSize: SIZES.md, marginTop: 12, lineHeight: 24, textAlign: 'justify', fontWeight: 'bold' },
   metaRow: { flexDirection: 'row', gap: 12, marginTop: 4 },
-  meta: { fontSize: SIZES.xs, color: COLORS.textSecondary, backgroundColor: COLORS.background, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 4 },
-  noData: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  meta: { fontSize: SIZES.xs, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 4 },
+  noData: { textAlign: 'center', padding: 20 },
   pdfBtn: {
-    width: 36, height: 36, borderRadius: 10, backgroundColor: COLORS.primary + '15',
+    width: 36, height: 36, borderRadius: 10,
     justifyContent: 'center', alignItems: 'center', marginLeft: 8,
   },
   pdfBtnText: { fontSize: 18 },

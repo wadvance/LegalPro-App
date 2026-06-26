@@ -6,7 +6,8 @@ import { getChatbotResponse, sendWhatsAppMessage } from '../services/whatsapp';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import HeaderComponent from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const initialMessages = [
   { id: '0', text: '🤖 ¡Hola! Soy el asistente virtual de *Bufete de Abogados*. ¿En qué puedo ayudarle hoy?', sender: 'bot', timestamp: new Date() },
@@ -19,6 +20,7 @@ const quickReplies = [
 ];
 
 const ChatbotScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -76,11 +78,14 @@ const ChatbotScreen = ({ navigation }) => {
   };
 
   const renderMessage = ({ item }) => (
-    <View style={[styles.messageContainer, item.sender === 'user' ? styles.userMessage : styles.botMessage]}>
-      <Text style={[styles.messageText, item.sender === 'user' && styles.userMessageText]}>
+    <View style={[styles.messageContainer, item.sender === 'user'
+      ? [styles.userMessage, { backgroundColor: colors.primary }]
+      : [styles.botMessage, { backgroundColor: colors.surface, borderColor: colors.border }]
+    ]}>
+      <Text style={[styles.messageText, { color: colors.text }, item.sender === 'user' && { color: colors.textLight }]}>
         {item.text}
       </Text>
-      <Text style={styles.timestamp}>
+      <Text style={[styles.timestamp, { color: colors.disabled }]}>
         {item.timestamp.toLocaleTimeString('es-PA', { hour: '2-digit', minute: '2-digit' })}
       </Text>
     </View>
@@ -88,7 +93,7 @@ const ChatbotScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
@@ -101,16 +106,16 @@ const ChatbotScreen = ({ navigation }) => {
       />
 
       {showPhoneInput && (
-        <View style={styles.whatsappBar}>
-          <TextInput style={styles.phoneInput}
+        <View style={[styles.whatsappBar, { backgroundColor: colors.success + '10', borderBottomColor: colors.border }]}>
+          <TextInput style={[styles.phoneInput, { backgroundColor: colors.surface, color: colors.text, borderColor: colors.border }]}
             placeholder="Teléfono destino (ej: +50760000000)"
-            placeholderTextColor={COLORS.disabled}
+            placeholderTextColor={colors.disabled}
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
           />
-          <TouchableOpacity style={styles.whatsappSendBtn} onPress={handleSendWhatsApp}>
-            <Text style={styles.whatsappSendText}>Enviar</Text>
+          <TouchableOpacity style={[styles.whatsappSendBtn, { backgroundColor: colors.success }]} onPress={handleSendWhatsApp}>
+            <Text style={[styles.whatsappSendText, { color: colors.textLight }]}>Enviar</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -124,12 +129,12 @@ const ChatbotScreen = ({ navigation }) => {
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         ListHeaderComponent={
           <View style={styles.quickRepliesContainer}>
-            <Text style={styles.quickTitle}>Consultas rápidas:</Text>
+            <Text style={[styles.quickTitle, { color: colors.textSecondary }]}>Consultas rápidas:</Text>
             <View style={styles.quickGrid}>
               {quickReplies.map((qr) => (
-                <TouchableOpacity key={qr} style={styles.quickChip}
+                <TouchableOpacity key={qr} style={[styles.quickChip, { backgroundColor: colors.primary + '12', borderColor: colors.primary + '30' }]}
                   onPress={() => handleSend(qr)}>
-                  <Text style={styles.quickChipText}>{qr}</Text>
+                  <Text style={[styles.quickChipText, { color: colors.primary }]}>{qr}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -137,26 +142,26 @@ const ChatbotScreen = ({ navigation }) => {
         }
       />
 
-      <View style={styles.inputBar}>
+      <View style={[styles.inputBar, { backgroundColor: colors.surface, borderTopColor: colors.border }]}>
         <TextInput
-          style={styles.chatInput}
-          placeholder="Escriba su mensaje..."
-          placeholderTextColor={COLORS.disabled}
-          value={input}
-          onChangeText={setInput}
-          multiline={false}
-          onSubmitEditing={() => handleSend()}
-        />
-        <TouchableOpacity style={styles.sendBtn} onPress={() => handleSend()}>
-          <Text style={styles.sendBtnText}>Enviar</Text>
-        </TouchableOpacity>
+          style={[styles.chatInput, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
+            placeholder="Escriba su mensaje..."
+            placeholderTextColor={colors.disabled}
+            value={input}
+            onChangeText={setInput}
+            multiline={false}
+            onSubmitEditing={() => handleSend()}
+          />
+          <TouchableOpacity style={[styles.sendBtn, { backgroundColor: colors.primary }]} onPress={() => handleSend()}>
+            <Text style={[styles.sendBtnText, { color: colors.textLight }]}>Enviar</Text>
+          </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   messagesList: { padding: SIZES.padding, paddingBottom: 10 },
   messageContainer: {
     maxWidth: '80%',
@@ -166,53 +171,41 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: COLORS.primary,
     borderBottomRightRadius: 4,
   },
   botMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: COLORS.surface,
     borderBottomLeftRadius: 4,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
-  messageText: { fontSize: SIZES.md, color: COLORS.text, lineHeight: 22 },
-  userMessageText: { color: COLORS.textLight },
-  timestamp: { fontSize: SIZES.xs, color: COLORS.disabled, marginTop: 4, alignSelf: 'flex-end' },
+  messageText: { fontSize: SIZES.md, lineHeight: 22 },
+  timestamp: { fontSize: SIZES.xs, marginTop: 4, alignSelf: 'flex-end' },
   quickRepliesContainer: { marginBottom: 15 },
-  quickTitle: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginBottom: 8, fontWeight: '500' },
+  quickTitle: { fontSize: SIZES.sm, marginBottom: 8, fontWeight: '500' },
   quickGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   quickChip: {
-    backgroundColor: COLORS.primary + '12',
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: COLORS.primary + '30',
   },
-  quickChipText: { fontSize: SIZES.xs, color: COLORS.primary, fontWeight: '500' },
+  quickChipText: { fontSize: SIZES.xs, fontWeight: '500' },
   inputBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.surface,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderTopWidth: 1,
-    borderTopColor: COLORS.border,
   },
   chatInput: {
     flex: 1,
-    backgroundColor: COLORS.background,
     borderRadius: 20,
     paddingHorizontal: 16,
     height: 42,
     fontSize: SIZES.md,
-    color: COLORS.text,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   sendBtn: {
-    backgroundColor: COLORS.primary,
     borderRadius: 20,
     paddingHorizontal: 18,
     height: 42,
@@ -220,29 +213,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 8,
   },
-  sendBtnText: { color: COLORS.textLight, fontSize: SIZES.sm, fontWeight: '600' },
+  sendBtnText: { fontSize: SIZES.sm, fontWeight: '600' },
   whatsappBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.success + '10',
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
   },
   phoneInput: {
     flex: 1,
-    backgroundColor: COLORS.surface,
     borderRadius: 10,
     paddingHorizontal: 12,
     height: 40,
     fontSize: SIZES.sm,
-    color: COLORS.text,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   whatsappSendBtn: {
-    backgroundColor: COLORS.success,
     borderRadius: 10,
     paddingHorizontal: 14,
     height: 40,
@@ -250,7 +237,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 8,
   },
-  whatsappSendText: { color: COLORS.textLight, fontSize: SIZES.sm, fontWeight: '600' },
+  whatsappSendText: { fontSize: SIZES.sm, fontWeight: '600' },
 });
 
 export default ChatbotScreen;

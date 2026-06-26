@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
   KeyboardAvoidingView, Platform, Alert, ScrollView,
 } from 'react-native';
 import { loginUser, resetPassword } from '../../firebase/auth';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const LoginScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setEmail('');
+      setPassword('');
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
@@ -23,6 +33,8 @@ const LoginScreen = ({ navigation }) => {
     if (!result.success) {
       Alert.alert('Error de inicio de sesión', result.error);
     } else {
+      setEmail('');
+      setPassword('');
       navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
     }
   };
@@ -54,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.primary }]}
       behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'web' ? undefined : 'height'}
     >
       <ScrollView
@@ -67,15 +79,15 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.tagline}>Bufete de Abogados</Text>
         </View>
 
-        <View style={styles.formSection}>
-          <Text style={styles.welcomeText}>Iniciar Sesión</Text>
+        <View style={[styles.formSection, { backgroundColor: colors.surface }]}>
+          <Text style={[styles.welcomeText, { color: colors.text }]}>Iniciar Sesión</Text>
 
-          <View style={styles.inputContainer}>
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Text style={styles.inputIcon}>✉️</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { color: colors.text }]}
               placeholder="Correo electrónico"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor={colors.disabled}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -84,12 +96,12 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <View style={styles.inputContainer}>
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Text style={styles.inputIcon}>🔒</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { color: colors.text }]}
               placeholder="Contraseña"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor={colors.disabled}
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -103,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={[styles.loginButton, loading && styles.buttonDisabled]}
+            style={[styles.loginButton, { backgroundColor: colors.primary, shadowColor: colors.primary }, loading && styles.buttonDisabled]}
             onPress={handleLogin}
             disabled={loading}
           >
@@ -113,13 +125,13 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
-            <Text style={styles.linkText}>¿Olvidó su contraseña?</Text>
+            <Text style={[styles.linkText, { color: colors.primaryLight }]}>¿Olvidó su contraseña?</Text>
           </TouchableOpacity>
 
-          <View style={styles.registerSection}>
-            <Text style={styles.noAccount}>¿No tiene cuenta? </Text>
+          <View style={[styles.registerSection, { borderTopColor: colors.border }]}>
+            <Text style={[styles.noAccount, { color: colors.textSecondary }]}>¿No tiene cuenta? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerLink}>Regístrese aquí</Text>
+              <Text style={[styles.registerLink, { color: colors.primary }]}>Regístrese aquí</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -129,7 +141,7 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.primary },
+  container: { flex: 1 },
   scrollContent: { flexGrow: 1, justifyContent: 'center' },
   logoSection: {
     alignItems: 'center',
@@ -140,15 +152,8 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: COLORS.textLight,
+    color: '#FFFFFF',
     letterSpacing: 1,
-  },
-  appSubtitle: {
-    fontSize: 28,
-    fontWeight: '300',
-    color: COLORS.secondaryLight,
-    letterSpacing: 8,
-    marginTop: -4,
   },
   tagline: {
     fontSize: SIZES.sm,
@@ -157,7 +162,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   formSection: {
-    backgroundColor: COLORS.surface,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 30,
@@ -168,36 +172,30 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: SIZES.xxl,
     fontWeight: 'bold',
-    color: COLORS.text,
     marginBottom: 25,
     textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.background,
     borderRadius: 15,
     paddingHorizontal: 15,
     marginBottom: 15,
     height: 55,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   inputIcon: { fontSize: 18, marginRight: 10 },
   input: {
     flex: 1,
     fontSize: SIZES.md,
-    color: COLORS.text,
   },
   eyeButton: { padding: 5 },
   loginButton: {
-    backgroundColor: COLORS.primary,
     borderRadius: 15,
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    shadowColor: COLORS.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -205,14 +203,13 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: { opacity: 0.7 },
   loginButtonText: {
-    color: COLORS.textLight,
+    color: '#FFFFFF',
     fontSize: SIZES.lg,
     fontWeight: 'bold',
     letterSpacing: 1,
   },
   linkButton: { alignItems: 'center', marginTop: 18 },
   linkText: {
-    color: COLORS.primaryLight,
     fontSize: SIZES.sm,
   },
   registerSection: {
@@ -221,11 +218,9 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: COLORS.border,
   },
-  noAccount: { color: COLORS.textSecondary, fontSize: SIZES.sm },
+  noAccount: { fontSize: SIZES.sm },
   registerLink: {
-    color: COLORS.primary,
     fontSize: SIZES.sm,
     fontWeight: '600',
   },

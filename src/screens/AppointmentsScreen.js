@@ -10,11 +10,13 @@ import { scheduleAppointmentReminder } from '../services/notifications';
 import { sendAppointmentConfirmation, sendWhatsAppMessage } from '../services/whatsapp';
 import Card from '../components/Card';
 import Header from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { formatDateTime, getStatusColor, parseDate } from '../utils/helpers';
 import { TIPOS_CITA } from '../utils/constants';
 
 const AppointmentsScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [clients, setClients] = useState([]);
@@ -57,11 +59,11 @@ const AppointmentsScreen = ({ navigation }) => {
     if (dateStr) {
       markedDates[dateStr] = {
         marked: true,
-        dotColor: appt.estado === 'pendiente' ? COLORS.warning : COLORS.success,
+        dotColor: appt.estado === 'pendiente' ? colors.warning : colors.success,
       };
     }
   });
-  markedDates[selectedDate] = { ...markedDates[selectedDate], selected: true, selectedColor: COLORS.primary };
+  markedDates[selectedDate] = { ...markedDates[selectedDate], selected: true, selectedColor: colors.primary };
 
   const dayAppointments = appointments.filter((a) => {
     const d = a.fecha ? parseDate(a.fecha)?.toISOString().split('T')[0] : null;
@@ -146,12 +148,12 @@ const AppointmentsScreen = ({ navigation }) => {
         subtitle={item.tipo}
         badge={item.estado}
       >
-        <Text style={styles.apptDetail}>{item.titulo || item.notas || 'Sin descripción'}</Text>
+        <Text style={[styles.apptDetail, { color: colors.textSecondary }]}>{item.titulo || item.notas || 'Sin descripción'}</Text>
         <View style={styles.statusRow}>
           {['pendiente', 'completado', 'cancelado'].map((s) => (
             <TouchableOpacity
               key={s}
-              style={[styles.statusBtn, item.estado === s && { backgroundColor: getStatusColor(s) + '20' }]}
+              style={[styles.statusBtn, item.estado === s && { backgroundColor: getStatusColor(s) + '20' }, { borderColor: colors.border }]}
               onPress={() => updateStatus(item, s)}
             >
               <Text style={[styles.statusText, { color: getStatusColor(s) }]}>
@@ -165,7 +167,7 @@ const AppointmentsScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header
         title="Citas y Agenda"
         subtitle={selectedDate}
@@ -178,15 +180,15 @@ const AppointmentsScreen = ({ navigation }) => {
         markedDates={markedDates}
         onDayPress={(day) => setSelectedDate(day.dateString)}
         theme={{
-          todayColor: COLORS.primaryLight,
-          selectedDayBackgroundColor: COLORS.primary,
-          arrowColor: COLORS.primary,
-          todayTextColor: COLORS.primary,
+          todayColor: colors.primaryLight,
+          selectedDayBackgroundColor: colors.primary,
+          arrowColor: colors.primary,
+          todayTextColor: colors.primary,
         }}
         locale="es"
       />
 
-      <Text style={styles.citaCount}>
+      <Text style={[styles.citaCount, { color: colors.textSecondary }]}>
         {dayAppointments.length} cita(s) para este día
       </Text>
 
@@ -196,30 +198,30 @@ const AppointmentsScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         ListEmptyComponent={
-          <Card><Text style={styles.emptyText}>No hay citas para esta fecha</Text></Card>
+          <Card><Text style={[styles.emptyText, { color: colors.textSecondary }]}>No hay citas para esta fecha</Text></Card>
         }
       />
 
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
-          <ScrollView style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
+          <ScrollView style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>
               {editingAppt ? 'Editar Cita' : 'Nueva Cita'}
             </Text>
 
             {!editingAppt && (
               <View style={styles.clientSelector}>
-                <Text style={styles.fieldLabel}>Seleccionar Cliente:</Text>
+                <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Seleccionar Cliente:</Text>
                 <FlatList
                   data={clients}
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => (
                     <TouchableOpacity
-                      style={[styles.clientChip, form.clienteId === item.id && styles.clientChipActive]}
+                      style={[styles.clientChip, { borderColor: colors.border }, form.clienteId === item.id && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                       onPress={() => selectClient(item)}
                     >
-                      <Text style={[styles.clientChipText, form.clienteId === item.id && { color: COLORS.textLight }]}>
+                      <Text style={[styles.clientChipText, { color: colors.text }, form.clienteId === item.id && { color: colors.textLight }]}>
                         {item.nombre} {item.apellido}
                       </Text>
                     </TouchableOpacity>
@@ -229,42 +231,42 @@ const AppointmentsScreen = ({ navigation }) => {
               </View>
             )}
 
-            <TextInput style={styles.input} placeholder="Cliente *" value={form.clienteNombre}
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Cliente *" value={form.clienteNombre}
               onChangeText={(v) => setForm({ ...form, clienteNombre: v })} />
-            <TextInput style={styles.input} placeholder="Teléfono" value={form.clienteTelefono}
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Teléfono" value={form.clienteTelefono}
               onChangeText={(v) => setForm({ ...form, clienteTelefono: v })} keyboardType="phone-pad" />
-            <TextInput style={styles.input} placeholder="Título / Motivo"
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Título / Motivo"
               value={form.titulo} onChangeText={(v) => setForm({ ...form, titulo: v })} />
 
-            <Text style={styles.fieldLabel}>Tipo de Cita:</Text>
+            <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Tipo de Cita:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsContainer}>
               {TIPOS_CITA.map((t) => (
-                <TouchableOpacity key={t} style={[styles.chip, form.tipo === t && styles.chipActive]}
+                <TouchableOpacity key={t} style={[styles.chip, { borderColor: colors.border }, form.tipo === t && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                   onPress={() => setForm({ ...form, tipo: t })}>
-                  <Text style={[styles.chipText, form.tipo === t && { color: COLORS.textLight }]}>{t}</Text>
+                  <Text style={[styles.chipText, { color: colors.text }, form.tipo === t && { color: colors.textLight }]}>{t}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
             <View style={styles.row}>
-              <TextInput style={[styles.input, { flex: 1, marginRight: 8 }]} placeholder="Hora (HH:MM)"
+              <TextInput style={[styles.input, { flex: 1, marginRight: 8, backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Hora (HH:MM)"
                 value={form.hora} onChangeText={(v) => setForm({ ...form, hora: v })} />
-              <TextInput style={[styles.input, { flex: 1, marginLeft: 8 }]} placeholder="Duración (min)"
+              <TextInput style={[styles.input, { flex: 1, marginLeft: 8, backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Duración (min)"
                 value={form.duracion} onChangeText={(v) => setForm({ ...form, duracion: v })} keyboardType="numeric" />
             </View>
 
-            <TextInput style={styles.input} placeholder="Ubicación"
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Ubicación"
               value={form.ubicacion} onChangeText={(v) => setForm({ ...form, ubicacion: v })} />
-            <TextInput style={[styles.input, styles.textArea]} placeholder="Notas adicionales"
+            <TextInput style={[styles.input, styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Notas adicionales"
               value={form.notas} onChangeText={(v) => setForm({ ...form, notas: v })} multiline />
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.cancelBtn}
+              <TouchableOpacity style={[styles.cancelBtn, { borderColor: colors.border }]}
                 onPress={() => { setModalVisible(false); resetForm(); }}>
-                <Text style={styles.cancelText}>Cancelar</Text>
+                <Text style={[styles.cancelText, { color: colors.textSecondary }]}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
-                <Text style={styles.saveText}>Guardar</Text>
+              <TouchableOpacity style={[styles.saveBtn, { backgroundColor: colors.primary }]} onPress={handleSave}>
+                <Text style={[styles.saveText, { color: colors.textLight }]}>Guardar</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -275,62 +277,59 @@ const AppointmentsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   list: { padding: SIZES.padding },
   citaCount: {
     fontSize: SIZES.sm,
-    color: COLORS.textSecondary,
     paddingHorizontal: SIZES.padding,
     paddingTop: 10,
     fontWeight: '500',
   },
-  apptDetail: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginTop: 4 },
+  apptDetail: { fontSize: SIZES.sm, marginTop: 4 },
   statusRow: { flexDirection: 'row', marginTop: 8, gap: 6 },
   statusBtn: {
     paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderWidth: 1,
   },
   statusText: { fontSize: SIZES.xs, fontWeight: '500' },
-  emptyText: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalContent: {
-    backgroundColor: COLORS.surface, borderTopLeftRadius: 30, borderTopRightRadius: 30,
+    borderTopLeftRadius: 30, borderTopRightRadius: 30,
     padding: 25, maxHeight: '85%',
   },
-  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', color: COLORS.primary, marginBottom: 15, textAlign: 'center' },
-  fieldLabel: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginBottom: 5, marginTop: 5, fontWeight: '500' },
+  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
+  fieldLabel: { fontSize: SIZES.sm, marginBottom: 5, marginTop: 5, fontWeight: '500' },
   clientSelector: { marginBottom: 10 },
   clientChip: {
     paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 8,
+    borderWidth: 1, marginRight: 8,
   },
-  clientChipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  clientChipText: { fontSize: SIZES.xs, color: COLORS.text },
+  clientChipText: { fontSize: SIZES.xs },
   input: {
-    backgroundColor: COLORS.background, borderRadius: 10, paddingHorizontal: 15,
-    height: 45, marginBottom: 10, fontSize: SIZES.md, color: COLORS.text,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderRadius: 10, paddingHorizontal: 15,
+    height: 45, marginBottom: 10, fontSize: SIZES.md,
+    borderWidth: 1,
   },
   textArea: { height: 70, paddingTop: 12 },
   chipsContainer: { marginBottom: 10 },
   chip: {
     paddingHorizontal: 14, paddingVertical: 7, borderRadius: 16,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 6,
+    borderWidth: 1, marginRight: 6,
   },
-  chipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  chipText: { fontSize: SIZES.xs, color: COLORS.text },
+  chipText: { fontSize: SIZES.xs },
   row: { flexDirection: 'row' },
   modalButtons: { flexDirection: 'row', marginTop: 15, gap: 10 },
   cancelBtn: {
     flex: 1, height: 48, borderRadius: 12, borderWidth: 1,
-    borderColor: COLORS.border, justifyContent: 'center', alignItems: 'center',
-  },
-  cancelText: { color: COLORS.textSecondary, fontSize: SIZES.md, fontWeight: '600' },
-  saveBtn: {
-    flex: 1, height: 48, borderRadius: 12, backgroundColor: COLORS.primary,
     justifyContent: 'center', alignItems: 'center',
   },
-  saveText: { color: COLORS.textLight, fontSize: SIZES.md, fontWeight: '600' },
+  cancelText: { fontSize: SIZES.md, fontWeight: '600' },
+  saveBtn: {
+    flex: 1, height: 48, borderRadius: 12,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  saveText: { fontSize: SIZES.md, fontWeight: '600' },
 });
 
 export default AppointmentsScreen;

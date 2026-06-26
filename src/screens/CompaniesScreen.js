@@ -6,9 +6,11 @@ import { onAuthChange } from '../../firebase/auth';
 import { createDocument, updateDocument, deleteDocument, subscribeToCollection } from '../services/firestoreService';
 import Card from '../components/Card';
 import Header from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const CompaniesScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState('');
@@ -90,7 +92,7 @@ const CompaniesScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => openEdit(item)} onLongPress={() => handleDelete(item.id)}>
       <Card icon="🏢" title={item.nombre} subtitle={`RUC: ${item.ruc || 'N/A'}`} badge={item.tipo}>
-        <Text style={styles.compInfo}>
+        <Text style={[styles.compInfo, { color: colors.textSecondary }]}>
           Rep. Legal: {item.representanteLegal || 'N/A'} · {item.telefono || 'Sin teléfono'}
         </Text>
       </Card>
@@ -98,24 +100,24 @@ const CompaniesScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header title="Empresas" subtitle={`${companies.length} registradas`}
         onBack={() => navigation.goBack()}
         rightAction={() => { resetForm(); setModalVisible(true); }} rightIcon="+" />
 
-      <View style={styles.searchContainer}>
+      <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput style={styles.searchInput} placeholder="Buscar por nombre, RUC o representante..."
-          value={search} onChangeText={setSearch} placeholderTextColor={COLORS.disabled} />
+        <TextInput style={[styles.searchInput, { color: colors.text }]} placeholder="Buscar por nombre, RUC o representante..."
+          value={search} onChangeText={setSearch} placeholderTextColor={colors.disabled} />
       </View>
 
       <FlatList data={filtered} renderItem={renderItem} keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={<Card><Text style={styles.emptyText}>No hay empresas registradas</Text></Card>} />
+        ListEmptyComponent={<Card><Text style={[styles.emptyText, { color: colors.textSecondary }]}>No hay empresas registradas</Text></Card>} />
 
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
-          <FlatList style={styles.modalContent}
+          <FlatList style={[styles.modalContent, { backgroundColor: colors.surface }]}
             data={[
               { key: 'nombre', placeholder: 'Nombre de la Empresa *' },
               { key: 'ruc', placeholder: 'RUC' },
@@ -127,15 +129,15 @@ const CompaniesScreen = ({ navigation }) => {
             ]}
             ListHeaderComponent={
               <>
-                <Text style={styles.modalTitle}>
+                <Text style={[styles.modalTitle, { color: colors.primary }]}>
                   {editingCompany ? 'Editar Empresa' : 'Nueva Empresa'}
                 </Text>
-                <Text style={styles.fieldLabel}>Tipo de Sociedad:</Text>
+                <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Tipo de Sociedad:</Text>
                 <FlatList data={tiposSociedad} horizontal showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => (
-                    <TouchableOpacity style={[styles.chip, form.tipo === item && styles.chipActive]}
+                    <TouchableOpacity style={[styles.chip, { borderColor: colors.border }, form.tipo === item && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                       onPress={() => setForm({ ...form, tipo: item })}>
-                      <Text style={[styles.chipText, form.tipo === item && { color: COLORS.textLight }]}>{item}</Text>
+                      <Text style={[styles.chipText, { color: colors.text }, form.tipo === item && { color: colors.textLight }]}>{item}</Text>
                     </TouchableOpacity>
                   )}
                   keyExtractor={(item) => item}
@@ -144,19 +146,19 @@ const CompaniesScreen = ({ navigation }) => {
               </>
             }
             renderItem={({ item }) => (
-              <TextInput style={styles.input} placeholder={item.placeholder}
-                placeholderTextColor={COLORS.disabled}
+              <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder={item.placeholder}
+                placeholderTextColor={colors.disabled}
                 value={form[item.key]} onChangeText={(v) => setForm({ ...form, [item.key]: v })} />
             )}
             keyExtractor={(item) => item.key}
             ListFooterComponent={
               <View style={styles.modalButtons}>
-                <TouchableOpacity style={styles.cancelBtn}
+                <TouchableOpacity style={[styles.cancelBtn, { borderColor: colors.border }]}
                   onPress={() => { setModalVisible(false); resetForm(); }}>
-                  <Text style={styles.cancelText}>Cancelar</Text>
+                  <Text style={[styles.cancelText, { color: colors.textSecondary }]}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
-                  <Text style={styles.saveText}>Guardar</Text>
+                <TouchableOpacity style={[styles.saveBtn, { backgroundColor: colors.primary }]} onPress={handleSave}>
+                  <Text style={[styles.saveText, { color: colors.textLight }]}>Guardar</Text>
                 </TouchableOpacity>
               </View>
             }
@@ -168,46 +170,45 @@ const CompaniesScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   searchContainer: {
-    flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.surface,
+    flexDirection: 'row', alignItems: 'center',
     margin: SIZES.padding, borderRadius: 12, paddingHorizontal: 12, height: 45,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderWidth: 1,
   },
   searchIcon: { fontSize: 16, marginRight: 8 },
-  searchInput: { flex: 1, fontSize: SIZES.md, color: COLORS.text },
+  searchInput: { flex: 1, fontSize: SIZES.md },
   list: { paddingHorizontal: SIZES.padding, paddingBottom: 20 },
-  compInfo: { fontSize: SIZES.xs, color: COLORS.textSecondary, marginTop: 2 },
-  emptyText: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  compInfo: { fontSize: SIZES.xs, marginTop: 2 },
+  emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalContent: {
-    backgroundColor: COLORS.surface, borderTopLeftRadius: 30, borderTopRightRadius: 30,
+    borderTopLeftRadius: 30, borderTopRightRadius: 30,
     padding: 25, maxHeight: '80%',
   },
-  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', color: COLORS.primary, marginBottom: 15, textAlign: 'center' },
-  fieldLabel: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginBottom: 6, fontWeight: '500' },
+  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
+  fieldLabel: { fontSize: SIZES.sm, marginBottom: 6, fontWeight: '500' },
   chip: {
     paddingHorizontal: 14, paddingVertical: 7, borderRadius: 16,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 6,
+    borderWidth: 1, marginRight: 6,
   },
-  chipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  chipText: { fontSize: SIZES.xs, color: COLORS.text },
+  chipText: { fontSize: SIZES.xs },
   input: {
-    backgroundColor: COLORS.background, borderRadius: 10, paddingHorizontal: 15,
-    height: 45, marginBottom: 10, fontSize: SIZES.md, color: COLORS.text,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderRadius: 10, paddingHorizontal: 15,
+    height: 45, marginBottom: 10, fontSize: SIZES.md,
+    borderWidth: 1,
   },
   modalButtons: { flexDirection: 'row', marginTop: 15, gap: 10 },
   cancelBtn: {
     flex: 1, height: 48, borderRadius: 12, borderWidth: 1,
-    borderColor: COLORS.border, justifyContent: 'center', alignItems: 'center',
-  },
-  cancelText: { color: COLORS.textSecondary, fontSize: SIZES.md, fontWeight: '600' },
-  saveBtn: {
-    flex: 1, height: 48, borderRadius: 12, backgroundColor: COLORS.primary,
     justifyContent: 'center', alignItems: 'center',
   },
-  saveText: { color: COLORS.textLight, fontSize: SIZES.md, fontWeight: '600' },
+  cancelText: { fontSize: SIZES.md, fontWeight: '600' },
+  saveBtn: {
+    flex: 1, height: 48, borderRadius: 12,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  saveText: { fontSize: SIZES.md, fontWeight: '600' },
 });
 
 export default CompaniesScreen;

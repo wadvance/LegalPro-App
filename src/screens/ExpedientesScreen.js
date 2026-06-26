@@ -9,10 +9,12 @@ import { generateCaseReportPDF, sharePDF } from '../services/pdfGenerator';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { TIPOS_EXPEDIENTE, ESTADOS_EXPEDIENTE } from '../utils/constants';
 
 const ExpedientesScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [expedientes, setExpedientes] = useState([]);
   const [clients, setClients] = useState([]);
@@ -106,10 +108,10 @@ const ExpedientesScreen = ({ navigation }) => {
       setModalVisible(true);
     }}>
       <Card icon="📁" title={`#${item.numero}`} subtitle={item.clienteNombre} badge={item.estado}>
-        <Text style={styles.expInfo}>{item.tipo} · {item.descripcion?.substring(0, 80)}</Text>
+        <Text style={[styles.expInfo, { color: colors.textSecondary }]}>{item.tipo} · {item.descripcion?.substring(0, 80)}</Text>
         <View style={styles.expActions}>
-          <TouchableOpacity style={styles.pdfBtn} onPress={() => generatePDF(item)}>
-            <Text style={styles.pdfBtnText}>📄 PDF</Text>
+          <TouchableOpacity style={[styles.pdfBtn, { backgroundColor: colors.primary + '10' }]} onPress={() => generatePDF(item)}>
+            <Text style={[styles.pdfBtnText, { color: colors.primary }]}>📄 PDF</Text>
           </TouchableOpacity>
         </View>
       </Card>
@@ -117,32 +119,32 @@ const ExpedientesScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header title="Expedientes" subtitle={`${expedientes.length} registrados`}
         onBack={() => navigation.goBack()}
         rightAction={() => { resetForm(); setModalVisible(true); }} rightIcon="+" />
-      <View style={styles.searchContainer}>
+      <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput style={styles.searchInput} placeholder="Buscar expediente..." value={search}
-          onChangeText={setSearch} placeholderTextColor={COLORS.disabled} />
+        <TextInput style={[styles.searchInput, { color: colors.text }]} placeholder="Buscar expediente..." value={search}
+          onChangeText={setSearch} placeholderTextColor={colors.disabled} />
       </View>
       <FlatList data={filtered} renderItem={renderItem} keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={<Card><Text style={styles.emptyText}>No hay expedientes</Text></Card>} />
+        ListEmptyComponent={<Card><Text style={[styles.emptyText, { color: colors.textSecondary }]}>No hay expedientes</Text></Card>} />
 
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
-          <ScrollView style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{editingExpediente ? 'Editar Expediente' : 'Nuevo Expediente'}</Text>
+          <ScrollView style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>{editingExpediente ? 'Editar Expediente' : 'Nuevo Expediente'}</Text>
             {!editingExpediente && (
               <View>
-                <Text style={styles.fieldLabel}>Cliente:</Text>
+                <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Cliente:</Text>
                 <FlatList data={clients} horizontal showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => (
                     <TouchableOpacity
-                      style={[styles.clientChip, form.clienteId === item.id && styles.clientChipActive]}
+                      style={[styles.clientChip, { borderColor: colors.border }, form.clienteId === item.id && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                       onPress={() => selectClient(item)}>
-                      <Text style={[styles.clientChipText, form.clienteId === item.id && { color: COLORS.textLight }]}>
+                      <Text style={[styles.clientChipText, { color: colors.text }, form.clienteId === item.id && { color: colors.textLight }]}>
                         {item.nombre} {item.apellido}
                       </Text>
                     </TouchableOpacity>
@@ -150,37 +152,37 @@ const ExpedientesScreen = ({ navigation }) => {
                   keyExtractor={(item) => item.id} />
               </View>
             )}
-            <TextInput style={styles.input} placeholder="Número de Expediente *"
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Número de Expediente *"
               value={form.numero} onChangeText={(v) => setForm({ ...form, numero: v })} />
-            <TextInput style={styles.input} placeholder="Cliente" value={form.clienteNombre}
+            <TextInput style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Cliente" value={form.clienteNombre}
               onChangeText={(v) => setForm({ ...form, clienteNombre: v })} />
-            <Text style={styles.fieldLabel}>Tipo:</Text>
+            <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Tipo:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsContainer}>
               {TIPOS_EXPEDIENTE.map((t) => (
-                <TouchableOpacity key={t} style={[styles.chip, form.tipo === t && styles.chipActive]}
+                <TouchableOpacity key={t} style={[styles.chip, { borderColor: colors.border }, form.tipo === t && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                   onPress={() => setForm({ ...form, tipo: t })}>
-                  <Text style={[styles.chipText, form.tipo === t && { color: COLORS.textLight }]}>{t}</Text>
+                  <Text style={[styles.chipText, { color: colors.text }, form.tipo === t && { color: colors.textLight }]}>{t}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-            <Text style={styles.fieldLabel}>Estado:</Text>
+            <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Estado:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsContainer}>
               {ESTADOS_EXPEDIENTE.map((e) => (
-                <TouchableOpacity key={e} style={[styles.chip, form.estado === e && styles.chipActive]}
+                <TouchableOpacity key={e} style={[styles.chip, { borderColor: colors.border }, form.estado === e && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                   onPress={() => setForm({ ...form, estado: e })}>
-                  <Text style={[styles.chipText, form.estado === e && { color: COLORS.textLight }]}>{e}</Text>
+                  <Text style={[styles.chipText, { color: colors.text }, form.estado === e && { color: colors.textLight }]}>{e}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-            <TextInput style={[styles.input, styles.textArea]} placeholder="Descripción del caso"
+            <TextInput style={[styles.input, styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Descripción del caso"
               value={form.descripcion} onChangeText={(v) => setForm({ ...form, descripcion: v })} multiline />
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.cancelBtn}
+              <TouchableOpacity style={[styles.cancelBtn, { borderColor: colors.border }]}
                 onPress={() => { setModalVisible(false); resetForm(); }}>
-                <Text style={styles.cancelText}>Cancelar</Text>
+                <Text style={[styles.cancelText, { color: colors.textSecondary }]}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
-                <Text style={styles.saveText}>Guardar</Text>
+              <TouchableOpacity style={[styles.saveBtn, { backgroundColor: colors.primary }]} onPress={handleSave}>
+                <Text style={[styles.saveText, { color: colors.textLight }]}>Guardar</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -191,60 +193,59 @@ const ExpedientesScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   searchContainer: {
-    flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.surface,
+    flexDirection: 'row', alignItems: 'center',
     margin: SIZES.padding, borderRadius: 12, paddingHorizontal: 12, height: 45,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderWidth: 1,
   },
   searchIcon: { fontSize: 16, marginRight: 8 },
-  searchInput: { flex: 1, fontSize: SIZES.md, color: COLORS.text },
+  searchInput: { flex: 1, fontSize: SIZES.md },
   list: { paddingHorizontal: SIZES.padding, paddingBottom: 20 },
-  expInfo: { fontSize: SIZES.xs, color: COLORS.textSecondary, marginTop: 4 },
+  expInfo: { fontSize: SIZES.xs, marginTop: 4 },
   expActions: { flexDirection: 'row', marginTop: 8 },
   pdfBtn: {
     paddingHorizontal: 14, paddingVertical: 5, borderRadius: 8,
-    backgroundColor: COLORS.primary + '10',
   },
-  pdfBtnText: { fontSize: SIZES.xs, color: COLORS.primary, fontWeight: '500' },
-  emptyText: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  pdfBtnText: { fontSize: SIZES.xs, fontWeight: '500' },
+  emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalContent: {
-    backgroundColor: COLORS.surface, borderTopLeftRadius: 30, borderTopRightRadius: 30,
+    borderTopLeftRadius: 30, borderTopRightRadius: 30,
     padding: 25, maxHeight: '85%',
   },
-  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', color: COLORS.primary, marginBottom: 15, textAlign: 'center' },
-  fieldLabel: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginBottom: 5, marginTop: 5, fontWeight: '500' },
+  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
+  fieldLabel: { fontSize: SIZES.sm, marginBottom: 5, marginTop: 5, fontWeight: '500' },
   clientChip: {
     paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 8, marginBottom: 10,
+    borderWidth: 1, marginRight: 8, marginBottom: 10,
   },
-  clientChipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  clientChipText: { fontSize: SIZES.xs, color: COLORS.text },
+  clientChipActive: {},
+  clientChipText: { fontSize: SIZES.xs },
   input: {
-    backgroundColor: COLORS.background, borderRadius: 10, paddingHorizontal: 15,
-    height: 45, marginBottom: 10, fontSize: SIZES.md, color: COLORS.text,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderRadius: 10, paddingHorizontal: 15,
+    height: 45, marginBottom: 10, fontSize: SIZES.md,
+    borderWidth: 1,
   },
   textArea: { height: 80, paddingTop: 12, textAlignVertical: 'top' },
   chipsContainer: { marginBottom: 10 },
   chip: {
     paddingHorizontal: 14, paddingVertical: 7, borderRadius: 16,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 6, marginBottom: 5,
+    borderWidth: 1, marginRight: 6, marginBottom: 5,
   },
-  chipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  chipText: { fontSize: SIZES.xs, color: COLORS.text },
+  chipActive: {},
+  chipText: { fontSize: SIZES.xs },
   modalButtons: { flexDirection: 'row', marginTop: 15, gap: 10 },
   cancelBtn: {
     flex: 1, height: 48, borderRadius: 12, borderWidth: 1,
-    borderColor: COLORS.border, justifyContent: 'center', alignItems: 'center',
-  },
-  cancelText: { color: COLORS.textSecondary, fontSize: SIZES.md, fontWeight: '600' },
-  saveBtn: {
-    flex: 1, height: 48, borderRadius: 12, backgroundColor: COLORS.primary,
     justifyContent: 'center', alignItems: 'center',
   },
-  saveText: { color: COLORS.textLight, fontSize: SIZES.md, fontWeight: '600' },
+  cancelText: { fontSize: SIZES.md, fontWeight: '600' },
+  saveBtn: {
+    flex: 1, height: 48, borderRadius: 12,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  saveText: { fontSize: SIZES.md, fontWeight: '600' },
 });
 
 export default ExpedientesScreen;

@@ -7,10 +7,12 @@ import { createDocument, updateDocument, deleteDocument, subscribeToCollection }
 import { sendWelcomeMessage } from '../services/whatsapp';
 import Card from '../components/Card';
 import Header from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { formatDate } from '../utils/helpers';
 
 const ClientsScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState('');
@@ -108,13 +110,13 @@ const ClientsScreen = ({ navigation }) => {
         subtitle={`${item.tipo || 'Persona Natural'} • ${item.cedula || 'Sin cédula'}`}
         badge={item.telefono}
       >
-        <Text style={styles.clientInfo}>{item.email || 'Sin email'} · {item.direccion || 'Sin dirección'}</Text>
+        <Text style={[styles.clientInfo, { color: colors.textSecondary }]}>{item.email || 'Sin email'} · {item.direccion || 'Sin dirección'}</Text>
       </Card>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header
         title="Clientes"
         subtitle={`${clients.length} registrados`}
@@ -123,12 +125,12 @@ const ClientsScreen = ({ navigation }) => {
         rightIcon="+"
       />
 
-      <View style={styles.searchContainer}>
+      <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Text style={styles.searchIcon}>🔍</Text>
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, { color: colors.text }]}
           placeholder="Buscar por nombre, cédula o teléfono..."
-          placeholderTextColor={COLORS.disabled}
+          placeholderTextColor={colors.disabled}
           value={search}
           onChangeText={setSearch}
         />
@@ -141,7 +143,7 @@ const ClientsScreen = ({ navigation }) => {
         contentContainerStyle={styles.list}
         ListEmptyComponent={
           <Card>
-            <Text style={styles.emptyText}>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
               {search ? 'No se encontraron clientes' : 'No hay clientes registrados. Presione + para agregar.'}
             </Text>
           </Card>
@@ -150,8 +152,8 @@ const ClientsScreen = ({ navigation }) => {
 
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
+          <View style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>
               {editingClient ? 'Editar Cliente' : 'Nuevo Cliente'}
             </Text>
             <FlatList
@@ -167,9 +169,9 @@ const ClientsScreen = ({ navigation }) => {
               ]}
               renderItem={({ item }) => (
                 <TextInput
-                  style={styles.modalInput}
+                  style={[styles.modalInput, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
                   placeholder={item.placeholder}
-                  placeholderTextColor={COLORS.disabled}
+                  placeholderTextColor={colors.disabled}
                   value={form[item.key]}
                   onChangeText={(v) => setForm({ ...form, [item.key]: v })}
                 />
@@ -180,13 +182,13 @@ const ClientsScreen = ({ navigation }) => {
 
             <View style={styles.modalButtons}>
               <TouchableOpacity
-                style={styles.cancelButton}
+                style={[styles.cancelButton, { borderColor: colors.border }]}
                 onPress={() => { setModalVisible(false); resetForm(); }}
               >
-                <Text style={styles.cancelText}>Cancelar</Text>
+                <Text style={[styles.cancelText, { color: colors.textSecondary }]}>Cancelar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                <Text style={styles.saveText}>Guardar</Text>
+              <TouchableOpacity style={[styles.saveButton, { backgroundColor: colors.primary }]} onPress={handleSave}>
+                <Text style={[styles.saveText, { color: colors.textLight }]}>Guardar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -197,30 +199,27 @@ const ClientsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.surface,
     margin: SIZES.padding,
     borderRadius: 12,
     paddingHorizontal: 12,
     height: 45,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   searchIcon: { fontSize: 16, marginRight: 8 },
-  searchInput: { flex: 1, fontSize: SIZES.md, color: COLORS.text },
+  searchInput: { flex: 1, fontSize: SIZES.md },
   list: { paddingHorizontal: SIZES.padding, paddingBottom: 20 },
-  clientInfo: { fontSize: SIZES.xs, color: COLORS.textSecondary, marginTop: 2 },
-  emptyText: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  clientInfo: { fontSize: SIZES.xs, marginTop: 2 },
+  emptyText: { textAlign: 'center', padding: 20 },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: COLORS.surface,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     padding: 25,
@@ -229,20 +228,16 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: SIZES.xxl,
     fontWeight: 'bold',
-    color: COLORS.primary,
     marginBottom: 15,
     textAlign: 'center',
   },
   modalInput: {
-    backgroundColor: COLORS.background,
     borderRadius: 10,
     paddingHorizontal: 15,
     height: 45,
     marginBottom: 10,
     fontSize: SIZES.md,
-    color: COLORS.text,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   modalButtons: {
     flexDirection: 'row',
@@ -254,20 +249,18 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: COLORS.border,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cancelText: { color: COLORS.textSecondary, fontSize: SIZES.md, fontWeight: '600' },
+  cancelText: { fontSize: SIZES.md, fontWeight: '600' },
   saveButton: {
     flex: 1,
     height: 48,
     borderRadius: 12,
-    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  saveText: { color: COLORS.textLight, fontSize: SIZES.md, fontWeight: '600' },
+  saveText: { fontSize: SIZES.md, fontWeight: '600' },
 });
 
 export default ClientsScreen;

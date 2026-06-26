@@ -6,10 +6,12 @@ import { onAuthChange } from '../../firebase/auth';
 import { updateDocument, subscribeToCollection } from '../services/firestoreService';
 import Card from '../components/Card';
 import Header from '../components/Header';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { formatDateTime } from '../utils/helpers';
 
 const CaseTrackingScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [expedientes, setExpedientes] = useState([]);
   const [search, setSearch] = useState('');
@@ -69,11 +71,11 @@ const CaseTrackingScreen = ({ navigation }) => {
     <TouchableOpacity onPress={() => setSelectedExpediente(item)}>
       <Card icon="⚖️" title={`Expediente #${item.numero}`}
         subtitle={item.clienteNombre} badge={item.estado}>
-        <Text style={styles.expInfo}>
+        <Text style={[styles.expInfo, { color: colors.textSecondary }]}>
           {item.tipo} · {item.movimientos?.length || 0} movimientos
         </Text>
         {item.ultimaActualizacion && (
-          <Text style={styles.updateText}>
+          <Text style={[styles.updateText, { color: colors.disabled }]}>
             Última actualización: {formatDateTime(item.ultimaActualizacion)}
           </Text>
         )}
@@ -82,21 +84,21 @@ const CaseTrackingScreen = ({ navigation }) => {
   );
 
   const renderMovimiento = ({ item }) => (
-    <View style={styles.movimientoItem}>
+    <View style={[styles.movimientoItem, { backgroundColor: colors.background }]}>
       <View style={styles.movimientoHeader}>
-        <Text style={styles.movTipo}>{item.tipo}</Text>
-        <Text style={styles.movFecha}>
+        <Text style={[styles.movTipo, { color: colors.primary }]}>{item.tipo}</Text>
+        <Text style={[styles.movFecha, { color: colors.textSecondary }]}>
           {item.fecha ? new Date(item.fecha).toLocaleDateString('es-PA') : ''}
         </Text>
       </View>
-      <Text style={styles.movDescripcion}>{item.descripcion}</Text>
-      <Text style={styles.movUsuario}>por {item.usuario}</Text>
+      <Text style={[styles.movDescripcion, { color: colors.text }]}>{item.descripcion}</Text>
+      <Text style={[styles.movUsuario, { color: colors.disabled }]}>por {item.usuario}</Text>
     </View>
   );
 
   if (selectedExpediente) {
     return (
-      <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Header
           title={`#${selectedExpediente.numero}`}
           subtitle={selectedExpediente.clienteNombre}
@@ -104,30 +106,29 @@ const CaseTrackingScreen = ({ navigation }) => {
           rightAction={() => setModalVisible(true)}
           rightIcon="+"
         />
-
         <ScrollView contentContainerStyle={styles.detailContainer}>
           <Card title="Información del Expediente" icon="📋">
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Cliente:</Text>
-              <Text style={styles.detailValue}>{selectedExpediente.clienteNombre}</Text>
+              <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Cliente:</Text>
+              <Text style={[styles.detailValue, { color: colors.text }]}>{selectedExpediente.clienteNombre}</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Tipo:</Text>
-              <Text style={styles.detailValue}>{selectedExpediente.tipo}</Text>
+              <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Tipo:</Text>
+              <Text style={[styles.detailValue, { color: colors.text }]}>{selectedExpediente.tipo}</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Estado:</Text>
-              <Text style={styles.detailValue}>{selectedExpediente.estado}</Text>
+              <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Estado:</Text>
+              <Text style={[styles.detailValue, { color: colors.text }]}>{selectedExpediente.estado}</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Descripción:</Text>
+              <Text style={[styles.detailLabel, { color: colors.textSecondary }]}>Descripción:</Text>
             </View>
-            <Text style={styles.descripcionText}>
+            <Text style={[styles.descripcionText, { color: colors.text }]}>
               {selectedExpediente.descripcion || 'Sin descripción'}
             </Text>
           </Card>
 
-          <Text style={styles.sectionTitle}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
             Movimientos ({selectedExpediente.movimientos?.length || 0})
           </Text>
 
@@ -137,49 +138,50 @@ const CaseTrackingScreen = ({ navigation }) => {
               const dateB = new Date(b.fecha || 0);
               return dateB - dateA;
             }).map((mov, i) => (
-              <View key={mov.id || i} style={styles.movimientoCard}>
+              <View key={mov.id || i} style={[styles.movimientoCard, { backgroundColor: colors.surface, borderLeftColor: colors.primary }]}>
                 <View style={styles.movHeader}>
                   <View style={[styles.movBadge, { backgroundColor: getTipoColor(mov.tipo) + '20' }]}>
                     <Text style={[styles.movBadgeText, { color: getTipoColor(mov.tipo) }]}>{mov.tipo}</Text>
                   </View>
-                  <Text style={styles.movFec}>{mov.fecha ? new Date(mov.fecha).toLocaleDateString('es-PA') : ''}</Text>
+                  <Text style={[styles.movFec, { color: colors.textSecondary }]}>{mov.fecha ? new Date(mov.fecha).toLocaleDateString('es-PA') : ''}</Text>
                 </View>
-                <Text style={styles.movDesc}>{mov.descripcion}</Text>
-                <Text style={styles.movUser}>{mov.usuario}</Text>
+                <Text style={[styles.movDesc, { color: colors.text }]}>{mov.descripcion}</Text>
+                <Text style={[styles.movUser, { color: colors.disabled }]}>{mov.usuario}</Text>
               </View>
             ))
           ) : (
-            <Card><Text style={styles.noData}>Sin movimientos registrados</Text></Card>
+            <Card><Text style={[styles.noData, { color: colors.textSecondary }]}>Sin movimientos registrados</Text></Card>
           )}
         </ScrollView>
 
         <Modal visible={modalVisible} animationType="slide" transparent>
           <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Nuevo Movimiento</Text>
-              <Text style={styles.fieldLabel}>Tipo:</Text>
+            <View style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+              <Text style={[styles.modalTitle, { color: colors.primary }]}>Nuevo Movimiento</Text>
+              <Text style={[styles.fieldLabel, { color: colors.textSecondary }]}>Tipo:</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsContainer}>
                 {tiposMovimiento.map((t) => (
                   <TouchableOpacity key={t}
-                    style={[styles.chip, movimientoForm.tipo === t && styles.chipActive]}
+                    style={[styles.chip, { borderColor: colors.border }, movimientoForm.tipo === t && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                     onPress={() => setMovimientoForm({ ...movimientoForm, tipo: t })}>
-                    <Text style={[styles.chipText, movimientoForm.tipo === t && { color: COLORS.textLight }]}>
+                    <Text style={[styles.chipText, { color: colors.text }, movimientoForm.tipo === t && { color: colors.textLight }]}>
                       {t}
                     </Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
-              <TextInput style={[styles.input, styles.textArea]} placeholder="Descripción del movimiento *"
+              <TextInput style={[styles.input, styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]} placeholder="Descripción del movimiento *"
+                placeholderTextColor={colors.disabled}
                 value={movimientoForm.descripcion}
                 onChangeText={(v) => setMovimientoForm({ ...movimientoForm, descripcion: v })}
                 multiline />
               <View style={styles.modalButtons}>
-                <TouchableOpacity style={styles.cancelBtn}
+                <TouchableOpacity style={[styles.cancelBtn, { borderColor: colors.border }]}
                   onPress={() => setModalVisible(false)}>
-                  <Text style={styles.cancelText}>Cancelar</Text>
+                  <Text style={[styles.cancelText, { color: colors.textSecondary }]}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.saveBtn} onPress={addMovimiento}>
-                  <Text style={styles.saveText}>Agregar</Text>
+                <TouchableOpacity style={[styles.saveBtn, { backgroundColor: colors.primary }]} onPress={addMovimiento}>
+                  <Text style={[styles.saveText, { color: colors.textLight }]}>Agregar</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -190,18 +192,18 @@ const CaseTrackingScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header title="Seguimiento de Expedientes"
         subtitle="Sistema Penal Acusatorio y más"
         onBack={() => navigation.goBack()} />
-      <View style={styles.searchContainer}>
+      <View style={[styles.searchContainer, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput style={styles.searchInput} placeholder="Buscar expediente..."
-          value={search} onChangeText={setSearch} placeholderTextColor={COLORS.disabled} />
+        <TextInput style={[styles.searchInput, { color: colors.text }]} placeholder="Buscar expediente..."
+          value={search} onChangeText={setSearch} placeholderTextColor={colors.disabled} />
       </View>
       <FlatList data={filtered} renderItem={renderItem} keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
-        ListEmptyComponent={<Card><Text style={styles.noData}>Sin expedientes registrados</Text></Card>} />
+        ListEmptyComponent={<Card><Text style={[styles.noData, { color: colors.textSecondary }]}>Sin expedientes registrados</Text></Card>} />
     </View>
   );
 };
@@ -216,76 +218,75 @@ const getTipoColor = (tipo) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   searchContainer: {
-    flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.surface,
+    flexDirection: 'row', alignItems: 'center',
     margin: SIZES.padding, borderRadius: 12, paddingHorizontal: 12, height: 45,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderWidth: 1,
   },
   searchIcon: { fontSize: 16, marginRight: 8 },
-  searchInput: { flex: 1, fontSize: SIZES.md, color: COLORS.text },
+  searchInput: { flex: 1, fontSize: SIZES.md },
   list: { padding: SIZES.padding },
-  expInfo: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginTop: 4 },
-  updateText: { fontSize: SIZES.xs, color: COLORS.disabled, marginTop: 4 },
-  noData: { textAlign: 'center', color: COLORS.textSecondary, padding: 20 },
+  expInfo: { fontSize: SIZES.sm, marginTop: 4 },
+  updateText: { fontSize: SIZES.xs, marginTop: 4 },
+  noData: { textAlign: 'center', padding: 20 },
   detailContainer: { padding: SIZES.padding, paddingBottom: 40 },
   detailRow: { flexDirection: 'row', marginBottom: 6 },
-  detailLabel: { fontSize: SIZES.sm, color: COLORS.textSecondary, width: 80 },
-  detailValue: { fontSize: SIZES.sm, color: COLORS.text, fontWeight: '500', flex: 1 },
-  descripcionText: { fontSize: SIZES.sm, color: COLORS.text, marginTop: 4, fontStyle: 'italic' },
+  detailLabel: { fontSize: SIZES.sm, width: 80 },
+  detailValue: { fontSize: SIZES.sm, fontWeight: '500', flex: 1 },
+  descripcionText: { fontSize: SIZES.sm, marginTop: 4, fontStyle: 'italic' },
   sectionTitle: {
-    fontSize: SIZES.xl, fontWeight: 'bold', color: COLORS.text,
+    fontSize: SIZES.xl, fontWeight: 'bold',
     marginTop: 15, marginBottom: 10,
   },
   movimientoCard: {
-    backgroundColor: COLORS.surface, borderRadius: 12, padding: 14,
-    marginBottom: 8, borderLeftWidth: 3, borderLeftColor: COLORS.primary,
-    shadowColor: COLORS.cardShadow, shadowOffset: { width: 0, height: 1 },
+    borderRadius: 12, padding: 14,
+    marginBottom: 8, borderLeftWidth: 3,
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1, shadowRadius: 3, elevation: 2,
   },
   movHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 },
   movBadge: { paddingHorizontal: 10, paddingVertical: 3, borderRadius: 8 },
   movBadgeText: { fontSize: SIZES.xs, fontWeight: '600' },
-  movFec: { fontSize: SIZES.xs, color: COLORS.textSecondary },
-  movDesc: { fontSize: SIZES.sm, color: COLORS.text, lineHeight: 20 },
-  movUser: { fontSize: SIZES.xs, color: COLORS.disabled, marginTop: 4 },
-  movimientoItem: { padding: 10, backgroundColor: COLORS.background, borderRadius: 8, marginBottom: 8 },
+  movFec: { fontSize: SIZES.xs },
+  movDesc: { fontSize: SIZES.sm, lineHeight: 20 },
+  movUser: { fontSize: SIZES.xs, marginTop: 4 },
+  movimientoItem: { padding: 10, borderRadius: 8, marginBottom: 8 },
   movimientoHeader: { flexDirection: 'row', justifyContent: 'space-between' },
-  movTipo: { fontSize: SIZES.sm, fontWeight: '600', color: COLORS.primary },
-  movFecha: { fontSize: SIZES.xs, color: COLORS.textSecondary },
-  movDescripcion: { fontSize: SIZES.sm, color: COLORS.text, marginTop: 4 },
-  movUsuario: { fontSize: SIZES.xs, color: COLORS.disabled, marginTop: 4 },
+  movTipo: { fontSize: SIZES.sm, fontWeight: '600' },
+  movFecha: { fontSize: SIZES.xs },
+  movDescripcion: { fontSize: SIZES.sm, marginTop: 4 },
+  movUsuario: { fontSize: SIZES.xs, marginTop: 4 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
   modalContent: {
-    backgroundColor: COLORS.surface, borderTopLeftRadius: 30, borderTopRightRadius: 30,
+    borderTopLeftRadius: 30, borderTopRightRadius: 30,
     padding: 25,
   },
-  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', color: COLORS.primary, marginBottom: 15, textAlign: 'center' },
-  fieldLabel: { fontSize: SIZES.sm, color: COLORS.textSecondary, marginBottom: 6, fontWeight: '500' },
+  modalTitle: { fontSize: SIZES.xxl, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
+  fieldLabel: { fontSize: SIZES.sm, marginBottom: 6, fontWeight: '500' },
   chipsContainer: { marginBottom: 12 },
   chip: {
     paddingHorizontal: 14, paddingVertical: 7, borderRadius: 16,
-    borderWidth: 1, borderColor: COLORS.border, marginRight: 6,
+    borderWidth: 1, marginRight: 6,
   },
-  chipActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  chipText: { fontSize: SIZES.xs, color: COLORS.text },
+  chipText: { fontSize: SIZES.xs },
   input: {
-    backgroundColor: COLORS.background, borderRadius: 10, paddingHorizontal: 15,
-    height: 45, marginBottom: 10, fontSize: SIZES.md, color: COLORS.text,
-    borderWidth: 1, borderColor: COLORS.border,
+    borderRadius: 10, paddingHorizontal: 15,
+    height: 45, marginBottom: 10, fontSize: SIZES.md,
+    borderWidth: 1,
   },
   textArea: { height: 100, paddingTop: 12, textAlignVertical: 'top' },
   modalButtons: { flexDirection: 'row', marginTop: 10, gap: 10 },
   cancelBtn: {
     flex: 1, height: 48, borderRadius: 12, borderWidth: 1,
-    borderColor: COLORS.border, justifyContent: 'center', alignItems: 'center',
-  },
-  cancelText: { color: COLORS.textSecondary, fontSize: SIZES.md, fontWeight: '600' },
-  saveBtn: {
-    flex: 1, height: 48, borderRadius: 12, backgroundColor: COLORS.primary,
     justifyContent: 'center', alignItems: 'center',
   },
-  saveText: { color: COLORS.textLight, fontSize: SIZES.md, fontWeight: '600' },
+  cancelText: { fontSize: SIZES.md, fontWeight: '600' },
+  saveBtn: {
+    flex: 1, height: 48, borderRadius: 12,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  saveText: { fontSize: SIZES.md, fontWeight: '600' },
 });
 
 export default CaseTrackingScreen;

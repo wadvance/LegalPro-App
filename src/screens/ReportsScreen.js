@@ -7,12 +7,14 @@ import { generatePDF, sharePDF } from '../services/pdfGenerator';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import { formatCurrency, parseDate } from '../utils/helpers';
 
 const screenWidth = Dimensions.get('window').width - 32;
 
 const ReportsScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const [user, setUser] = useState(null);
   const [expedientes, setExpedientes] = useState([]);
   const [cobros, setCobros] = useState([]);
@@ -59,7 +61,7 @@ const ReportsScreen = ({ navigation }) => {
     name: name.length > 10 ? name.substring(0, 10) + '...' : name,
     count,
     color: ['#1A237E', '#C5A028', '#388E3C', '#D32F2F', '#F57C00', '#1976D2', '#7B1FA2'][i % 7],
-    legendFontColor: COLORS.text,
+    legendFontColor: colors.text,
     legendFontSize: 11,
   }));
 
@@ -94,7 +96,7 @@ const ReportsScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header title="Reportes y Estadísticas" onBack={() => navigation.goBack()}
         rightAction={generarReportePDF} rightIcon="📄" />
 
@@ -107,9 +109,9 @@ const ReportsScreen = ({ navigation }) => {
               width={screenWidth - 32}
               height={180}
               chartConfig={{
-                color: () => COLORS.text,
-                backgroundGradientFrom: COLORS.surface,
-                backgroundGradientTo: COLORS.surface,
+                color: () => colors.text,
+                backgroundGradientFrom: colors.surface,
+                backgroundGradientTo: colors.surface,
               }}
               accessor="count"
               backgroundColor="transparent"
@@ -117,7 +119,7 @@ const ReportsScreen = ({ navigation }) => {
               absolute
             />
           ) : (
-            <Text style={styles.noData}>Sin datos disponibles</Text>
+            <Text style={[styles.noData, { color: colors.disabled }]}>Sin datos disponibles</Text>
           )}
         </Card>
 
@@ -131,19 +133,19 @@ const ReportsScreen = ({ navigation }) => {
               width={screenWidth - 32}
               height={180}
               chartConfig={{
-                backgroundColor: COLORS.surface,
-                backgroundGradientFrom: COLORS.surface,
-                backgroundGradientTo: COLORS.surface,
+                backgroundColor: colors.surface,
+                backgroundGradientFrom: colors.surface,
+                backgroundGradientTo: colors.surface,
                 decimalPlaces: 0,
-                color: () => COLORS.primary,
-                labelColor: () => COLORS.textSecondary,
+                color: () => colors.primary,
+                labelColor: () => colors.textSecondary,
                 barPercentage: 0.6,
               }}
               yAxisLabel=""
               yAxisSuffix=""
             />
           ) : (
-            <Text style={styles.noData}>Sin datos disponibles</Text>
+            <Text style={[styles.noData, { color: colors.disabled }]}>Sin datos disponibles</Text>
           )}
         </Card>
 
@@ -157,12 +159,12 @@ const ReportsScreen = ({ navigation }) => {
               width={screenWidth - 32}
               height={180}
               chartConfig={{
-                backgroundColor: COLORS.surface,
-                backgroundGradientFrom: COLORS.surface,
-                backgroundGradientTo: COLORS.surface,
+                backgroundColor: colors.surface,
+                backgroundGradientFrom: colors.surface,
+                backgroundGradientTo: colors.surface,
                 decimalPlaces: 0,
-                color: () => COLORS.success,
-                labelColor: () => COLORS.textSecondary,
+                color: () => colors.success,
+                labelColor: () => colors.textSecondary,
               }}
               bezier
             />
@@ -172,23 +174,23 @@ const ReportsScreen = ({ navigation }) => {
         <View style={styles.statsGrid}>
           <Card style={styles.statItem}>
             <Text style={styles.statIcon}>📁</Text>
-            <Text style={styles.statNumber}>{expedientes.length}</Text>
-            <Text style={styles.statLabel}>Total Expedientes</Text>
+            <Text style={[styles.statNumber, { color: colors.primary }]}>{expedientes.length}</Text>
+            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Total Expedientes</Text>
           </Card>
           <Card style={styles.statItem}>
             <Text style={styles.statIcon}>⚖️</Text>
-            <Text style={styles.statNumber}>{expedientes.filter((e) => e.estado === 'Activo').length}</Text>
-            <Text style={styles.statLabel}>Activos</Text>
+            <Text style={[styles.statNumber, { color: colors.primary }]}>{expedientes.filter((e) => e.estado === 'Activo').length}</Text>
+            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Activos</Text>
           </Card>
           <Card style={styles.statItem}>
             <Text style={styles.statIcon}>💰</Text>
-            <Text style={styles.statNumber}>{formatCurrency(cobros.reduce((s, c) => s + (parseFloat(c.monto) || 0), 0))}</Text>
-            <Text style={styles.statLabel}>Total Cobrado</Text>
+            <Text style={[styles.statNumber, { color: colors.primary }]}>{formatCurrency(cobros.reduce((s, c) => s + (parseFloat(c.monto) || 0), 0))}</Text>
+            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Total Cobrado</Text>
           </Card>
           <Card style={styles.statItem}>
             <Text style={styles.statIcon}>📅</Text>
-            <Text style={styles.statNumber}>{citas.length}</Text>
-            <Text style={styles.statLabel}>Total Citas</Text>
+            <Text style={[styles.statNumber, { color: colors.primary }]}>{citas.length}</Text>
+            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Total Citas</Text>
           </Card>
         </View>
       </ScrollView>
@@ -197,14 +199,14 @@ const ReportsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
+  container: { flex: 1 },
   content: { padding: SIZES.padding, paddingBottom: 40 },
-  noData: { textAlign: 'center', color: COLORS.disabled, padding: 20, fontSize: SIZES.sm },
+  noData: { textAlign: 'center', padding: 20, fontSize: SIZES.sm },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: 8 },
   statItem: { width: '48%', alignItems: 'center', paddingVertical: 16 },
   statIcon: { fontSize: 28 },
-  statNumber: { fontSize: SIZES.xxl, fontWeight: 'bold', color: COLORS.primary, marginTop: 5 },
-  statLabel: { fontSize: SIZES.xs, color: COLORS.textSecondary, marginTop: 2 },
+  statNumber: { fontSize: SIZES.xxl, fontWeight: 'bold', marginTop: 5 },
+  statLabel: { fontSize: SIZES.xs, marginTop: 2 },
 });
 
 export default ReportsScreen;
