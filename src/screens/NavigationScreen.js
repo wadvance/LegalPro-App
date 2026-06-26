@@ -119,6 +119,9 @@ const NavigationScreen = ({ navigation }) => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
         <View style={styles.headerRow}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <Text style={styles.backArrow}>←</Text>
+          </TouchableOpacity>
           <Text style={styles.headerIcon}>📍</Text>
           <View style={styles.headerText}>
             <Text style={styles.headerTitle}>Navegación GPS</Text>
@@ -199,6 +202,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 28,
   },
   headerRow: { flexDirection: 'row', alignItems: 'center' },
+  backBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center', marginRight: 10 },
+  backArrow: { fontSize: 20, color: '#FFFFFF', fontWeight: 'bold', lineHeight: 22 },
   headerIcon: { fontSize: 32, marginRight: 12 },
   headerText: { flex: 1 },
   headerTitle: {
