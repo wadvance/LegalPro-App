@@ -105,8 +105,8 @@ const LoginScreen = ({ navigation }) => {
               placeholderTextColor={COLORS.disabled}
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              autoComplete="new-password"
+              secureTextEntry={Platform.OS !== 'web' && !showPassword}
+              autoComplete="off"
             />
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}

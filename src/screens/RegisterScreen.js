@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions,
+  View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { registerUser } from '../../firebase/auth';
@@ -109,6 +109,7 @@ const RegisterScreen = ({ navigation }) => {
               onChangeText={(v) => updateForm('email', v)}
               keyboardType="email-address"
               autoCapitalize="none"
+              autoComplete="off"
             />
           </View>
 
@@ -140,7 +141,8 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
-              secureTextEntry
+              secureTextEntry={Platform.OS !== 'web'}
+              autoComplete="off"
             />
           </View>
 
@@ -151,7 +153,8 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
-              secureTextEntry
+              secureTextEntry={Platform.OS !== 'web'}
+              autoComplete="off"
             />
           </View>
 
