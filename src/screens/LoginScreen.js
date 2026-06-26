@@ -94,19 +94,21 @@ const LoginScreen = ({ navigation }) => {
               autoCapitalize="none"
               autoCorrect={false}
               autoComplete="off"
+              dataSet={{ lpignore: 'true' }}
             />
           </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.inputIcon}>🔒</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, !showPassword && Platform.OS === 'web' && { WebkitTextSecurity: 'disc' }]}
               placeholder="Contraseña"
               placeholderTextColor={COLORS.disabled}
               value={password}
               onChangeText={setPassword}
               secureTextEntry={Platform.OS !== 'web' && !showPassword}
               autoComplete="off"
+              dataSet={{ lpignore: 'true' }}
             />
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}

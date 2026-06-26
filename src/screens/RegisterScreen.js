@@ -110,6 +110,7 @@ const RegisterScreen = ({ navigation }) => {
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="off"
+              dataSet={{ lpignore: 'true' }}
             />
           </View>
 
@@ -136,25 +137,27 @@ const RegisterScreen = ({ navigation }) => {
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <TextInput
-              style={[styles.input, { color: colors.text }]}
+              style={[styles.input, { color: colors.text, ...(Platform.OS === 'web' ? { WebkitTextSecurity: 'disc' } : {}) }]}
               placeholder="Contraseña * (mín. 6 caracteres)"
               placeholderTextColor={colors.textSecondary}
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
               secureTextEntry={Platform.OS !== 'web'}
               autoComplete="off"
+              dataSet={{ lpignore: 'true' }}
             />
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <TextInput
-              style={[styles.input, { color: colors.text }]}
+              style={[styles.input, { color: colors.text, ...(Platform.OS === 'web' ? { WebkitTextSecurity: 'disc' } : {}) }]}
               placeholder="Confirmar contraseña *"
               placeholderTextColor={colors.textSecondary}
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
               secureTextEntry={Platform.OS !== 'web'}
               autoComplete="off"
+              dataSet={{ lpignore: 'true' }}
             />
           </View>
 
