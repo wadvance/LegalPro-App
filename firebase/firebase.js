@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -18,6 +18,7 @@ let db;
 try {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
+  setPersistence(auth, browserLocalPersistence);
   db = getFirestore(app);
 } catch (e) {
   console.error('Firebase init error:', e);

@@ -30,7 +30,7 @@ const AuthLoader = ({ navigation }) => {
         if (timer.current) clearTimeout(timer.current);
         timer.current = setTimeout(() => {
           if (mounted.current) navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
-        }, 3000);
+        }, 8000);
       }
     });
 
