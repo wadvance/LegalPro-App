@@ -8,10 +8,10 @@ const basePath = '/LegalPro-App';
 fs.copyFileSync(path.join(webDir, 'manifest.json'), path.join(distDir, 'manifest.json'));
 fs.copyFileSync(path.join(webDir, 'sw.js'), path.join(distDir, 'sw.js'));
 
-const iconFiles = ['icon-192.png', 'icon-512.png'];
-iconFiles.forEach((file) => {
-  const src = path.join(webDir, file);
-  const dest = path.join(distDir, file);
+const iconSizes = ['48', '72', '96', '120', '128', '144', '152', '167', '180', '192', '384', '512'];
+iconSizes.forEach((size) => {
+  const src = path.join(webDir, `icon-${size}.png`);
+  const dest = path.join(distDir, `icon-${size}.png`);
   if (fs.existsSync(src)) {
     fs.copyFileSync(src, dest);
   }
@@ -27,13 +27,20 @@ html = html
   .replace(/src='\//g, `src='${basePath}/`)
   .replace(new RegExp(`${basePath}${basePath}`, 'g'), basePath);
 
+html = html.replace('<html lang="en">', '<html lang="es">');
+
 const headTags = `
     <link rel="manifest" href="${basePath}/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Bufete de Abogados" />
-    <link rel="apple-touch-icon" href="${basePath}/icon-192.png" />
+    <link rel="apple-touch-icon" href="${basePath}/icon-180.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="${basePath}/icon-120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="${basePath}/icon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="${basePath}/icon-167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="${basePath}/icon-180.png" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Bufete de Abogados" />
     <style>
       #root .loading-message { display: flex; align-items: center; justify-content: center; height: 100%; font-family: sans-serif; color: #FFFFFF; background: #1A237E; font-size: 18px; font-weight: bold; }
     </style>
