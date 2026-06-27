@@ -28,21 +28,22 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [isFocused]);
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (!email.trim() || !password.trim()) {
       Alert.alert('Error', 'Por favor ingrese su correo y contraseña');
       return;
     }
     setLoading(true);
-    const result = await loginUser(email.trim(), password);
-    setLoading(false);
-    if (!result.success) {
-      Alert.alert('Error de inicio de sesión', result.error);
-    } else {
-      setEmail('');
-      setPassword('');
-      navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
-    }
+    loginUser(email.trim(), password).then((result) => {
+      setLoading(false);
+      if (!result.success) {
+        Alert.alert('Error de inicio de sesión', result.error);
+      } else {
+        setEmail('');
+        setPassword('');
+        navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+      }
+    });
   };
 
   const handleResetPassword = () => {
