@@ -10,9 +10,13 @@ const openURL = (url) => {
   }
 };
 
-export const openGoogleMaps = (destination) => {
-  const encoded = encodeURIComponent(destination);
-  const url = `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
+export const openGoogleMaps = (destination, origin = null) => {
+  const dest = encodeURIComponent(destination);
+  let url = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+  if (origin) {
+    const orig = encodeURIComponent(origin);
+    url += `&origin=${orig}`;
+  }
   openURL(url);
 };
 

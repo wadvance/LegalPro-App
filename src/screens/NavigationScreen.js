@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
-  View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Alert,
+  View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Alert, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { onAuthChange } from '../../firebase/auth';
@@ -25,6 +25,9 @@ const NavigationScreen = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
   const [savedAddresses, setSavedAddresses] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [locating, setLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
 
   useEffect(() => {
     const unsub = onAuthChange((currentUser) => {
@@ -86,6 +89,41 @@ const NavigationScreen = ({ navigation }) => {
     return items;
   }, [savedAddresses, filter, search]);
 
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocalización no disponible en este dispositivo');
+      return;
+    }
+    setLocating(true);
+    setLocationError('');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCurrentLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setLocating(false);
+      },
+      (error) => {
+        setLocating(false);
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setLocationError('Permiso denegado. Active la ubicación en su dispositivo.');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            setLocationError('Ubicación no disponible.');
+            break;
+          case error.TIMEOUT:
+            setLocationError('Tiempo de espera agotado.');
+            break;
+          default:
+            setLocationError('Error al obtener ubicación.');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  };
+
   const handleNavigateNow = () => {
     if (!search.trim()) {
       Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
@@ -94,20 +132,23 @@ const NavigationScreen = ({ navigation }) => {
     navigateToAddress(search.trim(), search.trim());
   };
 
-  const handleOpenMaps = () => {
-    if (!search.trim()) {
+  const handleOpenMaps = (dest) => {
+    const address = dest || search.trim();
+    if (!address) {
       Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
       return;
     }
-    openGoogleMaps(search.trim());
+    const origin = currentLocation ? `${currentLocation.lat},${currentLocation.lng}` : null;
+    openGoogleMaps(address, origin);
   };
 
-  const handleOpenWaze = () => {
-    if (!search.trim()) {
+  const handleOpenWaze = (dest) => {
+    const address = dest || search.trim();
+    if (!address) {
       Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
       return;
     }
-    openWaze(search.trim());
+    openWaze(address);
   };
 
   const renderAddressItem = ({ item }) => (
@@ -169,19 +210,38 @@ const NavigationScreen = ({ navigation }) => {
         <View style={styles.actionRow}>
           <TouchableOpacity
             style={[styles.actionBtn, { backgroundColor: '#1976D2' }]}
-            onPress={handleOpenMaps}
+            onPress={() => handleOpenMaps()}
           >
             <Text style={styles.actionIcon}>🗺️</Text>
             <Text style={styles.actionLabel}>Google Maps</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.actionBtn, { backgroundColor: '#1A237E' }]}
-            onPress={handleOpenWaze}
+            onPress={() => handleOpenWaze()}
           >
             <Text style={styles.actionIcon}>🧭</Text>
             <Text style={styles.actionLabel}>Waze</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionBtn, { backgroundColor: '#388E3C' }]}
+            onPress={getCurrentLocation}
+          >
+            <Text style={styles.actionIcon}>📍</Text>
+            <Text style={styles.actionLabel}>{locating ? '...' : 'Mi ubicación'}</Text>
+          </TouchableOpacity>
         </View>
+        {currentLocation ? (
+          <View style={styles.locationInfo}>
+            <Text style={styles.locationText}>
+              📍 {currentLocation.lat.toFixed(4)}, {currentLocation.lng.toFixed(4)}
+            </Text>
+          </View>
+        ) : null}
+        {locationError ? (
+          <View style={styles.locationError}>
+            <Text style={styles.locationErrorText}>{locationError}</Text>
+          </View>
+        ) : null}
 
         <View style={styles.filterRow}>
           {FILTERS.map((f) => (
@@ -283,8 +343,34 @@ const styles = StyleSheet.create({
   },
   actionRow: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     marginTop: 12,
+  },
+  locationInfo: {
+    marginTop: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    backgroundColor: '#E8F5E9',
+  },
+  locationText: {
+    fontSize: SIZES.sm,
+    color: '#2E7D32',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  locationError: {
+    marginTop: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    backgroundColor: '#FFEBEE',
+  },
+  locationErrorText: {
+    fontSize: SIZES.sm,
+    color: '#C62828',
+    fontWeight: '500',
+    textAlign: 'center',
   },
   actionBtn: {
     flex: 1,
