@@ -93,6 +93,12 @@ export const loginWithGoogle = async () => {
       });
     }
 
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('@arauz_auth', JSON.stringify({
+        uid: user.uid, email: user.email, displayName: user.displayName,
+      }));
+    }
+
     return { success: true };
   } catch (error) {
     if (error.code === 'auth/popup-closed-by-user') {
@@ -148,6 +154,9 @@ export const getGoogleRedirectResult = async () => {
 export const logoutUser = async () => {
   try {
     await signOut(auth);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('@arauz_auth');
+    }
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };

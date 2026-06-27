@@ -193,7 +193,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
   if (!selectedCode) {
     const hasResults = search.trim().length > 0 && totalResults > 0;
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View key="main" style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
           <View style={styles.headerRow}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBack}>
@@ -218,6 +218,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
         )}
         {hasResults ? (
           <FlatList
+            key="main-results"
             data={Object.entries(results).flatMap(([code, articles]) =>
               articles.map((a) => ({ ...a, codigoKey: code }))
             )}
@@ -281,7 +282,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
       : [];
 
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View key="categories" style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
           <View style={styles.headerRow}>
             <TouchableOpacity onPress={handleBack} style={styles.headerBack}>
@@ -303,7 +304,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
           {search.trim() ? `Resultados (${totalResults})` : 'Categorías'}
         </Text>
         <FlatList
-          key={search.trim() ? 'articles' : 'categories'}
+          key={search.trim() ? 'data-articles' : 'data-categories'}
           data={search.trim() ? articulosFiltrados : categorias}
           renderItem={({ item }) =>
             search.trim() ? (
@@ -343,7 +344,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
     const nextArticle = currentIndex < articulos.length - 1 ? articulos[currentIndex + 1] : null;
 
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View key="article" style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
           <View style={styles.headerRow}>
             <TouchableOpacity onPress={handleBack} style={styles.headerBack}>
@@ -440,7 +441,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
 
   const codeInfo = CODIGOS_DISPONIBLES.find((c) => c.key === selectedCode);
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View key="results" style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.header, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={handleBack} style={styles.headerBack}>
@@ -453,6 +454,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
         </View>
       </View>
       <FlatList
+        key="res-list"
         data={Object.values(results).flat()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleViewArticle(selectedCode, item)}>
