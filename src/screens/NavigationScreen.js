@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Alert, Platform,
+  View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { onAuthChange } from '../../firebase/auth';
 import { subscribeToCollection } from '../services/firestoreService';
-import { openGoogleMaps, openWaze, navigateToAddress } from '../services/maps';
+import { openGoogleMaps, openWaze } from '../services/maps';
 import { PANAMA_LOCATIONS } from '../data/panamaLocations';
 import Card from '../components/Card';
 import { SIZES } from '../utils/theme';
@@ -124,37 +124,21 @@ const NavigationScreen = ({ navigation }) => {
     );
   };
 
-  const handleNavigateNow = () => {
-    if (!search.trim()) {
-      Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
-      return;
-    }
-    navigateToAddress(search.trim(), search.trim());
-  };
-
   const handleOpenMaps = (dest) => {
-    const address = dest || search.trim();
-    if (!address) {
-      Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
-      return;
-    }
+    const address = dest || search.trim() || 'Panamá';
     const origin = currentLocation ? `${currentLocation.lat},${currentLocation.lng}` : null;
     openGoogleMaps(address, origin);
   };
 
   const handleOpenWaze = (dest) => {
-    const address = dest || search.trim();
-    if (!address) {
-      Alert.alert('Dirección requerida', 'Escribe una dirección o selecciona una de la lista');
-      return;
-    }
+    const address = dest || search.trim() || 'Panamá';
     openWaze(address);
   };
 
   const renderAddressItem = ({ item }) => (
     <TouchableOpacity
       style={[styles.addressCard, { backgroundColor: colors.cardBg, borderColor: colors.cardBorder }]}
-      onPress={() => navigateToAddress(item.address, item.label)}
+      onPress={() => handleOpenMaps(item.address)}
     >
       <View style={[styles.addressIcon, { backgroundColor: colors.overlay }]}>
         <Text style={styles.addressIconText}>{item.icon}</Text>
@@ -166,7 +150,7 @@ const NavigationScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={[styles.navBtn, { backgroundColor: colors.primary + '15' }]}
-        onPress={() => navigateToAddress(item.address, item.label)}
+        onPress={() => handleOpenMaps(item.address)}
       >
         <Text style={styles.navBtnText}>📍</Text>
       </TouchableOpacity>
@@ -198,7 +182,7 @@ const NavigationScreen = ({ navigation }) => {
             value={search}
             onChangeText={setSearch}
             returnKeyType="search"
-            onSubmitEditing={handleNavigateNow}
+            onSubmitEditing={() => handleOpenMaps()}
           />
           {search ? (
             <TouchableOpacity onPress={() => setSearch('')}>
