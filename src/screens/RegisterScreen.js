@@ -84,7 +84,7 @@ const RegisterScreen = ({ navigation }) => {
           <Text style={styles.headerSubtitle}>Únase a Bufete de Abogados</Text>
         </View>
 
-        <Form>
+        <Form style={[styles.formSection, { backgroundColor: colors.surface }]}>
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <AppTextInput
               style={[styles.input, { color: colors.text }]}

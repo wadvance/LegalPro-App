@@ -1,7 +1,8 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut,
   sendPasswordResetEmail,
@@ -75,11 +76,21 @@ export const loginUser = async (email, password) => {
 };
 
 export const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
   try {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    await signInWithRedirect(auth, provider);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: 'Error al iniciar sesión con Google' };
+  }
+};
 
+export const getGoogleRedirectResult = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (!result) return null;
+
+    const user = result.user;
     const profileSnap = await getDoc(doc(db, 'usuarios', user.uid));
     if (!profileSnap.exists()) {
       const displayName = user.displayName || '';
