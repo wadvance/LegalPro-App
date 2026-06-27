@@ -3,7 +3,7 @@ import {
   View, Text, TouchableOpacity, StyleSheet, ScrollView, useWindowDimensions, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { registerUser } from '../../firebase/auth';
+import { registerUser, loginWithGoogle } from '../../firebase/auth';
 import { SIZES } from '../utils/theme';
 import Form from '../components/Form';
 import AppTextInput from '../components/AppTextInput';
@@ -28,6 +28,7 @@ const RegisterScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [regError, setRegError] = useState('');
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const updateForm = (key, value) => setForm({ ...form, [key]: value });
 
@@ -227,6 +228,33 @@ const RegisterScreen = ({ navigation }) => {
             <Text style={styles.regError}>{regError}</Text>
           ) : null}
 
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>O</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            style={[styles.googleButton, googleLoading && styles.buttonDisabled]}
+            onPress={() => {
+              setGoogleLoading(true);
+              loginWithGoogle().then((result) => {
+                setGoogleLoading(false);
+                if (result.success) {
+                  navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+                } else if (result.error) {
+                  setRegError(result.error);
+                }
+              });
+            }}
+            disabled={googleLoading}
+          >
+            <Text style={styles.googleIcon}>G</Text>
+            <Text style={styles.googleButtonText}>
+              {googleLoading ? 'Conectando...' : 'Registrarse con Google'}
+            </Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => navigation.navigate('Login')}
             style={styles.loginLink}
@@ -347,6 +375,50 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     marginTop: 12,
+  },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 16,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#E0E0E0',
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    color: '#757575',
+    fontSize: SIZES.sm,
+    fontWeight: '600',
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    backgroundColor: '#FFFFFF',
+    gap: 10,
+  },
+  googleIcon: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4285F4',
+    backgroundColor: '#FFFFFF',
+    width: 28,
+    height: 28,
+    textAlign: 'center',
+    lineHeight: 28,
+    borderRadius: 14,
+    overflow: 'hidden',
+  },
+  googleButtonText: {
+    color: '#555555',
+    fontSize: SIZES.md,
+    fontWeight: '600',
   },
   loginLink: { alignItems: 'center', marginTop: 20 },
   loginText: { fontSize: SIZES.sm, fontWeight: '600' },
