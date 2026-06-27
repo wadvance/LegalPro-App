@@ -84,7 +84,8 @@ const RegisterScreen = ({ navigation }) => {
           <Text style={styles.headerSubtitle}>Únase a Bufete de Abogados</Text>
         </View>
 
-        <Form style={[styles.formSection, { backgroundColor: colors.surface }]}>
+        <View style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingHorizontal: 25, paddingTop: 30, paddingBottom: 40, backgroundColor: colors.surface, overflow: 'hidden' }}>
+        <Form>
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <AppTextInput
               style={[styles.input, { color: colors.text }]}
@@ -264,6 +265,7 @@ const RegisterScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </Form>
+        </View>
       </ScrollView>
     </View>
   );

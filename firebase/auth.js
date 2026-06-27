@@ -1,7 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithRedirect,
+  signInWithPopup,
   getRedirectResult,
   GoogleAuthProvider,
   signOut,
@@ -78,9 +78,45 @@ export const loginUser = async (email, password) => {
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithRedirect(auth, provider);
-    return { success: true };
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const profileSnap = await getDoc(doc(db, 'usuarios', user.uid));
+    if (!profileSnap.exists()) {
+      const displayName = user.displayName || '';
+      const parts = displayName.split(' ');
+      const nombre = parts[0] || '';
+      const apellido = parts.slice(1).join(' ') || '';
+
+      await setDoc(doc(db, 'usuarios', user.uid), {
+        uid: user.uid,
+        email: user.email,
+        nombre,
+        apellido,
+        telefono: '',
+        cedula: '',
+        rol: 'abogado',
+        activo: true,
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp(),
+      });
+    }
+
+    return {
+      success: true,
+      user: {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || user.email,
+      },
+    };
   } catch (error) {
+    if (error.code === 'auth/popup-closed-by-user') {
+      return { success: false, error: '' };
+    }
+    if (error.code === 'auth/popup-blocked') {
+      return { success: false, error: 'Permita ventanas emergentes (pop-ups) para este sitio e intente de nuevo' };
+    }
     return { success: false, error: 'Error al iniciar sesión con Google' };
   }
 };
