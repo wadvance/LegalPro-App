@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   signOut,
   sendPasswordResetEmail,
@@ -189,15 +190,20 @@ const ensureUserProfile = async (user) => {
   } catch {}
 };
 
+export const waitForAuthReady = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result && result.user) {
+      await ensureUserProfile(result.user);
+    }
+  } catch {}
+};
+
 export const onAuthChange = (callback) => {
   const unsubscribe = onAuthStateChanged(auth, async (user) => {
     if (user) {
       await ensureUserProfile(user);
-      callback({
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-      });
+      callback({ uid: user.uid, email: user.email, displayName: user.displayName });
     } else {
       callback(null);
     }
