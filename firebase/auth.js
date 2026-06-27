@@ -1,7 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithRedirect,
+  signInWithPopup,
   getRedirectResult,
   GoogleAuthProvider,
   signOut,
@@ -78,10 +78,13 @@ export const loginUser = async (email, password) => {
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithRedirect(auth, provider);
+    await signInWithPopup(auth, provider);
     return { success: true };
   } catch (error) {
-    return { success: false, error: `${error.code || 'unknown'}: ${error.message || error}` };
+    if (error.code === 'auth/popup-closed-by-user') {
+      return { success: false, error: '' };
+    }
+    return { success: false, error: error.code ? `${error.code}: ${error.message}` : String(error) };
   }
 };
 
