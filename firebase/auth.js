@@ -117,13 +117,7 @@ export const loginWithGoogle = async () => {
     if (error.code === 'auth/popup-blocked') {
       return { success: false, error: 'Permita ventanas emergentes (pop-ups) para este sitio e intente de nuevo' };
     }
-    let msg = 'Error al iniciar sesión con Google';
-    if (error.code === 'auth/unauthorized-domain') {
-      msg = 'Dominio no autorizado. Agregue wadvance.github.io en Firebase Console > Authentication > Authorized domains';
-    } else if (error.code === 'auth/operation-not-allowed') {
-      msg = 'El inicio de sesión con Google no está habilitado en Firebase Console';
-    }
-    return { success: false, error: msg };
+    return { success: false, error: `${error.code || 'unknown'}: ${error.message || error}` };
   }
 };
 
