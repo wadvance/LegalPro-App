@@ -4,7 +4,7 @@ import {
   KeyboardAvoidingView, Platform, Alert, ScrollView,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { loginUser, resetPassword } from '../../firebase/auth';
+import { loginUser, resetPassword, loginWithGoogle } from '../../firebase/auth';
 import { COLORS, SIZES } from '../utils/theme';
 import Form from '../components/Form';
 import AppTextInput from '../components/AppTextInput';
@@ -17,6 +17,7 @@ const LoginScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [recoveryMsg, setRecoveryMsg] = useState('');
   const [recovering, setRecovering] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {
     if (isFocused) {
@@ -132,6 +133,33 @@ const LoginScreen = ({ navigation }) => {
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
             <Text style={styles.linkText}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
+          </TouchableOpacity>
+
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>O</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          <TouchableOpacity
+            style={[styles.googleButton, googleLoading && styles.buttonDisabled]}
+            onPress={() => {
+              setGoogleLoading(true);
+              loginWithGoogle().then((result) => {
+                setGoogleLoading(false);
+                if (result.success) {
+                  navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+                } else if (result.error) {
+                  Alert.alert('Error', result.error);
+                }
+              });
+            }}
+            disabled={googleLoading}
+          >
+            <Text style={styles.googleIcon}>G</Text>
+            <Text style={styles.googleButtonText}>
+              {googleLoading ? 'Conectando...' : 'Continuar con Google'}
+            </Text>
           </TouchableOpacity>
           {recoveryMsg ? (
             <Text style={styles.recoveryText}>{recoveryMsg}</Text>
@@ -252,6 +280,50 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingHorizontal: 10,
     lineHeight: 22,
+  },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 18,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.border,
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    color: COLORS.textSecondary,
+    fontSize: SIZES.sm,
+    fontWeight: '600',
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: '#FFFFFF',
+    gap: 10,
+  },
+  googleIcon: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#4285F4',
+    backgroundColor: '#FFFFFF',
+    width: 28,
+    height: 28,
+    textAlign: 'center',
+    lineHeight: 28,
+    borderRadius: 14,
+    overflow: 'hidden',
+  },
+  googleButtonText: {
+    color: '#555555',
+    fontSize: SIZES.md,
+    fontWeight: '600',
   },
   registerSection: {
     flexDirection: 'row',
