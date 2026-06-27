@@ -1,29 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { getCurrentUser } from '../../firebase/auth';
+import { onAuthChange } from '../../firebase/auth';
 
 const AuthLoader = ({ navigation }) => {
   const mounted = useRef(true);
 
   useEffect(() => {
-    const run = async () => {
-      try {
-        const user = await getCurrentUser();
-        if (!mounted.current) return;
-        if (user) {
-          navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
-        } else {
-          navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
-        }
-      } catch {
-        if (mounted.current) {
-          navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
-        }
+    const unsub = onAuthChange((user) => {
+      if (!mounted.current) return;
+      if (user) {
+        navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+      } else {
+        navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
       }
-    };
+    });
 
-    run();
-    return () => { mounted.current = false; };
+    return () => { mounted.current = false; unsub(); };
   }, [navigation]);
 
   return (
