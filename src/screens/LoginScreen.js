@@ -41,20 +41,22 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const handleResetPassword = async () => {
-    if (!email.trim()) {
+  const handleResetPassword = () => {
+    const em = email.trim();
+    if (!em) {
       Alert.alert('Error', 'Por favor ingrese su correo electrónico');
       return;
     }
-    const result = await resetPassword(email.trim());
-    if (result.success) {
-      Alert.alert(
-        'Recuperar Contraseña',
-        `Su contraseña es: ${result.password}\n\nSe recomienda cambiarla después de iniciar sesión.`
-      );
-    } else {
-      Alert.alert('Error', result.error);
-    }
+    resetPassword(em).then((result) => {
+      if (result.success) {
+        Alert.alert(
+          'Recuperar Contraseña',
+          `Su contraseña es: ${result.password}`
+        );
+      } else {
+        Alert.alert('Error', result.error);
+      }
+    });
   };
 
   return (

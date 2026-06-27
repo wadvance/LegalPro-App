@@ -73,11 +73,12 @@ export const logoutUser = async () => {
 export const resetPassword = async (email) => {
   try {
     const users = await getUsers();
-    const user = users.find((u) => u.email === email);
+    if (!users || users.length === 0) return { success: false, error: 'No hay usuarios registrados' };
+    const user = users.find((u) => u.email && u.email.toLowerCase() === email.toLowerCase());
     if (!user) return { success: false, error: 'Correo no registrado' };
     return { success: true, password: user.password };
   } catch (error) {
-    return { success: false, error: error.message };
+    return { success: false, error: 'Error al recuperar la contraseña' };
   }
 };
 
