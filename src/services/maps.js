@@ -2,7 +2,7 @@ import { Linking, Alert, Platform } from 'react-native';
 
 const openURL = (url) => {
   if (Platform.OS === 'web') {
-    window.open(url, '_blank');
+    window.location.href = url;
   } else {
     Linking.openURL(url).catch(() =>
       Alert.alert('Error', 'No se pudo abrir la aplicación')
