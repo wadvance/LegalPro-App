@@ -116,8 +116,9 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity
               onPress={() => setShowPassword(!showPassword)}
               style={styles.eyeButton}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Text>{showPassword ? '🙈' : '👁️'}</Text>
+              <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
             </TouchableOpacity>
           </View>
 
@@ -213,7 +214,8 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  eyeButton: { padding: 5 },
+  eyeButton: { padding: 8, justifyContent: 'center', alignItems: 'center' },
+  eyeIcon: { fontSize: 20 },
   loginButton: {
     backgroundColor: COLORS.primary,
     borderRadius: 15,

@@ -25,6 +25,8 @@ const RegisterScreen = ({ navigation }) => {
     rol: 'abogado',
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const updateForm = (key, value) => setForm({ ...form, [key]: value });
 
@@ -151,11 +153,18 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
-              secureTextEntry
+              secureTextEntry={!showPassword}
               autoComplete="new-password"
               inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.eyeButton}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
@@ -165,11 +174,18 @@ const RegisterScreen = ({ navigation }) => {
               placeholderTextColor={colors.textSecondary}
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
-              secureTextEntry
+              secureTextEntry={!showConfirmPassword}
               autoComplete="new-password"
               inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
+            <TouchableOpacity
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              style={styles.eyeButton}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={styles.eyeIcon}>{showConfirmPassword ? '🙈' : '👁️'}</Text>
+            </TouchableOpacity>
           </View>
 
           <Text style={[styles.label, { color: colors.textSecondary }]}>Rol:</Text>
@@ -258,13 +274,16 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row' },
   inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 12,
     paddingHorizontal: 15,
     marginBottom: 12,
     height: 50,
     borderWidth: 1,
-    justifyContent: 'center',
   },
+  eyeButton: { padding: 8, justifyContent: 'center', alignItems: 'center' },
+  eyeIcon: { fontSize: 18 },
   input: {
     fontSize: SIZES.md,
     fontWeight: '600',
