@@ -303,6 +303,7 @@ const LegalDictionaryScreen = ({ navigation }) => {
           {search.trim() ? `Resultados (${totalResults})` : 'Categorías'}
         </Text>
         <FlatList
+          key={search.trim() ? 'articles' : 'categories'}
           data={search.trim() ? articulosFiltrados : categorias}
           renderItem={({ item }) =>
             search.trim() ? (
