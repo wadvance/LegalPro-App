@@ -78,7 +78,21 @@ export const loginUser = async (email, password) => {
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const profileSnap = await getDoc(doc(db, 'usuarios', user.uid));
+    if (!profileSnap.exists()) {
+      const displayName = user.displayName || '';
+      const parts = displayName.split(' ');
+      await setDoc(doc(db, 'usuarios', user.uid), {
+        uid: user.uid, email: user.email,
+        nombre: parts[0] || '', apellido: parts.slice(1).join(' ') || '',
+        telefono: '', cedula: '', rol: 'abogado', activo: true,
+        createdAt: serverTimestamp(), lastLogin: serverTimestamp(),
+      });
+    }
+
     return { success: true };
   } catch (error) {
     if (error.code === 'auth/popup-closed-by-user') {
