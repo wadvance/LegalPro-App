@@ -31,7 +31,7 @@ export const sendAppointmentConfirmation = async (phone, cliente, fecha, hora) =
   const message = `Hola ${cliente}, ✅ *Cita Confirmada*\n\n` +
     `Estimado(a) ${cliente}, su cita con *Bufete de Abogados* ha sido confirmada.\n\n` +
     `📅 *Fecha:* ${fecha}\n⏰ *Hora:* ${hora}\n📍 *Lugar:* Oficina Central\n\n` +
-    `Si necesita reagendar, contáctenos al +507 0000-0000.\n\n` +
+
     `*Arauz Carrillo Abogados* - Su confianza, nuestro compromiso.`;
   return sendWhatsAppMessage(phone, message);
 };
@@ -86,17 +86,11 @@ export const getChatbotResponse = async (message) => {
   }
 
   if (lowerMsg.includes('direcci') || lowerMsg.includes('ubicaci')) {
-    return '📍 Estamos ubicados en:\n' +
-      'Vía España, Edificio Arauz Carrillo\n' +
-      'Piso 8, Oficina 801\n' +
-      'Ciudad de Panamá, Panamá';
+    return 'Por el momento no tenemos una dirección disponible. Contáctenos para más información.';
   }
 
   if (lowerMsg.includes('contacto') || lowerMsg.includes('teléfono') || lowerMsg.includes('telefono')) {
-    return '📞 Puede contactarnos:\n' +
-      'Teléfono: +507 0000-0000\n' +
-      'WhatsApp: +507 0000-0000\n' +
-      'Email: info@arauzcarrillo.com';
+    return '📞 Puede contactarnos por este mismo chat o enviarnos un correo a info@arauzcarrillo.com.';
   }
 
   if (lowerMsg.includes('cita') || lowerMsg.includes('agendar')) {
@@ -104,8 +98,7 @@ export const getChatbotResponse = async (message) => {
       '1. Nombre completo\n' +
       '2. Número de cédula\n' +
       '3. Motivo de la consulta\n' +
-      '4. Día y hora preferida\n\n' +
-      'O puede llamarnos directamente al +507 0000-0000.';
+      '4. Día y hora preferida';
   }
 
   if (lowerMsg.includes('cobro') || lowerMsg.includes('pago') || lowerMsg.includes('factura')) {
