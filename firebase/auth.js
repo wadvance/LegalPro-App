@@ -1,69 +1,80 @@
-import { getItem, setItem, removeItem } from '../src/utils/storage';
-import { AUTH_STORAGE_KEY, SESSION_KEY } from './config';
-
-const getUsers = async () => {
-  try {
-    const json = await getItem(AUTH_STORAGE_KEY);
-    return json ? JSON.parse(json) : [];
-  } catch {
-    return [];
-  }
-};
-
-const saveUsers = async (users) => {
-  await setItem(AUTH_STORAGE_KEY, JSON.stringify(users));
-};
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from './firebase';
 
 export const registerUser = async (email, password, userData) => {
   try {
-    const users = await getUsers();
-    const exists = users.find((u) => u.email === email);
-    if (exists) return { success: false, error: 'El correo ya está registrado' };
-    if (password.length < 6) return { success: false, error: 'La contraseña debe tener al menos 6 caracteres' };
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = cred.user.uid;
 
-    const newUser = {
-      ...userData,
+    const profile = {
+      uid,
       email,
-      password, // En producción usar hash
-      uid: Date.now().toString(36) + Math.random().toString(36).substring(2, 8),
+      nombre: userData.nombre || '',
+      apellido: userData.apellido || '',
+      telefono: userData.telefono || '',
+      cedula: userData.cedula || '',
       rol: userData.rol || 'abogado',
       activo: true,
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString(),
+      createdAt: serverTimestamp(),
+      lastLogin: serverTimestamp(),
     };
-    users.push(newUser);
-    await saveUsers(users);
 
-    const session = { uid: newUser.uid, email: newUser.email, nombre: newUser.nombre, rol: newUser.rol };
-    await setItem(SESSION_KEY, JSON.stringify(session));
+    await setDoc(doc(db, 'usuarios', uid), profile);
 
-    return { success: true, user: { uid: newUser.uid, email: newUser.email, displayName: `${newUser.nombre} ${newUser.apellido}` } };
+    return {
+      success: true,
+      user: {
+        uid,
+        email,
+        displayName: `${profile.nombre} ${profile.apellido}`.trim(),
+      },
+    };
   } catch (error) {
-    return { success: false, error: error.message };
+    let msg = error.message;
+    if (error.code === 'auth/email-already-in-use') msg = 'El correo ya está registrado';
+    else if (error.code === 'auth/weak-password') msg = 'La contraseña debe tener al menos 6 caracteres';
+    else if (error.code === 'auth/invalid-email') msg = 'Correo electrónico inválido';
+    return { success: false, error: msg };
   }
 };
 
 export const loginUser = async (email, password) => {
   try {
-    const users = await getUsers();
-    const user = users.find((u) => u.email === email && u.password === password);
-    if (!user) return { success: false, error: 'Credenciales inválidas' };
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    const uid = cred.user.uid;
 
-    user.lastLogin = new Date().toISOString();
-    await saveUsers(users);
+    const profile = await getDoc(doc(db, 'usuarios', uid));
+    const data = profile.data() || {};
 
-    const session = { uid: user.uid, email: user.email, nombre: user.nombre, rol: user.rol };
-    await setItem(SESSION_KEY, JSON.stringify(session));
-
-    return { success: true, user: { uid: user.uid, email: user.email, displayName: `${user.nombre} ${user.apellido}` } };
+    return {
+      success: true,
+      user: {
+        uid,
+        email: cred.user.email,
+        displayName: `${data.nombre || ''} ${data.apellido || ''}`.trim(),
+      },
+    };
   } catch (error) {
-    return { success: false, error: error.message };
+    let msg = 'Credenciales inválidas';
+    if (error.code === 'auth/user-not-found') msg = 'Correo no registrado';
+    else if (error.code === 'auth/wrong-password') msg = 'Contraseña incorrecta';
+    else if (error.code === 'auth/invalid-email') msg = 'Correo electrónico inválido';
+    else if (error.code === 'auth/too-many-requests') msg = 'Demasiados intentos. Intente más tarde.';
+    else if (error.code === 'auth/invalid-credential') msg = 'Credenciales inválidas';
+    return { success: false, error: msg };
   }
 };
 
 export const logoutUser = async () => {
   try {
-    await removeItem(SESSION_KEY);
+    await signOut(auth);
     return { success: true };
   } catch (error) {
     return { success: false, error: error.message };
@@ -72,33 +83,27 @@ export const logoutUser = async () => {
 
 export const resetPassword = async (email) => {
   try {
-    const users = await getUsers();
-    if (!users || users.length === 0) return { success: false, error: 'No hay usuarios registrados' };
-    const user = users.find((u) => u.email && u.email.toLowerCase() === email.toLowerCase());
-    if (!user) return { success: false, error: 'Correo no registrado' };
-    return { success: true, password: user.password };
+    await sendPasswordResetEmail(auth, email);
+    return { success: true, password: '' };
   } catch (error) {
-    return { success: false, error: 'Error al recuperar la contraseña' };
+    let msg = 'Error al enviar correo de restablecimiento';
+    if (error.code === 'auth/user-not-found') msg = 'Correo no registrado';
+    else if (error.code === 'auth/invalid-email') msg = 'Correo electrónico inválido';
+    return { success: false, error: msg };
   }
 };
 
-export const getCurrentUser = async () => {
-  try {
-    const json = await getItem(SESSION_KEY);
-    if (!json) return null;
-    const session = JSON.parse(json);
-    return { uid: session.uid, email: session.email, displayName: session.nombre };
-  } catch {
-    return null;
-  }
+export const getCurrentUser = () => {
+  const user = auth.currentUser;
+  if (!user) return null;
+  return { uid: user.uid, email: user.email, displayName: user.displayName };
 };
 
 export const getUserProfile = async (uid) => {
   try {
-    const users = await getUsers();
-    const user = users.find((u) => u.uid === uid);
-    if (user) {
-      const { password, ...profile } = user;
+    const docSnap = await getDoc(doc(db, 'usuarios', uid));
+    if (docSnap.exists()) {
+      const { password, ...profile } = docSnap.data();
       return { success: true, data: profile };
     }
     return { success: false, error: 'Perfil no encontrado' };
@@ -108,11 +113,16 @@ export const getUserProfile = async (uid) => {
 };
 
 export const onAuthChange = (callback) => {
-  const poll = async () => {
-    const session = await getCurrentUser();
-    callback(session);
-  };
-  poll();
-  const interval = setInterval(poll, 3000);
-  return () => clearInterval(interval);
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      callback({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+      });
+    } else {
+      callback(null);
+    }
+  });
+  return unsubscribe;
 };

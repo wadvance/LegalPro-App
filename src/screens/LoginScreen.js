@@ -57,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
     resetPassword(em).then((result) => {
       setRecovering(false);
       if (result.success) {
-        setRecoveryMsg(`Su contraseña es: ${result.password}`);
+        setRecoveryMsg('Revise su bandeja de entrada. Le enviamos un enlace para restablecer su contraseña.');
       } else {
         setRecoveryMsg(result.error);
       }
