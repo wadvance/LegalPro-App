@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions, Platform,
+  View, Text, TouchableOpacity, StyleSheet, ScrollView, useWindowDimensions, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { registerUser } from '../../firebase/auth';
@@ -27,43 +27,44 @@ const RegisterScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [regError, setRegError] = useState('');
 
   const updateForm = (key, value) => setForm({ ...form, [key]: value });
 
-  const handleRegister = async () => {
+  const handleRegister = () => {
+    setRegError('');
     if (!form.nombre || !form.apellido || !form.email || !form.password) {
-      Alert.alert('Error', 'Todos los campos obligatorios deben estar llenos');
+      setRegError('Todos los campos obligatorios deben estar llenos');
       return;
     }
     if (!validateEmail(form.email)) {
-      Alert.alert('Error', 'Correo electrónico inválido');
+      setRegError('Correo electrónico inválido');
       return;
     }
     if (form.password.length < 6) {
-      Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres');
+      setRegError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
     if (form.password !== form.confirmPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden');
+      setRegError('Las contraseñas no coinciden');
       return;
     }
 
     setLoading(true);
-    const result = await registerUser(form.email, form.password, {
+    registerUser(form.email, form.password, {
       nombre: form.nombre,
       apellido: form.apellido,
       telefono: form.telefono,
       cedula: form.cedula,
       rol: form.rol,
+    }).then((result) => {
+      setLoading(false);
+      if (result.success) {
+        navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
+      } else {
+        setRegError(result.error);
+      }
     });
-    setLoading(false);
-
-    if (result.success) {
-      Alert.alert('Éxito', 'Registro completado correctamente');
-      navigation.reset({ index: 0, routes: [{ name: 'Main' }] });
-    } else {
-      Alert.alert('Error de registro', result.error);
-    }
   };
 
   return (
@@ -222,6 +223,9 @@ const RegisterScreen = ({ navigation }) => {
               {loading ? 'Registrando...' : 'Crear Cuenta'}
             </Text>
           </TouchableOpacity>
+          {regError ? (
+            <Text style={styles.regError}>{regError}</Text>
+          ) : null}
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Login')}
@@ -336,6 +340,13 @@ const styles = StyleSheet.create({
     fontSize: SIZES.lg,
     fontWeight: 'bold',
     letterSpacing: 1,
+  },
+  regError: {
+    color: '#D32F2F',
+    fontSize: SIZES.md,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 12,
   },
   loginLink: { alignItems: 'center', marginTop: 20 },
   loginText: { fontSize: SIZES.sm, fontWeight: '600' },
