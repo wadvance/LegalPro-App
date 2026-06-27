@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions, Platform,
+  View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, useWindowDimensions, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { registerUser } from '../../firebase/auth';
 import { SIZES } from '../utils/theme';
+import Form from '../components/Form';
+import AppTextInput from '../components/AppTextInput';
 import { useTheme } from '../context/ThemeContext';
 import { validateEmail } from '../utils/helpers';
 
@@ -78,54 +80,33 @@ const RegisterScreen = ({ navigation }) => {
           <Text style={styles.headerSubtitle}>Únase a Bufete de Abogados</Text>
         </View>
 
-        <View style={[styles.formSection, { backgroundColor: colors.surface }]}>
-          {/* Decoy inputs - MUST be first in DOM to absorb autofill */}
-          {Platform.OS === 'web' && (
-            <View style={{ position: 'absolute', top: -9999, left: -9999, height: 1, width: 1, overflow: 'hidden' }}>
-              <TextInput
-                autoComplete="username"
-                autoCorrect={false}
-                autoCapitalize="none"
-                style={{ height: 0, borderWidth: 0 }}
-                tabIndex={-1}
-              />
-              <TextInput
-                autoComplete="current-password"
-                secureTextEntry
-                autoCorrect={false}
-                autoCapitalize="none"
-                style={{ height: 0, borderWidth: 0 }}
-                tabIndex={-1}
-              />
-            </View>
-          )}
-          <View style={styles.row}>
-            <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border, flex: 1, marginRight: 8 }]}>
-              <TextInput
-                style={[styles.input, { color: colors.text }]}
-                placeholder="Nombre *"
-                placeholderTextColor={colors.textSecondary}
-                value={form.nombre}
-                onChangeText={(v) => updateForm('nombre', v)}
-                autoComplete="nope-name"
-                inputMode="text"
-              />
-            </View>
-            <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border, flex: 1, marginLeft: 8 }]}>
-              <TextInput
-                style={[styles.input, { color: colors.text }]}
-                placeholder="Apellido *"
-                placeholderTextColor={colors.textSecondary}
-                value={form.apellido}
-                onChangeText={(v) => updateForm('apellido', v)}
-                autoComplete="nope-lastname"
-                inputMode="text"
-              />
-            </View>
+        <Form>
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
+            <AppTextInput
+              style={[styles.input, { color: colors.text }]}
+              placeholder="Nombre *"
+              placeholderTextColor={colors.textSecondary}
+              value={form.nombre}
+              onChangeText={(v) => updateForm('nombre', v)}
+              autoComplete="nope-name"
+              inputMode="text"
+            />
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <TextInput
+            <AppTextInput
+              style={[styles.input, { color: colors.text }]}
+              placeholder="Apellido *"
+              placeholderTextColor={colors.textSecondary}
+              value={form.apellido}
+              onChangeText={(v) => updateForm('apellido', v)}
+              autoComplete="nope-lastname"
+              inputMode="text"
+            />
+          </View>
+
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
+            <AppTextInput
               style={[styles.input, { color: colors.text }]}
               placeholder="Correo electrónico *"
               placeholderTextColor={colors.textSecondary}
@@ -139,7 +120,7 @@ const RegisterScreen = ({ navigation }) => {
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <TextInput
+            <AppTextInput
               style={[styles.input, { color: colors.text }]}
               placeholder="Teléfono"
               placeholderTextColor={colors.textSecondary}
@@ -152,7 +133,7 @@ const RegisterScreen = ({ navigation }) => {
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <TextInput
+            <AppTextInput
               style={[styles.input, { color: colors.text }]}
               placeholder="Cédula (ej: 8-xxx-xxxx)"
               placeholderTextColor={colors.textSecondary}
@@ -164,28 +145,28 @@ const RegisterScreen = ({ navigation }) => {
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <TextInput
-              style={[styles.input, { color: colors.text, ...(Platform.OS === 'web' ? { WebkitTextSecurity: 'disc' } : {}) }]}
+            <AppTextInput
+              style={[styles.input, { color: colors.text }]}
               placeholder="Contraseña * (mín. 6 caracteres)"
               placeholderTextColor={colors.textSecondary}
               value={form.password}
               onChangeText={(v) => updateForm('password', v)}
-              secureTextEntry={Platform.OS !== 'web'}
-              autoComplete="nope-password"
+              secureTextEntry
+              autoComplete="new-password"
               inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
           </View>
 
           <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
-            <TextInput
-              style={[styles.input, { color: colors.text, ...(Platform.OS === 'web' ? { WebkitTextSecurity: 'disc' } : {}) }]}
+            <AppTextInput
+              style={[styles.input, { color: colors.text }]}
               placeholder="Confirmar contraseña *"
               placeholderTextColor={colors.textSecondary}
               value={form.confirmPassword}
               onChangeText={(v) => updateForm('confirmPassword', v)}
-              secureTextEntry={Platform.OS !== 'web'}
-              autoComplete="nope-confirm"
+              secureTextEntry
+              autoComplete="new-password"
               inputMode="text"
               dataSet={{ lpignore: 'true' }}
             />
@@ -234,7 +215,7 @@ const RegisterScreen = ({ navigation }) => {
               ¿Ya tiene cuenta? <Text style={[styles.loginHighlight, { color: colors.primary }]}>Inicie sesión</Text>
             </Text>
           </TouchableOpacity>
-        </View>
+        </Form>
       </ScrollView>
     </View>
   );
@@ -284,7 +265,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
   },
-  input: { fontSize: SIZES.md, fontWeight: '600' },
+  input: {
+    fontSize: SIZES.md,
+    fontWeight: '600',
+    ...Platform.select({
+      web: {
+        outline: 'none',
+        outlineWidth: 0,
+        outlineStyle: 'none',
+        outlineColor: 'transparent',
+        boxShadow: 'none',
+        WebkitFocusRingColor: 'transparent',
+        WebkitAppearance: 'none',
+        MozAppearance: 'none',
+      },
+    }),
+  },
   label: {
     fontSize: SIZES.sm,
     marginBottom: 8,

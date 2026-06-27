@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet,
+  View, Text, TouchableOpacity, StyleSheet,
   KeyboardAvoidingView, Platform, Alert, ScrollView,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { loginUser, resetPassword } from '../../firebase/auth';
 import { COLORS, SIZES } from '../utils/theme';
+import Form from '../components/Form';
+import AppTextInput from '../components/AppTextInput';
 
 const LoginScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -79,32 +81,12 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.tagline}>Bufete de Abogados</Text>
         </View>
 
-        <View style={styles.formSection}>
-          {/* Decoy inputs - MUST be first in DOM to absorb autofill */}
-          {Platform.OS === 'web' && (
-            <View style={{ position: 'absolute', top: -9999, left: -9999, height: 1, width: 1, overflow: 'hidden' }}>
-              <TextInput
-                autoComplete="username"
-                autoCorrect={false}
-                autoCapitalize="none"
-                style={{ height: 0, borderWidth: 0 }}
-                tabIndex={-1}
-              />
-              <TextInput
-                autoComplete="current-password"
-                secureTextEntry
-                autoCorrect={false}
-                autoCapitalize="none"
-                style={{ height: 0, borderWidth: 0 }}
-                tabIndex={-1}
-              />
-            </View>
-          )}
+        <Form>
           <Text style={styles.welcomeText}>Iniciar Sesión</Text>
 
           <View style={styles.inputContainer}>
             <Text style={styles.inputIcon}>✉️</Text>
-            <TextInput
+            <AppTextInput
               style={styles.input}
               placeholder="Correo electrónico"
               placeholderTextColor={COLORS.disabled}
@@ -120,13 +102,13 @@ const LoginScreen = ({ navigation }) => {
 
           <View style={styles.inputContainer}>
             <Text style={styles.inputIcon}>🔒</Text>
-            <TextInput
-              style={[styles.input, !showPassword && Platform.OS === 'web' && { WebkitTextSecurity: 'disc' }]}
+            <AppTextInput
+              style={styles.input}
               placeholder="Contraseña"
               placeholderTextColor={COLORS.disabled}
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={Platform.OS !== 'web' && !showPassword}
+              secureTextEntry={!showPassword}
               autoComplete="nope-password"
               inputMode="text"
               dataSet={{ lpignore: 'true' }}
@@ -159,7 +141,7 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.registerLink}>Regístrese aquí</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </Form>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -218,6 +200,18 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: SIZES.md,
     color: COLORS.text,
+    ...Platform.select({
+      web: {
+        outline: 'none',
+        outlineWidth: 0,
+        outlineStyle: 'none',
+        outlineColor: 'transparent',
+        boxShadow: 'none',
+        WebkitFocusRingColor: 'transparent',
+        WebkitAppearance: 'none',
+        MozAppearance: 'none',
+      },
+    }),
   },
   eyeButton: { padding: 5 },
   loginButton: {
