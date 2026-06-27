@@ -1,8 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
-  getRedirectResult,
+  signInWithRedirect,
   GoogleAuthProvider,
   signOut,
   sendPasswordResetEmail,
@@ -78,45 +77,9 @@ export const loginUser = async (email, password) => {
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    const profileSnap = await getDoc(doc(db, 'usuarios', user.uid));
-    if (!profileSnap.exists()) {
-      const displayName = user.displayName || '';
-      const parts = displayName.split(' ');
-      const nombre = parts[0] || '';
-      const apellido = parts.slice(1).join(' ') || '';
-
-      await setDoc(doc(db, 'usuarios', user.uid), {
-        uid: user.uid,
-        email: user.email,
-        nombre,
-        apellido,
-        telefono: '',
-        cedula: '',
-        rol: 'abogado',
-        activo: true,
-        createdAt: serverTimestamp(),
-        lastLogin: serverTimestamp(),
-      });
-    }
-
-    return {
-      success: true,
-      user: {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName || user.email,
-      },
-    };
+    await signInWithRedirect(auth, provider);
+    return { success: true };
   } catch (error) {
-    if (error.code === 'auth/popup-closed-by-user') {
-      return { success: false, error: '' };
-    }
-    if (error.code === 'auth/popup-blocked') {
-      return { success: false, error: 'Permita ventanas emergentes (pop-ups) para este sitio e intente de nuevo' };
-    }
     return { success: false, error: `${error.code || 'unknown'}: ${error.message || error}` };
   }
 };
@@ -204,9 +167,32 @@ export const getUserProfile = async (uid) => {
   }
 };
 
+const ensureUserProfile = async (user) => {
+  try {
+    const profileSnap = await getDoc(doc(db, 'usuarios', user.uid));
+    if (!profileSnap.exists()) {
+      const displayName = user.displayName || '';
+      const parts = displayName.split(' ');
+      await setDoc(doc(db, 'usuarios', user.uid), {
+        uid: user.uid,
+        email: user.email,
+        nombre: parts[0] || '',
+        apellido: parts.slice(1).join(' ') || '',
+        telefono: '',
+        cedula: '',
+        rol: 'abogado',
+        activo: true,
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp(),
+      });
+    }
+  } catch {}
+};
+
 export const onAuthChange = (callback) => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
     if (user) {
+      await ensureUserProfile(user);
       callback({
         uid: user.uid,
         email: user.email,
