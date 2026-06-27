@@ -15,12 +15,16 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [recoveryMsg, setRecoveryMsg] = useState('');
+  const [recovering, setRecovering] = useState(false);
 
   useEffect(() => {
     if (isFocused) {
       setEmail('');
       setPassword('');
       setShowPassword(false);
+      setRecoveryMsg('');
+      setRecovering(false);
     }
   }, [isFocused]);
 
@@ -44,17 +48,17 @@ const LoginScreen = ({ navigation }) => {
   const handleResetPassword = () => {
     const em = email.trim();
     if (!em) {
-      Alert.alert('Error', 'Por favor ingrese su correo electrónico');
+      setRecoveryMsg('Ingrese su correo electrónico primero');
       return;
     }
+    setRecovering(true);
+    setRecoveryMsg('');
     resetPassword(em).then((result) => {
+      setRecovering(false);
       if (result.success) {
-        Alert.alert(
-          'Recuperar Contraseña',
-          `Su contraseña es: ${result.password}`
-        );
+        setRecoveryMsg(`Su contraseña es: ${result.password}`);
       } else {
-        Alert.alert('Error', result.error);
+        setRecoveryMsg(result.error);
       }
     });
   };
@@ -126,8 +130,11 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
-            <Text style={styles.linkText}>¿Olvidó su contraseña?</Text>
+            <Text style={styles.linkText}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
           </TouchableOpacity>
+          {recoveryMsg ? (
+            <Text style={styles.recoveryText}>{recoveryMsg}</Text>
+          ) : null}
 
           <View style={styles.registerSection}>
             <Text style={styles.noAccount}>¿No tiene cuenta? </Text>
@@ -235,6 +242,15 @@ const styles = StyleSheet.create({
     fontSize: SIZES.sm,
     fontWeight: '600',
     textDecorationLine: 'underline',
+  },
+  recoveryText: {
+    color: COLORS.primary,
+    fontSize: SIZES.md,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginTop: 12,
+    paddingHorizontal: 10,
+    lineHeight: 22,
   },
   registerSection: {
     flexDirection: 'row',
