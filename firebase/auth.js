@@ -75,7 +75,7 @@ export const resetPassword = async (email) => {
     const users = await getUsers();
     const user = users.find((u) => u.email === email);
     if (!user) return { success: false, error: 'Correo no registrado' };
-    return { success: true, message: `Contraseña actual: ${user.password}` };
+    return { success: true, password: user.password };
   } catch (error) {
     return { success: false, error: error.message };
   }

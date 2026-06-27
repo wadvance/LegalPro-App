@@ -41,29 +41,20 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     if (!email.trim()) {
       Alert.alert('Error', 'Por favor ingrese su correo electrónico');
       return;
     }
-    Alert.alert(
-      'Restablecer Contraseña',
-      '¿Enviar enlace de restablecimiento a ' + email + '?',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Enviar',
-          onPress: async () => {
-            const result = await resetPassword(email.trim());
-            if (result.success) {
-              Alert.alert('Éxito', 'Revise su correo para restablecer su contraseña');
-            } else {
-              Alert.alert('Error', result.error);
-            }
-          },
-        },
-      ]
-    );
+    const result = await resetPassword(email.trim());
+    if (result.success) {
+      Alert.alert(
+        'Recuperar Contraseña',
+        `Su contraseña es: ${result.password}\n\nSe recomienda cambiarla después de iniciar sesión.`
+      );
+    } else {
+      Alert.alert('Error', result.error);
+    }
   };
 
   return (
@@ -81,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.tagline}>Bufete de Abogados</Text>
         </View>
 
-        <Form>
+        <Form style={styles.formSection}>
           <Text style={styles.welcomeText}>Iniciar Sesión</Text>
 
           <View style={styles.inputContainer}>
@@ -238,8 +229,10 @@ const styles = StyleSheet.create({
   },
   linkButton: { alignItems: 'center', marginTop: 18 },
   linkText: {
-    color: COLORS.primaryLight,
+    color: COLORS.primary,
     fontSize: SIZES.sm,
+    fontWeight: '600',
+    textDecorationLine: 'underline',
   },
   registerSection: {
     flexDirection: 'row',
@@ -253,7 +246,8 @@ const styles = StyleSheet.create({
   registerLink: {
     color: COLORS.primary,
     fontSize: SIZES.sm,
-    fontWeight: '600',
+    fontWeight: '700',
+    textDecorationLine: 'underline',
   },
 });
 

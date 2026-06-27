@@ -1,5 +1,5 @@
 const BASE_PATH = '/LegalPro-App';
-const CACHE_NAME = 'legalpro-app-v1';
+const CACHE_NAME = 'legalpro-app-v2';
 const urlsToCache = [
   `${BASE_PATH}/`,
   `${BASE_PATH}/index.html`,
