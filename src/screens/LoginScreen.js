@@ -131,17 +131,17 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={Object.assign({}, styles.loginButton, { backgroundColor: colors.primary, shadowColor: colors.primary }, loading && styles.buttonDisabled)}
+            style={Object.assign({}, styles.loginButton, { backgroundColor: colors.surface, borderColor: colors.border, shadowColor: colors.cardShadow }, loading && styles.buttonDisabled)}
             onPress={handleLogin}
             disabled={loading}
           >
-            <Text style={styles.loginButtonText}>
+            <Text style={Object.assign({}, styles.loginButtonText, { color: colors.primary })}>
               {loading ? 'Ingresando...' : 'Ingresar'}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
-            <Text style={Object.assign({}, styles.linkText, { color: colors.primary })}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
+            <Text style={Object.assign({}, styles.linkText, { color: colors.textSecondary })}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
           </TouchableOpacity>
 
           <View style={styles.dividerRow}>
@@ -268,14 +268,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+    borderWidth: 1,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 4,
   },
   buttonDisabled: { opacity: 0.7 },
   loginButtonText: {
-    color: '#FFFFFF',
     fontSize: SIZES.lg,
     fontWeight: 'bold',
     letterSpacing: 1,
