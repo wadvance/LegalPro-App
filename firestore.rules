@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /usuarios/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /citas/{citaId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /clientes/{clienteId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /expedientes/{expedienteId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /cobros/{cobroId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /reportes/{reporteId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /chats/{chatId} {
+      allow read, write: if request.auth != null && request.auth.uid in resource.data.participantes;
+    }
+    
+    match /calificaciones/{calificacionId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /facturas/{facturaId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /notificaciones/{notificacionId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+    
+    match /abogados/{abogadoId} {
+      allow read, write: if request.auth != null && request.auth.uid == abogadoId;
+    }
+    
+    match /empresas/{empresaId} {
+      allow read, write: if request.auth != null && resource.data.abogadoId == request.auth.uid;
+    }
+  }
+}
