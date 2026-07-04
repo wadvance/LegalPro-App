@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.logoSection}>
           <Text style={styles.logoIcon}>⚖️</Text>
           <Text style={styles.appName}>Bufete de Abogados</Text>
-          <Text style={styles.tagline}>Bufete de Abogados</Text>
+          <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
         </View>
 
         <Form style={styles.formSection}>
