@@ -1,0 +1,34 @@
+name: Clean Artifacts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old github-pages artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: artifacts } = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const toDelete = artifacts.artifacts.filter(a => a.name === 'github-pages');
+            if (toDelete.length === 0) {
+              console.log('No artifacts to delete');
+              return;
+            }
+            for (const artifact of toDelete) {
+              await github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: artifact.id
+              });
+              console.log(`Deleted artifact: ${artifact.name} (${artifact.id})`);
+            }
+            console.log(`Deleted ${toDelete.length} artifacts`);
