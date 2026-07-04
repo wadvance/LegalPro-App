@@ -7,7 +7,6 @@ import { useTheme } from '../context/ThemeContext';
 import { SIZES } from '../utils/theme';
 
 import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
 import AuthLoader from '../screens/AuthLoader';
 import HomeScreen from '../screens/HomeScreen';
 import ClientsScreen from '../screens/ClientsScreen';
@@ -123,7 +122,6 @@ export default function AppNavigator({ navigationRef }) {
         }}
       >
         <Stack.Screen name="AuthLoader" component={AuthLoader} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Companies" component={CompaniesScreen} />
