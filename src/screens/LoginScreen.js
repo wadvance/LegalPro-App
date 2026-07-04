@@ -69,11 +69,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={[styles.container, { backgroundColor: colors.primary }]}
+      style={Object.assign({}, styles.container, { backgroundColor: colors.primary })}
       behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'web' ? undefined : 'height'}
     >
       <ScrollView
-        contentContainerStyle={[styles.scrollContent, { backgroundColor: colors.primary }]}
+        contentContainerStyle={Object.assign({}, styles.scrollContent, { backgroundColor: colors.primary })}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.logoSection}>
@@ -83,19 +83,19 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.appName}>Bufete de Abogados</Text>
               <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
             </View>
-            <TouchableOpacity onPress={toggleTheme} style={[styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.15)' }]}>
+            <TouchableOpacity onPress={toggleTheme} style={Object.assign({}, styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.15)' })}>
               <Text style={styles.themeIcon}>{isDark ? '☀️' : '🌙'}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Form style={[styles.formSection, { backgroundColor: colors.surface }]}>
-          <Text style={[styles.welcomeText, { color: colors.text }]}>Iniciar Sesión</Text>
+        <Form style={Object.assign({}, styles.formSection, { backgroundColor: colors.surface })}>
+          <Text style={Object.assign({}, styles.welcomeText, { color: colors.text })}>Iniciar Sesión</Text>
 
-          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
+          <View style={Object.assign({}, styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border })}>
             <Text style={styles.inputIcon}>✉️</Text>
             <AppTextInput
-              style={[styles.input, { color: colors.text }]}
+              style={Object.assign({}, styles.input, { color: colors.text })}
               placeholder="Correo electrónico"
               placeholderTextColor={colors.disabled}
               value={email}
@@ -108,10 +108,10 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
+          <View style={Object.assign({}, styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border })}>
             <Text style={styles.inputIcon}>🔒</Text>
             <AppTextInput
-              style={[styles.input, { color: colors.text }]}
+              style={Object.assign({}, styles.input, { color: colors.text })}
               placeholder="Contraseña"
               placeholderTextColor={colors.disabled}
               value={password}
@@ -131,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={[styles.loginButton, { backgroundColor: colors.primary, shadowColor: colors.primary }, loading && styles.buttonDisabled]}
+            style={Object.assign({}, styles.loginButton, { backgroundColor: colors.primary, shadowColor: colors.primary }, loading && styles.buttonDisabled)}
             onPress={handleLogin}
             disabled={loading}
           >
@@ -141,17 +141,17 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
-            <Text style={[styles.linkText, { color: colors.primary }]}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
+            <Text style={Object.assign({}, styles.linkText, { color: colors.primary })}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
           </TouchableOpacity>
 
           <View style={styles.dividerRow}>
-            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
-            <Text style={[styles.dividerText, { color: colors.textSecondary }]}>O</Text>
-            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+            <View style={Object.assign({}, styles.dividerLine, { backgroundColor: colors.border })} />
+            <Text style={Object.assign({}, styles.dividerText, { color: colors.textSecondary })}>O</Text>
+            <View style={Object.assign({}, styles.dividerLine, { backgroundColor: colors.border })} />
           </View>
 
           <TouchableOpacity
-            style={[styles.googleButton, { borderColor: colors.border }, googleLoading && styles.buttonDisabled]}
+            style={Object.assign({}, styles.googleButton, { borderColor: colors.border }, googleLoading && styles.buttonDisabled)}
             onPress={() => {
               setGoogleLoading(true);
               loginWithGoogle().then((result) => {
@@ -171,7 +171,7 @@ const LoginScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           {recoveryMsg ? (
-            <Text style={[styles.recoveryText, { color: colors.primary }]}>{recoveryMsg}</Text>
+            <Text style={Object.assign({}, styles.recoveryText, { color: colors.primary })}>{recoveryMsg}</Text>
           ) : null}
         </Form>
       </ScrollView>
