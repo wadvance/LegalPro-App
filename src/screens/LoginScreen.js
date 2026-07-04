@@ -69,11 +69,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={Object.assign({}, styles.container, { backgroundColor: colors.primary })}
+      style={Object.assign({}, styles.container, { backgroundColor: colors.headerBg })}
       behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'web' ? undefined : 'height'}
     >
       <ScrollView
-        contentContainerStyle={Object.assign({}, styles.scrollContent, { backgroundColor: colors.primary })}
+        contentContainerStyle={Object.assign({}, styles.scrollContent, { backgroundColor: colors.headerBg })}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.logoSection}>
@@ -151,7 +151,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={Object.assign({}, styles.googleButton, { borderColor: colors.border }, googleLoading && styles.buttonDisabled)}
+            style={Object.assign({}, styles.googleButton, { borderColor: colors.border, backgroundColor: isDark ? '#2A2A2A' : '#FFFFFF' }, googleLoading && styles.buttonDisabled)}
             onPress={() => {
               setGoogleLoading(true);
               loginWithGoogle().then((result) => {
@@ -165,8 +165,8 @@ const LoginScreen = ({ navigation }) => {
             }}
             disabled={googleLoading}
           >
-            <Text style={styles.googleIcon}>G</Text>
-            <Text style={styles.googleButtonText}>
+            <Text style={Object.assign({}, styles.googleIcon, { backgroundColor: isDark ? '#333' : '#FFFFFF' })}>G</Text>
+            <Text style={Object.assign({}, styles.googleButtonText, { color: isDark ? colors.textSecondary : '#555555' })}>
               {googleLoading ? 'Conectando...' : 'Continuar con Google'}
             </Text>
           </TouchableOpacity>
@@ -322,7 +322,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#4285F4',
-    backgroundColor: '#FFFFFF',
     width: 28,
     height: 28,
     textAlign: 'center',
@@ -331,7 +330,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   googleButtonText: {
-    color: '#555555',
     fontSize: SIZES.md,
     fontWeight: '600',
   },
