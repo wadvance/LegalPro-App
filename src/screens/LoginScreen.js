@@ -5,13 +5,13 @@ import {
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { loginUser, resetPassword, loginWithGoogle } from '../../firebase/auth';
-import { COLORS, SIZES } from '../utils/theme';
+import { SIZES } from '../utils/theme';
 import { useTheme } from '../context/ThemeContext';
 import Form from '../components/Form';
 import AppTextInput from '../components/AppTextInput';
 
 const LoginScreen = ({ navigation }) => {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme, colors } = useTheme();
   const isFocused = useIsFocused();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -69,11 +69,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.primary }]}
       behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'web' ? undefined : 'height'}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { backgroundColor: colors.primary }]}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.logoSection}>
@@ -83,21 +83,21 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.appName}>Bufete de Abogados</Text>
               <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
             </View>
-            <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
+            <TouchableOpacity onPress={toggleTheme} style={[styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.15)' }]}>
               <Text style={styles.themeIcon}>{isDark ? '☀️' : '🌙'}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Form style={styles.formSection}>
-          <Text style={styles.welcomeText}>Iniciar Sesión</Text>
+        <Form style={[styles.formSection, { backgroundColor: colors.surface }]}>
+          <Text style={[styles.welcomeText, { color: colors.text }]}>Iniciar Sesión</Text>
 
-          <View style={styles.inputContainer}>
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Text style={styles.inputIcon}>✉️</Text>
             <AppTextInput
-              style={styles.input}
+              style={[styles.input, { color: colors.text }]}
               placeholder="Correo electrónico"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor={colors.disabled}
               value={email}
               onChangeText={setEmail}
               autoCapitalize="none"
@@ -108,12 +108,12 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
-          <View style={styles.inputContainer}>
+          <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
             <Text style={styles.inputIcon}>🔒</Text>
             <AppTextInput
-              style={styles.input}
+              style={[styles.input, { color: colors.text }]}
               placeholder="Contraseña"
-              placeholderTextColor={COLORS.disabled}
+              placeholderTextColor={colors.disabled}
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -131,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            style={[styles.loginButton, loading && styles.buttonDisabled]}
+            style={[styles.loginButton, { backgroundColor: colors.primary, shadowColor: colors.primary }, loading && styles.buttonDisabled]}
             onPress={handleLogin}
             disabled={loading}
           >
@@ -141,17 +141,17 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleResetPassword} style={styles.linkButton}>
-            <Text style={styles.linkText}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
+            <Text style={[styles.linkText, { color: colors.primary }]}>{recovering ? 'Buscando...' : '¿Olvidó su contraseña?'}</Text>
           </TouchableOpacity>
 
           <View style={styles.dividerRow}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>O</Text>
-            <View style={styles.dividerLine} />
+            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+            <Text style={[styles.dividerText, { color: colors.textSecondary }]}>O</Text>
+            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
           </View>
 
           <TouchableOpacity
-            style={[styles.googleButton, googleLoading && styles.buttonDisabled]}
+            style={[styles.googleButton, { borderColor: colors.border }, googleLoading && styles.buttonDisabled]}
             onPress={() => {
               setGoogleLoading(true);
               loginWithGoogle().then((result) => {
@@ -171,7 +171,7 @@ const LoginScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
           {recoveryMsg ? (
-            <Text style={styles.recoveryText}>{recoveryMsg}</Text>
+            <Text style={[styles.recoveryText, { color: colors.primary }]}>{recoveryMsg}</Text>
           ) : null}
         </Form>
       </ScrollView>
@@ -180,7 +180,7 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.primary },
+  container: { flex: 1 },
   scrollContent: { flexGrow: 1, justifyContent: 'center' },
   logoSection: {
     paddingVertical: 40,
@@ -200,7 +200,6 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.15)',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 4,
@@ -222,7 +221,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   formSection: {
-    backgroundColor: COLORS.surface,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 30,
@@ -233,26 +231,22 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: SIZES.xxl,
     fontWeight: 'bold',
-    color: COLORS.text,
     marginBottom: 25,
     textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.background,
     borderRadius: 15,
     paddingHorizontal: 15,
     marginBottom: 15,
     height: 55,
     borderWidth: 1,
-    borderColor: COLORS.border,
   },
   inputIcon: { fontSize: 18, marginRight: 10 },
   input: {
     flex: 1,
     fontSize: SIZES.md,
-    color: COLORS.text,
     ...Platform.select({
       web: {
         outline: 'none',
@@ -269,13 +263,11 @@ const styles = StyleSheet.create({
   eyeButton: { padding: 8, justifyContent: 'center', alignItems: 'center' },
   eyeIcon: { fontSize: 20 },
   loginButton: {
-    backgroundColor: COLORS.primary,
     borderRadius: 15,
     height: 55,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    shadowColor: COLORS.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -290,13 +282,11 @@ const styles = StyleSheet.create({
   },
   linkButton: { alignItems: 'center', marginTop: 18 },
   linkText: {
-    color: COLORS.primary,
     fontSize: SIZES.sm,
     fontWeight: '600',
     textDecorationLine: 'underline',
   },
   recoveryText: {
-    color: COLORS.primary,
     fontSize: SIZES.md,
     fontWeight: '700',
     textAlign: 'center',
@@ -312,11 +302,9 @@ const styles = StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: COLORS.border,
   },
   dividerText: {
     marginHorizontal: 12,
-    color: COLORS.textSecondary,
     fontSize: SIZES.sm,
     fontWeight: '600',
   },
@@ -327,7 +315,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: COLORS.border,
     backgroundColor: '#FFFFFF',
     gap: 10,
   },
