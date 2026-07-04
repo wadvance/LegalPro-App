@@ -164,13 +164,6 @@ const LoginScreen = ({ navigation }) => {
           {recoveryMsg ? (
             <Text style={styles.recoveryText}>{recoveryMsg}</Text>
           ) : null}
-
-          <View style={styles.registerSection}>
-            <Text style={styles.noAccount}>¿No tiene cuenta? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerLink}>Regístrese aquí</Text>
-            </TouchableOpacity>
-          </View>
         </Form>
       </ScrollView>
     </KeyboardAvoidingView>
