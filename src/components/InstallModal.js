@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { SIZES } from '../utils/theme';
-import { tryInstall } from '../services/installApp';
+import { tryInstall, hasDeferredPrompt } from '../services/installApp';
 
 const androidSteps = [
   { icon: '🌐', text: 'Abre Google Chrome' },
@@ -119,7 +119,7 @@ export default function InstallModal({ visible, onClose }) {
             ))}
           </ScrollView>
 
-          {Platform.OS === 'web' && (
+          {Platform.OS === 'web' && hasDeferredPrompt() && (
             <TouchableOpacity
               style={[styles.webBtn, { backgroundColor: colors.primary }]}
               onPress={async () => {

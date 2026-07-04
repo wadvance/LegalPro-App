@@ -48,6 +48,10 @@ export function isRunningStandalone() {
   );
 }
 
+export function hasDeferredPrompt() {
+  return !!(deferredPrompt || window.__deferredPrompt);
+}
+
 export function getBrowser() {
   if (typeof window === 'undefined') return Platform.OS;
   const ua = window.navigator.userAgent;
