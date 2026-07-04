@@ -45,14 +45,15 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: artifacts } = await github.rest.actions.listArtifactsForOrg({
-              org: context.repo.owner,
-              per_page: 100
+            const { data: artifacts } = await github.rest.actions.listArtifactsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo
             });
             const toDelete = artifacts.artifacts.filter(a => a.name === 'github-pages');
             for (const artifact of toDelete) {
               await github.rest.actions.deleteArtifact({
-                org: context.repo.owner,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 artifact_id: artifact.id
               });
             }
