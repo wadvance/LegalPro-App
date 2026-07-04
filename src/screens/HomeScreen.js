@@ -115,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.headerText}>
               <Text style={styles.greeting}>Bienvenido,</Text>
               <Text style={styles.userName}>{profile?.nombre || 'Usuario'}</Text>
-              <Text style={styles.slogan}>Justicia y excelencia legal</Text>
+              <Text style={styles.slogan}>Justicia cercana, soluciones reales</Text>
             </View>
           </View>
           <View style={styles.headerActions}>
@@ -259,7 +259,7 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={styles.footer}>
           <Text style={[styles.footerText, { color: colors.disabled }]}>Bufete de Abogados</Text>
-          <Text style={[styles.footerSubtext, { color: colors.disabled }]}>Justicia y excelencia legal</Text>
+          <Text style={[styles.footerSubtext, { color: colors.disabled }]}>Justicia cercana, soluciones reales</Text>
         </View>
       </ScrollView>
     </View>
