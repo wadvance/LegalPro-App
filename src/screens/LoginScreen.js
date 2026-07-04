@@ -6,10 +6,12 @@ import {
 import { useIsFocused } from '@react-navigation/native';
 import { loginUser, resetPassword, loginWithGoogle } from '../../firebase/auth';
 import { COLORS, SIZES } from '../utils/theme';
+import { useTheme } from '../context/ThemeContext';
 import Form from '../components/Form';
 import AppTextInput from '../components/AppTextInput';
 
 const LoginScreen = ({ navigation }) => {
+  const { isDark, toggleTheme } = useTheme();
   const isFocused = useIsFocused();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,9 +77,16 @@ const LoginScreen = ({ navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.logoSection}>
-          <Text style={styles.logoIcon}>⚖️</Text>
-          <Text style={styles.appName}>Bufete de Abogados</Text>
-          <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
+          <View style={styles.logoRow}>
+            <View style={styles.logoStack}>
+              <Text style={styles.logoIcon}>⚖️</Text>
+              <Text style={styles.appName}>Bufete de Abogados</Text>
+              <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
+            </View>
+            <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
+              <Text style={styles.themeIcon}>{isDark ? '☀️' : '🌙'}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <Form style={styles.formSection}>
@@ -174,9 +183,30 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.primary },
   scrollContent: { flexGrow: 1, justifyContent: 'center' },
   logoSection: {
-    alignItems: 'center',
     paddingVertical: 40,
     paddingTop: 60,
+  },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+  },
+  logoStack: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  themeToggle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  themeIcon: {
+    fontSize: 22,
   },
   logoIcon: { fontSize: 60, marginBottom: 10 },
   appName: {
@@ -318,21 +348,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.md,
     fontWeight: '600',
   },
-  registerSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 25,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-  },
-  noAccount: { color: COLORS.textSecondary, fontSize: SIZES.sm },
-  registerLink: {
-    color: COLORS.primary,
-    fontSize: SIZES.sm,
-    fontWeight: '700',
-    textDecorationLine: 'underline',
-  },
+
 });
 
 export default LoginScreen;
