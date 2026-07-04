@@ -57,13 +57,13 @@ const headTags = `
           navigator.serviceWorker.register('${basePath}/sw.js', { scope: '${basePath}/' });
         });
       }
-      var deferredPrompt;
+      window.__deferredPrompt = null;
       window.addEventListener('beforeinstallprompt', function(e) {
         e.preventDefault();
-        deferredPrompt = e;
+        window.__deferredPrompt = e;
       });
       window.addEventListener('appinstalled', function() {
-        deferredPrompt = null;
+        window.__deferredPrompt = null;
       });
     </script>`;
 

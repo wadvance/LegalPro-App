@@ -2,11 +2,15 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
+import { useInstall } from '../context/InstallContext';
 import { SIZES } from '../utils/theme';
+import { canInstall } from '../services/installApp';
 
-const Header = ({ title, subtitle, onBack, rightAction, rightIcon }) => {
+const Header = ({ title, subtitle, onBack, rightAction, rightIcon, onInstall: onInstallProp }) => {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
+  const { onInstall: contextInstall } = useInstall();
+  const installHandler = onInstallProp || contextInstall;
   return (
     <View style={[styles.container, { backgroundColor: colors.headerBg, paddingTop: insets.top + 16 }]}>
       <View style={styles.content}>
@@ -21,11 +25,18 @@ const Header = ({ title, subtitle, onBack, rightAction, rightIcon }) => {
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
         </View>
-        {rightAction && (
-          <TouchableOpacity onPress={rightAction} style={[styles.rightBtn, { backgroundColor: colors.secondary }]}>
-            <Text style={styles.rightIcon}>{rightIcon || '+'}</Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.rightSection}>
+          {Platform.OS === 'web' && canInstall() && (
+            <TouchableOpacity onPress={installHandler} style={[styles.installBtn, { backgroundColor: colors.overlay }]}>
+              <Text style={styles.installIcon}>📥</Text>
+            </TouchableOpacity>
+          )}
+          {rightAction && (
+            <TouchableOpacity onPress={rightAction} style={[styles.rightBtn, { backgroundColor: colors.secondary }]}>
+              <Text style={styles.rightIcon}>{rightIcon || '+'}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -75,6 +86,21 @@ const styles = StyleSheet.create({
     fontSize: SIZES.xs,
     color: 'rgba(255,255,255,0.7)',
     marginTop: 2,
+  },
+  rightSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  installBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  installIcon: {
+    fontSize: 20,
   },
   rightBtn: {
     width: 40,

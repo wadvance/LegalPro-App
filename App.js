@@ -2,7 +2,10 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { StatusBar, LogBox, View, Text, StyleSheet, AppState, Keyboard } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
+import { InstallProvider, useInstall } from './src/context/InstallContext';
 import AppNavigator from './src/navigation/AppNavigator';
+import InstallBanner from './src/components/InstallBanner';
+import InstallModal from './src/components/InstallModal';
 import { logoutUser, getCurrentUser } from './firebase/auth';
 
 const IDLE_TIMEOUT = 10 * 60 * 1000; // 10 minutos de inactividad
@@ -115,10 +118,25 @@ const styles = StyleSheet.create({
 function AppContent({ navigationRef }) {
   const { isDark } = useTheme();
   return (
-    <IdleTimerProvider navigationRef={navigationRef}>
-      <StatusBar barStyle="light-content" backgroundColor="#1A237E" />
-      <AppNavigator navigationRef={navigationRef} />
-    </IdleTimerProvider>
+    <InstallProvider>
+      <IdleTimerProvider navigationRef={navigationRef}>
+        <StatusBar barStyle="light-content" backgroundColor="#1A237E" />
+        <AppNavigator navigationRef={navigationRef} />
+        <BannerAndModal />
+      </IdleTimerProvider>
+    </InstallProvider>
+  );
+}
+
+function BannerAndModal() {
+  const { showBanner, dismissBanner, onBannerInstall, showModal, closeModal } = useInstall();
+  return (
+    <>
+      {showBanner && (
+        <InstallBanner onInstall={onBannerInstall} onDismiss={dismissBanner} />
+      )}
+      <InstallModal visible={showModal} onClose={closeModal} />
+    </>
   );
 }
 
