@@ -69,23 +69,23 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={Object.assign({}, styles.container, { backgroundColor: colors.headerBg })}
+      style={Object.assign({}, styles.container, { backgroundColor: colors.background })}
       behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'web' ? undefined : 'height'}
     >
       <ScrollView
-        contentContainerStyle={Object.assign({}, styles.scrollContent, { backgroundColor: colors.headerBg })}
+        contentContainerStyle={Object.assign({}, styles.scrollContent, { backgroundColor: colors.background })}
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.logoSection}>
           <View style={styles.logoRow}>
-            <View style={styles.logoStack}>
-              <Text style={styles.logoIcon}>⚖️</Text>
-              <Text style={styles.appName}>Bufete de Abogados</Text>
-              <Text style={styles.tagline}>Justicia cercana, soluciones reales</Text>
-            </View>
-            <TouchableOpacity onPress={toggleTheme} style={Object.assign({}, styles.themeToggle, { backgroundColor: 'rgba(255,255,255,0.15)' })}>
+            <TouchableOpacity onPress={toggleTheme} style={Object.assign({}, styles.themeToggle, { backgroundColor: colors.overlay })}>
               <Text style={styles.themeIcon}>{isDark ? '☀️' : '🌙'}</Text>
             </TouchableOpacity>
+          </View>
+          <View style={styles.logoStack}>
+            <Text style={styles.logoIcon}>⚖️</Text>
+            <Text style={Object.assign({}, styles.appName, { color: colors.text })}>Bufete de Abogados</Text>
+            <Text style={Object.assign({}, styles.tagline, { color: colors.textSecondary })}>Justicia cercana, soluciones reales</Text>
           </View>
         </View>
 
@@ -183,18 +183,17 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   scrollContent: { flexGrow: 1, justifyContent: 'center' },
   logoSection: {
-    paddingVertical: 40,
+    paddingVertical: 30,
     paddingTop: 60,
   },
   logoRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingHorizontal: 24,
+    marginBottom: 20,
   },
   logoStack: {
     alignItems: 'center',
-    flex: 1,
   },
   themeToggle: {
     width: 44,
@@ -202,31 +201,32 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 4,
   },
   themeIcon: {
     fontSize: 22,
   },
-  logoIcon: { fontSize: 60, marginBottom: 10 },
+  logoIcon: { fontSize: 56, marginBottom: 10 },
   appName: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: 'bold',
-    color: '#FFFFFF',
     letterSpacing: 1,
   },
   tagline: {
     fontSize: SIZES.sm,
-    color: 'rgba(255,255,255,0.7)',
-    marginTop: 8,
+    marginTop: 6,
     fontStyle: 'italic',
   },
   formSection: {
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    borderRadius: 20,
     paddingHorizontal: 30,
-    paddingTop: 40,
-    paddingBottom: 50,
-    marginTop: 20,
+    paddingVertical: 40,
+    marginHorizontal: 16,
+    marginBottom: 40,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
   },
   welcomeText: {
     fontSize: SIZES.xxl,
@@ -315,7 +315,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 15,
     borderWidth: 1,
-    backgroundColor: '#FFFFFF',
     gap: 10,
   },
   googleIcon: {
