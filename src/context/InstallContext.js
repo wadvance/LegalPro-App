@@ -18,16 +18,24 @@ export function InstallProvider({ children }) {
 
   const handleInstall = useCallback(async () => {
     setShowBanner(false);
-    const installed = await tryInstall();
-    if (!installed) {
+    try {
+      const installed = await tryInstall();
+      if (!installed) {
+        setShowModal(true);
+      }
+    } catch {
       setShowModal(true);
     }
   }, []);
 
   const handleBannerInstall = useCallback(async () => {
     setShowBanner(false);
-    const installed = await tryInstall();
-    if (!installed) {
+    try {
+      const installed = await tryInstall();
+      if (!installed) {
+        setShowModal(true);
+      }
+    } catch {
       setShowModal(true);
     }
   }, []);

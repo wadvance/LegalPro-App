@@ -29,14 +29,16 @@ export function canInstall() {
 
 export async function tryInstall() {
   const prompt = deferredPrompt || window.__deferredPrompt || null;
-  if (prompt) {
+  if (!prompt) return false;
+  deferredPrompt = null;
+  window.__deferredPrompt = null;
+  try {
     prompt.prompt();
     const result = await prompt.userChoice;
-    deferredPrompt = null;
-    window.__deferredPrompt = null;
     return result.outcome === 'accepted';
+  } catch {
+    return false;
   }
-  return false;
 }
 
 export function isRunningStandalone() {

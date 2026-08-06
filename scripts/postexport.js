@@ -29,8 +29,14 @@ html = html
 
 html = html.replace('<html lang="en">', '<html lang="es">');
 
+html = html.replace(
+  '<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />',
+  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />'
+);
+
 const headTags = `
     <link rel="manifest" href="${basePath}/manifest.json" />
+    <meta name="theme-color" content="#1A237E" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Bufete de Abogados" />
@@ -48,9 +54,16 @@ const headTags = `
       var root = document.getElementById('root');
       if (root) root.innerHTML = '<div class="loading-message"><div style="text-align:center"><div style="font-size:48px;margin-bottom:16px">⚖️</div><div>Cargando...</div></div></div>';
       window.addEventListener('error', function(e) {
+        var isScriptError = e.target && e.target.tagName === 'SCRIPT';
+        var isRuntimeError = !e.target || e.target === window;
+        if (!isScriptError && !isRuntimeError) return;
         var d = document.getElementById('root');
         if (d) d.innerHTML = '<div style="padding:40px;font-family:sans-serif;background:#fff;min-height:100vh"><h2 style="color:#D32F2F">Error de carga</h2><pre style="white-space:pre-wrap;color:#333;font-size:14px">' + (e.message || (e.error && e.error.message) || 'Unknown error') + '</pre><p style="color:#888;font-size:12px">' + (e.filename || '') + ':' + (e.lineno || '') + ':' + (e.colno || '') + '</p></div>';
         return false;
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        var d = document.getElementById('root');
+        if (d) d.innerHTML = '<div style="padding:40px;font-family:sans-serif;background:#fff;min-height:100vh"><h2 style="color:#D32F2F">Error de carga</h2><pre style="white-space:pre-wrap;color:#333;font-size:14px">' + (e.reason && (e.reason.message || String(e.reason)) || 'Unhandled rejection') + '</pre><p style="color:#888;font-size:12px">unhandledrejection</p></div>';
       });
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {

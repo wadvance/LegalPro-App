@@ -1,6 +1,6 @@
 const BASE_PATH = '/LegalPro-App';
-const CACHE_NAME = 'legalpro-app-v3';
-const STATIC_CACHE = 'legalpro-static-v3';
+const CACHE_NAME = 'legalpro-app-v4';
+const STATIC_CACHE = 'legalpro-static-v4';
 
 const PRECACHE_URLS = [
   `${BASE_PATH}/`,
@@ -64,7 +64,7 @@ self.addEventListener('fetch', (event) => {
           const clone = response.clone();
           caches.open(STATIC_CACHE).then((cache) => cache.put(event.request, clone));
           return response;
-        });
+        }).catch(() => caches.match(event.request));
       })
     );
     return;
