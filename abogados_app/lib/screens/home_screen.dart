@@ -10,9 +10,9 @@ import '../utils/ayudas.dart' as ay;
 /// Replica src/screens/HomeScreen.js (header, métricas, citas, accesos).
 class HomeScreen extends StatefulWidget {
   final ThemeController themeController;
-  final void Function(int) irATab;
+  final void Function(String destino) navegar;
   const HomeScreen(
-      {super.key, required this.themeController, required this.irATab});
+      {super.key, required this.themeController, required this.navegar});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -298,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                         color: c.text)),
                 TextButton(
-                  onPressed: () => widget.irATab(3),
+                  onPressed: () => widget.navegar('citas'),
                   child: const Text('Ver todas'),
                 ),
               ],
@@ -327,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Cliente: ${data['clienteNombre'] ?? ''} • ${data['hora'] ?? ''}'),
                   trailing: const Text('›',
                       style: TextStyle(fontSize: 22)),
-                  onTap: () => widget.irATab(3),
+                  onTap: () => widget.navegar('citas'),
                 ),
               );
             }),
@@ -340,15 +340,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _accesoRapido(AppColors c) {
     final isDark = widget.themeController.isDark;
     final accesos = [
-      ('👥', 'Clientes', const Color(0xFF1976D2), 1),
-      ('📁', 'Expedientes', const Color(0xFF388E3C), 2),
-      ('📅', 'Citas', const Color(0xFFF57C00), 3),
-      ('💰', 'Cobros', const Color(0xFFD32F2F), 4),
-      ('📍', 'GPS', const Color(0xFFE91E63), 5),
-      ('🧮', 'Calculadoras', const Color(0xFF7B1FA2), -1),
-      ('⚖️', 'Leyes', const Color(0xFF1A237E), -1),
-      ('💬', 'Chatbot', const Color(0xFF00897B), -1),
-      ('📊', 'Reportes', const Color(0xFF5D4037), -1),
+      ('👥', 'Clientes', const Color(0xFF1976D2), 'clientes'),
+      ('📁', 'Expedientes', const Color(0xFF388E3C), 'expedientes'),
+      ('📅', 'Citas', const Color(0xFFF57C00), 'citas'),
+      ('💰', 'Cobros', const Color(0xFFD32F2F), 'cobros'),
+      ('📍', 'GPS', const Color(0xFFE91E63), 'gps'),
+      ('🏢', 'Empresas', const Color(0xFF0277BD), 'empresas'),
+      ('⚖️', 'Seguimiento', const Color(0xFF455A64), 'seguimiento'),
+      ('🧮', 'Calculadoras', const Color(0xFF7B1FA2), 'calculadoras'),
+      ('⚖️', 'Leyes', const Color(0xFF1A237E), 'leyes'),
+      ('💬', 'Chatbot', const Color(0xFF00897B), 'chatbot'),
+      ('📊', 'Reportes', const Color(0xFF5D4037), 'reportes'),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,19 +372,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.1),
           itemCount: accesos.length,
           itemBuilder: (_, i) {
-            final (icono, titulo, color, tab) = accesos[i];
+            final (icono, titulo, color, destino) = accesos[i];
             return InkWell(
-              onTap: () {
-                if (tab >= 0) {
-                  widget.irATab(tab);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: Text(
-                            '$titulo disponible en la fase 2')),
-                  );
-                }
-              },
+              onTap: () => widget.navegar(destino),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
