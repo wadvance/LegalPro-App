@@ -11,8 +11,12 @@ import '../utils/ayudas.dart' as ay;
 class HomeScreen extends StatefulWidget {
   final ThemeController themeController;
   final void Function(String destino) navegar;
+  final VoidCallback onInstalar;
   const HomeScreen(
-      {super.key, required this.themeController, required this.navegar});
+      {super.key,
+      required this.themeController,
+      required this.navegar,
+      required this.onInstalar});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -191,6 +195,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Color(0xFFC5A028))),
               ],
             ),
+          ),
+          IconButton(
+            onPressed: widget.onInstalar,
+            icon: const Text('📥',
+                style: TextStyle(fontSize: 20)),
+            tooltip: 'Instalar app',
           ),
           IconButton(
             onPressed: () => widget.themeController.toggle(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../widgets/instalacion.dart';
 import 'calculadoras_screen.dart';
 import 'chatbot_screen.dart';
 import 'citas_screen.dart';
@@ -25,6 +26,20 @@ class MainTabs extends StatefulWidget {
 
 class _MainTabsState extends State<MainTabs> {
   int _indice = 0;
+  late final InstallController _installController;
+
+  @override
+  void initState() {
+    super.initState();
+    _installController = InstallController()
+      ..addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _installController.dispose();
+    super.dispose();
+  }
 
   void _navegar(String destino) {
     const tabs = {
@@ -67,7 +82,8 @@ class _MainTabsState extends State<MainTabs> {
     final pantallas = [
       HomeScreen(
           themeController: widget.themeController,
-          navegar: _navegar),
+          navegar: _navegar,
+          onInstalar: _installController.abrirModal),
       ClientesScreen(themeController: widget.themeController),
       ExpedientesScreen(themeController: widget.themeController),
       CitasScreen(themeController: widget.themeController),
@@ -84,7 +100,17 @@ class _MainTabsState extends State<MainTabs> {
     ];
 
     return Scaffold(
-      body: IndexedStack(index: _indice, children: pantallas),
+      body: Stack(
+        children: [
+          IndexedStack(index: _indice, children: pantallas),
+          if (_installController.banner)
+            InstallBanner(
+                controller: _installController, c: c),
+          if (_installController.modal)
+            InstallModal(
+                controller: _installController, c: c),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _indice,
         onTap: (i) => setState(() => _indice = i),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'screens/auth_gate.dart';
+import 'services/instalacion_service.dart';
 import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  InstalacionService.inicializar();
   runApp(const MyApp());
 }
 
