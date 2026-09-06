@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-// ============================================================
-// CONFIGURA AQUI LA URL DE TU API (archivo api.php en Alwaysdata)
-// Ejemplo: 'https://TU_USUARIO.alwaysdata.net/api.php'
-// Tambien la puedes cambiar dentro de la app en el campo "URL de la API".
-// ============================================================
-const String kApiBaseUrl = 'https://TU_USUARIO.alwaysdata.net/api.php';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,59 +37,84 @@ class DatabaseScreen extends StatefulWidget {
 }
 
 class _DatabaseScreenState extends State<DatabaseScreen> {
-  final TextEditingController _apiController =
-      TextEditingController(text: kApiBaseUrl);
-
-  String _estadoConexion = 'Desconectado';
-  String _mensaje = 'Configura la URL de tu API de Alwaysdata para empezar.';
+  String _estadoConexion = 'Iniciando...';
+  String _mensaje = 'Conectando con Firebase...';
   List<Map<String, String>> _registros = [];
   bool _cargando = false;
+  bool _firebaseListo = false;
 
-  String get _apiUrl => _apiController.text.trim();
+  static const Duration _timeout = Duration(seconds: 15);
 
   @override
-  void dispose() {
-    _apiController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _iniciarFirebase();
   }
 
-  Future<void> _probarConexion() async {
-    if (_apiUrl.isEmpty || _apiUrl.contains('TU_USUARIO')) {
-      setState(() {
-        _estadoConexion = 'Falta configurar';
-        _mensaje =
-            'Pega la URL de tu api.php de Alwaysdata en el campo "URL de la API". Ver la carpeta abogados_app/api/README.md.';
-      });
-      return;
-    }
-
+  Future<void> _iniciarFirebase() async {
     setState(() {
       _cargando = true;
       _estadoConexion = 'Conectando...';
-      _mensaje = 'Contactando $_apiUrl...';
+      _mensaje = 'Conectando con Firebase (bufete-abogados)...';
     });
-
     try {
-      final uri = Uri.parse('$_apiUrl?action=list');
-      final resp = await http.get(uri).timeout(const Duration(seconds: 15));
-      if (resp.statusCode != 200) {
-        throw Exception('HTTP ${resp.statusCode}');
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ).timeout(_timeout);
+      await FirebaseAuth.instance.signInAnonymously().timeout(_timeout);
+      if (!mounted) return;
+      setState(() {
+        _firebaseListo = true;
+      });
+      await _probarConexion();
+    } on TimeoutException {
+      if (!mounted) return;
+      setState(() {
+        _estadoConexion = 'Sin respuesta';
+        _mensaje =
+            'Firebase tardo mas de 15 segundos. Revisa tu conexion a internet.';
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _estadoConexion = 'Error de conexion';
+        _mensaje = 'No se pudo iniciar Firebase: $e';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _cargando = false;
+        });
       }
-      final body = jsonDecode(resp.body) as Map<String, dynamic>;
-      if (body['ok'] != true) {
-        throw Exception(body['error'] ?? 'La API devolvio un error.');
-      }
-      final datos = (body['data'] as List?) ?? [];
+    }
+  }
+
+  CollectionReference<Map<String, dynamic>> get _coleccion =>
+      FirebaseFirestore.instance.collection('registros');
+
+  Future<void> _probarConexion() async {
+    if (!_firebaseListo) {
+      await _iniciarFirebase();
+      return;
+    }
+    setState(() {
+      _cargando = true;
+      _estadoConexion = 'Conectando...';
+      _mensaje = 'Leyendo coleccion "registros" en Firestore...';
+    });
+    try {
+      final snap =
+          await _coleccion.orderBy('creado', descending: true).limit(20).get().timeout(_timeout);
       if (!mounted) return;
       setState(() {
         _estadoConexion = 'Conectado';
-        _mensaje = 'Conexion exitosa con la API y MySQL en Alwaysdata.';
-        _registros = datos.map((e) {
-          final m = e as Map;
+        _mensaje = 'Conexion exitosa con Firestore (bufete-abogados).';
+        _registros = snap.docs.map((d) {
+          final data = d.data();
           return {
-            'id': '${m['id'] ?? ''}',
-            'nombre': '${m['nombre'] ?? 'Sin nombre'}',
-            'valor': '${m['valor'] ?? ''}',
+            'id': d.id,
+            'nombre': '${data['nombre'] ?? 'Sin nombre'}',
+            'valor': '${data['valor'] ?? ''}',
           };
         }).toList();
       });
@@ -101,14 +122,13 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
       if (!mounted) return;
       setState(() {
         _estadoConexion = 'Sin respuesta';
-        _mensaje =
-            'La API tardo mas de 15 segundos. Revisa la URL y que api.php este subido en Alwaysdata.';
+        _mensaje = 'Firestore tardo mas de 15 segundos en responder.';
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _estadoConexion = 'Error de conexion';
-        _mensaje = 'No se pudo conectar: $e';
+        _mensaje = 'No se pudo leer Firestore: $e';
       });
     } finally {
       if (mounted) {
@@ -120,43 +140,27 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
   }
 
   Future<void> _insertarRegistro() async {
-    if (_apiUrl.isEmpty || _apiUrl.contains('TU_USUARIO')) {
+    if (!_firebaseListo) {
       setState(() {
-        _estadoConexion = 'Falta configurar';
-        _mensaje = 'Primero configura la URL de tu API.';
+        _mensaje = 'Espera a que Firebase se conecte primero.';
       });
       return;
     }
-
     setState(() {
       _cargando = true;
     });
-
     try {
-      final uri = Uri.parse(_apiUrl);
-      final resp = await http
-          .post(
-            uri,
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode({
-              'nombre': 'Registro desde Flutter',
-              'valor': DateTime.now().toIso8601String(),
-            }),
-          )
-          .timeout(const Duration(seconds: 15));
-      if (resp.statusCode != 200) {
-        throw Exception('HTTP ${resp.statusCode}');
-      }
-      final body = jsonDecode(resp.body) as Map<String, dynamic>;
-      if (body['ok'] != true) {
-        throw Exception(body['error'] ?? 'La API devolvio un error.');
-      }
+      await _coleccion.add({
+        'nombre': 'Registro desde Flutter',
+        'valor': DateTime.now().toIso8601String(),
+        'creado': FieldValue.serverTimestamp(),
+      }).timeout(_timeout);
       await _probarConexion();
     } on TimeoutException {
       if (!mounted) return;
       setState(() {
         _estadoConexion = 'Sin respuesta';
-        _mensaje = 'La API tardo mas de 15 segundos al insertar.';
+        _mensaje = 'Firestore tardo mas de 15 segundos al insertar.';
       });
     } catch (e) {
       if (!mounted) return;
@@ -177,7 +181,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conexion MySQL'),
+        title: const Text('Conexion Firebase'),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
@@ -186,7 +190,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildTarjetaApi(),
+            _buildTarjetaInfo(),
             const SizedBox(height: 24),
             _buildTarjetaEstado(),
             const SizedBox(height: 24),
@@ -199,27 +203,22 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
     );
   }
 
-  Widget _buildTarjetaApi() {
+  Widget _buildTarjetaInfo() {
     return Card(
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'URL de la API (Alwaysdata)',
+          children: const [
+            Text(
+              'Base de datos',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _apiController,
-              keyboardType: TextInputType.url,
-              decoration: const InputDecoration(
-                hintText: 'https://TU_USUARIO.alwaysdata.net/api.php',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            SizedBox(height: 8),
+            Text('Proveedor: Firebase (Cloud Firestore)'),
+            Text('Proyecto: bufete-abogados'),
+            Text('Coleccion: registros'),
           ],
         ),
       ),
@@ -327,7 +326,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
               )
             else if (_registros.isEmpty)
               const Text(
-                'No hay datos. Configura tu API y usa "Insertar Registro".',
+                'No hay datos. Usa "Insertar Registro" para crear el primero.',
               )
             else
               ListView.builder(
