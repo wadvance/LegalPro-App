@@ -11,6 +11,7 @@ import 'empresas_screen.dart';
 import 'expedientes_screen.dart';
 import 'gps_screen.dart';
 import 'home_screen.dart';
+import 'ia_legal_screen.dart';
 import 'leyes_screen.dart';
 import 'reportes_screen.dart';
 import 'seguimiento_screen.dart';
@@ -67,6 +68,8 @@ class _MainTabsState extends State<MainTabs> {
           themeController: widget.themeController),
       'chatbot' =>
         ChatbotScreen(themeController: widget.themeController),
+      'ia' =>
+        IaLegalScreen(themeController: widget.themeController),
       _ => null,
     };
     if (pantalla != null && mounted) {
