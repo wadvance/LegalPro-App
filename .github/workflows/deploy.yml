@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Flutter Web to GitHub Pages
 
 on:
   push:
@@ -23,24 +23,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          node-version: 20
-          cache: 'npm'
+          channel: stable
+          cache: true
 
       - name: Install dependencies
-        run: npm ci
+        working-directory: abogados_app
+        run: flutter pub get
 
-      - name: Export web build
-        run: npx expo export --platform web
+      - name: Build web release
+        working-directory: abogados_app
+        run: flutter build web --release --base-href=/LegalPro-App/
 
-      - name: Post-export PWA setup
-        run: node scripts/postexport.js
+      - name: Prepare Pages output
+        run: |
+          touch abogados_app/build/web/.nojekyll
+          cp abogados_app/build/web/index.html abogados_app/build/web/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: abogados_app/build/web
 
       - name: Deploy to GitHub Pages
         id: deployment
