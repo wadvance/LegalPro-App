@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ({int totalClientes, int totalExpedientes, int citasPendientes, double cobrosDelMes})?
       _stats;
   bool _cargando = true;
+  String _error = '';
 
   User get _user => FirebaseAuth.instance.currentUser!;
 
@@ -32,15 +33,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _cargar() async {
-    setState(() => _cargando = true);
+    setState(() {
+      _cargando = true;
+      _error = '';
+    });
     try {
       final perfil = await AuthService.perfil(_user.uid);
+      if (!mounted) return;
+      setState(() => _perfil = perfil);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _error = 'Perfil: $e');
+    }
+    try {
       final stats = await FirestoreService.dashboard(_user.uid);
       if (!mounted) return;
-      setState(() {
-        _perfil = perfil;
-        _stats = stats;
-      });
+      setState(() => _stats = stats);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _error = '${_error.isNotEmpty ? '$_error\n' : ''}Stats: $e');
     } finally {
       if (mounted) setState(() => _cargando = false);
     }
@@ -87,6 +98,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          if (_error.isNotEmpty)
+                            Card(
+                              color: const Color(0xFFFDECEA),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text(_error,
+                                    style: const TextStyle(
+                                        color: Color(0xFFB71C1C),
+                                        fontSize: 12)),
+                              ),
+                            ),
+                          if (_error.isNotEmpty)
+                            const SizedBox(height: 12),
                           _metricas(c),
                           const SizedBox(height: 16),
                           _proximasCitas(c),
@@ -105,6 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                         fontStyle: FontStyle.italic,
                                         fontSize: 12,
+                                        color: c.textSecondary)),
+                                const SizedBox(height: 4),
+                                Text('Mi UID: ${_user.uid}',
+                                    style: TextStyle(
+                                        fontSize: 10,
                                         color: c.textSecondary)),
                               ],
                             ),
@@ -237,6 +266,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirestoreService.proximasCitas(_user.uid),
       builder: (_, snap) {
+        if (snap.hasError) {
+          return Text('Citas: ${snap.error}',
+              style: const TextStyle(
+                  color: Color(0xFFB71C1C), fontSize: 12));
+        }
         if (!snap.hasData || snap.data!.docs.isEmpty) {
           return const SizedBox.shrink();
         }
