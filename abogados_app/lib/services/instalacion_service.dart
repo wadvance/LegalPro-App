@@ -86,9 +86,7 @@ class InstalacionService {
     try {
       final ev = _InstallEvent(prompt);
       ev.prompt();
-      final res = await ev.userChoice.toDart;
-      if (res == null) return false;
-      final choice = _Choice(res);
+      final choice = _Choice(await ev.userChoice.toDart);
       return choice.outcome == 'accepted';
     } catch (_) {
       return false;
