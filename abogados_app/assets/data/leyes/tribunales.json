@@ -1,0 +1,195 @@
+{
+ "key": "tribunales",
+ "titulo": "Organización de los Tribunales Superiores de Panamá",
+ "descripcion": "Estructura, competencia y funcionamiento de los tribunales superiores de justicia, incluyendo la Corte Suprema, tribunales superiores de distrito y tribunales especializados de la República de Panamá.",
+ "info": {
+  "anio": "1972",
+  "ultimaReforma": "2020",
+  "importancia": "Organización y competencia del sistema judicial panameño",
+  "conceptosClave": [
+   "Corte Suprema",
+   "Tribunales",
+   "Juzgados",
+   "Competencia",
+   "Jurisdicción"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "TS-1",
+   "articulo": 1,
+   "titulo": "Corte Suprema de Justicia - Sala Primera (Civil)",
+   "contenido": "La Sala Primera de lo Civil conoce de los recursos de casación en materia civil, comercial y de familia. Conoce también de los procesos de mayor cuantía y de las demandas contra el Estado en materia civil.",
+   "libro": "Corte Suprema",
+   "categoria": "Sala Civil"
+  },
+  {
+   "id": "TS-2",
+   "articulo": 2,
+   "titulo": "Corte Suprema de Justicia - Sala Segunda (Penal)",
+   "contenido": "La Sala Segunda de lo Penal conoce del recurso de casación penal, del recurso de revisión penal y de las excusas y recusaciones de los magistrados de tribunales superiores en materia penal.",
+   "libro": "Corte Suprema",
+   "categoria": "Sala Penal"
+  },
+  {
+   "id": "TS-3",
+   "articulo": 3,
+   "titulo": "Corte Suprema de Justicia - Sala Tercera (Contencioso Administrativa)",
+   "contenido": "La Sala Tercera de lo Contencioso Administrativo conoce de las demandas de nulidad contra actos administrativos, de las controversias derivadas de contratos públicos, y de las acciones de plena jurisdicción.",
+   "libro": "Corte Suprema",
+   "categoria": "Sala Contencioso Administrativa"
+  },
+  {
+   "id": "TS-4",
+   "articulo": 4,
+   "titulo": "Corte Suprema de Justicia - Sala Cuarta (Negocios Generales)",
+   "contenido": "La Sala de Negocios Generales conoce de los conflictos de competencia entre tribunales, de las excusas y recusaciones de los magistrados de la Corte, y de las acciones de habeas corpus y amparo de garantías constitucionales.",
+   "libro": "Corte Suprema",
+   "categoria": "Sala de Negocios Generales"
+  },
+  {
+   "id": "TS-5",
+   "articulo": 5,
+   "titulo": "Pleno de la Corte Suprema de Justicia",
+   "contenido": "El Pleno de la Corte Suprema está integrado por los nueve magistrados. Conoce de las acciones de inconstitucionalidad, de las demandas contra el Presidente de la República y los magistrados, y de la elección de sus autoridades.",
+   "libro": "Corte Suprema",
+   "categoria": "Pleno"
+  },
+  {
+   "id": "TS-6",
+   "articulo": 6,
+   "titulo": "Tribunal Electoral",
+   "contenido": "El Tribunal Electoral es el máximo órgano jurisdiccional en materia electoral. Conoce de las impugnaciones de actos electorales, resuelve controversias sobre inscripciones de partidos políticos, y garantiza el libre ejercicio del sufragio.",
+   "libro": "Tribunales Especializados",
+   "categoria": "Tribunal Electoral"
+  },
+  {
+   "id": "TS-7",
+   "articulo": 7,
+   "titulo": "Tribunal Administrativo de la Función Pública",
+   "contenido": "Conoce de las controversias derivadas de la relación de empleo público, incluyendo nombramientos, ascensos, sanciones disciplinarias, cesantías y pensiones de los servidores públicos.",
+   "libro": "Tribunales Especializados",
+   "categoria": "Función Pública"
+  },
+  {
+   "id": "TS-8",
+   "articulo": 8,
+   "titulo": "Tribunal de Contrataciones Públicas",
+   "contenido": "Conoce de las impugnaciones contra actos de los procedimientos de contratación pública, resuelve recursos de reconsideración y apelación, y garantiza la legalidad y transparencia en las contrataciones del Estado.",
+   "libro": "Tribunales Especializados",
+   "categoria": "Contrataciones Públicas"
+  },
+  {
+   "id": "TS-9",
+   "articulo": 9,
+   "titulo": "Tribunal Superior de Trabajo",
+   "contenido": "El Tribunal Superior de Trabajo conoce de los recursos de apelación contra las sentencias de los juzgados de trabajo. Resuelve controversias colectivas e individuales derivadas de la relación laboral.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Tribunal Superior de Trabajo"
+  },
+  {
+   "id": "TS-10",
+   "articulo": 10,
+   "titulo": "Tribunal Superior de Familia",
+   "contenido": "El Tribunal Superior de Familia conoce de los recursos de apelación contra las decisiones de los juzgados de familia en materia de matrimonio, divorcio, filiación, alimentos, patria potestad, adopción y violencia doméstica.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Tribunal Superior de Familia"
+  },
+  {
+   "id": "TS-11",
+   "articulo": 11,
+   "titulo": "Tribunal Superior de Niñez y Adolescencia",
+   "contenido": "Conoce de las apelaciones contra sentencias de los juzgados de niñez y adolescencia en procesos de protección, responsabilidad penal juvenil y medidas socioeducativas.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Tribunal Superior de Niñez"
+  },
+  {
+   "id": "TS-12",
+   "articulo": 12,
+   "titulo": "Primer Tribunal Superior de Justicia del Primer Distrito Judicial",
+   "contenido": "Tiene competencia en la provincia de Panamá como tribunal de segunda instancia en materia civil y comercial. Conoce de las apelaciones contra sentencias de los juzgados civiles, comerciales y de circuito.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Primer Distrito Judicial"
+  },
+  {
+   "id": "TS-13",
+   "articulo": 13,
+   "titulo": "Segundo Tribunal Superior de Justicia del Primer Distrito Judicial",
+   "contenido": "Conoce de las apelaciones en materia penal del Primer Distrito Judicial. Es el tribunal de segunda instancia para las causas penales tramitadas en los juzgados de garantías y tribunales de juicio oral de la provincia de Panamá.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Primer Distrito Judicial"
+  },
+  {
+   "id": "TS-14",
+   "articulo": 14,
+   "titulo": "Tribunal Superior del Segundo Distrito Judicial (Colón y Panamá Oeste)",
+   "contenido": "Tiene jurisdicción en las provincias de Colón y Panamá Oeste. Conoce de las apelaciones en materia civil, penal, comercial y de familia del Segundo Distrito Judicial.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Segundo Distrito Judicial"
+  },
+  {
+   "id": "TS-15",
+   "articulo": 15,
+   "titulo": "Tribunal Superior del Tercer Distrito Judicial (Chiriquí y Bocas del Toro)",
+   "contenido": "Con jurisdicción en Chiriquí y Bocas del Toro, conoce de las apelaciones y recursos contra las decisiones de los tribunales inferiores de su distrito en todas las materias.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Tercer Distrito Judicial"
+  },
+  {
+   "id": "TS-16",
+   "articulo": 16,
+   "titulo": "Tribunal Superior del Cuarto Distrito Judicial (Coclé y Veraguas)",
+   "contenido": "Tiene competencia territorial en las provincias de Coclé y Veraguas. Conoce de apelaciones en materia civil, penal, familiar y laboral del distrito.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Cuarto Distrito Judicial"
+  },
+  {
+   "id": "TS-17",
+   "articulo": 17,
+   "titulo": "Tribunal Superior del Quinto Distrito Judicial (Los Santos, Herrera y Azuero)",
+   "contenido": "Conoce de las apelaciones en materia civil, penal, comercial y de familia en las provincias de Los Santos, Herrera y la región de Azuero.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Quinto Distrito Judicial"
+  },
+  {
+   "id": "TS-18",
+   "articulo": 18,
+   "titulo": "Tribunal Superior del Sexto Distrito Judicial (Darién y San Blas)",
+   "contenido": "Conoce de las apelaciones contra sentencias de los juzgados de Darién y la Comarca Guna Yala. Su competencia incluye materia civil, penal y familiar.",
+   "libro": "Tribunales Superiores de Distrito",
+   "categoria": "Sexto Distrito Judicial"
+  },
+  {
+   "id": "TS-19",
+   "articulo": 19,
+   "titulo": "Tribunal Superior de Agua y Saneamiento",
+   "contenido": "Conoce de las controversias relacionadas con la prestación de servicios de agua potable y saneamiento, las concesiones de agua, y las sanciones impuestas por la Autoridad de Servicios Públicos en materia de agua.",
+   "libro": "Tribunales Especializados",
+   "categoria": "Agua y Saneamiento"
+  },
+  {
+   "id": "TS-20",
+   "articulo": 20,
+   "titulo": "Tribunal de Cuentas de la República",
+   "contenido": "El Tribunal de Cuentas es el órgano de control fiscal del Estado. Juzga las cuentas de los servidores públicos responsables del manejo de fondos públicos y determina responsabilidades patrimoniales.",
+   "libro": "Tribunales Especializados",
+   "categoria": "Tribunal de Cuentas"
+  },
+  {
+   "id": "TS-21",
+   "articulo": 21,
+   "titulo": "Juzgados de Circuito Judicial",
+   "contenido": "Los juzgados de circuito son tribunales de primera instancia con competencia en materia civil, penal, familiar y laboral según la especialización. Existen en cada provincia y su número varía según la población y carga de trabajo.",
+   "libro": "Tribunales Inferiores",
+   "categoria": "Juzgados de Circuito"
+  },
+  {
+   "id": "TS-22",
+   "articulo": 22,
+   "titulo": "Juzgados Municipales y de Paz",
+   "contenido": "Los juzgados municipales conocen de asuntos de menor cuantía en materia civil y penal. Los juzgados de paz tienen competencia en asuntos de mínima cuantía y en la celebración de matrimonios civiles.",
+   "libro": "Tribunales Inferiores",
+   "categoria": "Juzgados Municipales y de Paz"
+  }
+ ]
+}

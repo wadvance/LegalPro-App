@@ -1,0 +1,171 @@
+{
+ "key": "fiscal",
+ "titulo": "Código Fiscal de la República de Panamá",
+ "descripcion": "Ley 8 de 1956, Código Fiscal de la República de Panamá, modificado por Ley 57 de 2021 y otras disposiciones tributarias.",
+ "info": {
+  "anio": "1956",
+  "ultimaReforma": "2021",
+  "importancia": "Regula el sistema tributario y fiscal panameño",
+  "conceptosClave": [
+   "ISR",
+   "ITBMS",
+   "Impuesto de Inmueble",
+   "Aduanas",
+   "Facturación Electrónica"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "CFI-1",
+   "articulo": 1,
+   "titulo": "Principios del Sistema Tributario",
+   "contenido": "El sistema tributario panameño se fundamenta en los principios de legalidad, igualdad, equidad, capacidad contributiva y no confiscatoriedad. Los tributos solo pueden crearse, modificarse o suprimirse mediante ley formal.",
+   "libro": "Libro I",
+   "categoria": "Principios Tributarios"
+  },
+  {
+   "id": "CFI-2",
+   "articulo": 2,
+   "titulo": "Impuesto sobre la Renta (ISR)",
+   "contenido": "Toda persona natural o jurídica que obtenga ingresos de fuente panameña está sujeta al impuesto sobre la renta. El impuesto se calcula sobre la renta neta gravable, que es la renta bruta menos las deducciones permitidas por la ley.",
+   "libro": "Libro II",
+   "categoria": "Impuesto sobre la Renta"
+  },
+  {
+   "id": "CFI-3",
+   "articulo": 3,
+   "titulo": "Renta de Fuente Panameña",
+   "contenido": "Se consideran de fuente panameña las rentas provenientes de bienes situados en el territorio nacional, de actividades desarrolladas en Panamá, de créditos utilizados en el país, y de bienes intangibles explotados en Panamá.",
+   "libro": "Libro II",
+   "categoria": "Impuesto sobre la Renta"
+  },
+  {
+   "id": "CFI-4",
+   "articulo": 4,
+   "titulo": "Tarifa del ISR para Personas Jurídicas",
+   "contenido": "Las personas jurídicas pagan el 25% sobre su renta neta gravable. Las empresas con ingresos anuales inferiores a B/.1,500,000 pagan una tasa progresiva que inicia en 15% para los primeros B/.50,000 de renta neta.",
+   "libro": "Libro II",
+   "categoria": "Impuesto sobre la Renta"
+  },
+  {
+   "id": "CFI-5",
+   "articulo": 5,
+   "titulo": "Tarifa del ISR para Personas Naturales",
+   "contenido": "Las personas naturales pagan tarifas progresivas: 0% hasta B/.11,000 de renta neta, 15% sobre el excedente de B/.11,001 hasta B/.50,000, y 27% sobre el excedente de B/.50,001 en adelante.",
+   "libro": "Libro II",
+   "categoria": "Impuesto sobre la Renta"
+  },
+  {
+   "id": "CFI-6",
+   "articulo": 6,
+   "titulo": "ITBMS - Impuesto a la Transferencia",
+   "contenido": "El Impuesto a la Transferencia de Bienes Muebles y Servicios (ITBMS) es del 7% y se aplica a la venta de bienes muebles, la prestación de servicios, la importación de bienes y la construcción en el territorio nacional.",
+   "libro": "Libro III",
+   "categoria": "ITBMS"
+  },
+  {
+   "id": "CFI-7",
+   "articulo": 7,
+   "titulo": "Exenciones del ITBMS",
+   "contenido": "Están exentos del ITBMS: los alimentos básicos de la canasta familiar, los medicamentos, los libros y revistas, los servicios educativos, los servicios de salud, las exportaciones, el transporte público, y los servicios financieros.",
+   "libro": "Libro III",
+   "categoria": "ITBMS"
+  },
+  {
+   "id": "CFI-8",
+   "articulo": 8,
+   "titulo": "Impuesto de Inmueble",
+   "contenido": "El impuesto de inmueble se aplica anualmente sobre el valor catastral de la propiedad inmueble. La tasa es del 2.10% para propiedades urbanas y del 1.05% para propiedades rurales.",
+   "libro": "Libro IV",
+   "categoria": "Impuesto de Inmueble"
+  },
+  {
+   "id": "CFI-9",
+   "articulo": 9,
+   "titulo": "Exención del Impuesto de Inmueble",
+   "contenido": "Están exentos del impuesto de inmueble: las propiedades del Estado, las iglesias, los partidos políticos, las embajadas, y las viviendas con valor catastral de hasta B/.30,000.",
+   "libro": "Libro IV",
+   "categoria": "Impuesto de Inmueble"
+  },
+  {
+   "id": "CFI-10",
+   "articulo": 10,
+   "titulo": "Impuesto de Inmueble Progresivo",
+   "contenido": "Las propiedades con valor catastral superior a B/.300,000 pagan una tasa progresiva adicional: 0.5% sobre el excedente entre B/.300,001 y B/.700,000, y 0.7% sobre el excedente superior a B/.700,000.",
+   "libro": "Libro IV",
+   "categoria": "Impuesto de Inmueble"
+  },
+  {
+   "id": "CFI-11",
+   "articulo": 11,
+   "titulo": "Arancel de Aduanas",
+   "contenido": "Los derechos de importación se aplican a las mercancías que ingresan al territorio nacional conforme al Arancel de Aduanas vigente. Las tasas varían según la clasificación arancelaria de cada producto.",
+   "libro": "Libro V",
+   "categoria": "Aduanas"
+  },
+  {
+   "id": "CFI-12",
+   "articulo": 12,
+   "titulo": "Zonas Francas y Regímenes Especiales",
+   "contenido": "Las empresas instaladas en zonas francas gozan de exención del impuesto sobre la renta por ingresos de fuente extranjera, exención de aranceles de importación y exportación, y otros beneficios fiscales.",
+   "libro": "Libro VI",
+   "categoria": "Regímenes Especiales"
+  },
+  {
+   "id": "CFI-13",
+   "articulo": 13,
+   "titulo": "Sedes de Empresas Multinacionales (SEM)",
+   "contenido": "Las sedes de empresas multinacionales establecidas en Panamá gozan de exención del impuesto sobre la renta por los ingresos provenientes de servicios prestados desde Panamá a empresas del mismo grupo en el extranjero.",
+   "libro": "Libro VI",
+   "categoria": "Regímenes Especiales"
+  },
+  {
+   "id": "CFI-14",
+   "articulo": 14,
+   "titulo": "Retenciones en la Fuente",
+   "contenido": "Los empleadores deben retener el impuesto sobre la renta de sus empleados mensualmente y pagarlo a la Dirección General de Ingresos. También están sujetos a retención los pagos a profesionales, las comisiones y los intereses.",
+   "libro": "Libro VII",
+   "categoria": "Administración Tributaria"
+  },
+  {
+   "id": "CFI-15",
+   "articulo": 15,
+   "titulo": "Declaración de Renta Anual",
+   "contenido": "Las personas naturales y jurídicas deben presentar declaración de renta anual dentro de los tres meses siguientes al cierre del año fiscal. La declaración debe incluir todos los ingresos, deducciones y el cálculo del impuesto.",
+   "libro": "Libro VII",
+   "categoria": "Administración Tributaria"
+  },
+  {
+   "id": "CFI-16",
+   "articulo": 16,
+   "titulo": "Facturación Electrónica",
+   "contenido": "La facturación electrónica es obligatoria en Panamá. Los contribuyentes deben emitir comprobantes fiscales electrónicos autorizados por la DGI, que garantizan la trazabilidad de las transacciones comerciales.",
+   "libro": "Libro VII",
+   "categoria": "Administración Tributaria"
+  },
+  {
+   "id": "CFI-17",
+   "articulo": 17,
+   "titulo": "Prescripción de la Obligación Tributaria",
+   "contenido": "La obligación tributaria prescribe a los 5 años contados desde la fecha en que el tributo era exigible. La prescripción se interrumpe por requerimiento de pago, fiscalización o reconocimiento de la deuda.",
+   "libro": "Libro VII",
+   "categoria": "Administración Tributaria"
+  },
+  {
+   "id": "CFI-18",
+   "articulo": 18,
+   "titulo": "Infracciones y Sanciones Tributarias",
+   "contenido": "La evasión fiscal, la defraudación tributaria y el incumplimiento de obligaciones formales serán sancionados con multas del 50% al 200% del tributo omitido, sin perjuicio de las acciones penales correspondientes.",
+   "libro": "Libro VIII",
+   "categoria": "Infracciones y Sanciones"
+  },
+  {
+   "id": "CFI-19",
+   "articulo": 19,
+   "titulo": "Fiscalización Tributaria",
+   "contenido": "La Dirección General de Ingresos puede fiscalizar a los contribuyentes mediante auditorías, requerimientos de información y cruces de datos. El contribuyente debe colaborar y proporcionar la documentación requerida.",
+   "libro": "Libro VIII",
+   "categoria": "Infracciones y Sanciones"
+  }
+ ]
+}

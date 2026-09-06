@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'calculadoras_screen.dart';
+import 'chatbot_screen.dart';
 import 'citas_screen.dart';
 import 'clientes_screen.dart';
 import 'cobros_screen.dart';
@@ -8,7 +10,7 @@ import 'empresas_screen.dart';
 import 'expedientes_screen.dart';
 import 'gps_screen.dart';
 import 'home_screen.dart';
-import 'placeholder_screen.dart';
+import 'leyes_screen.dart';
 import 'reportes_screen.dart';
 import 'seguimiento_screen.dart';
 
@@ -44,18 +46,12 @@ class _MainTabsState extends State<MainTabs> {
         ReportesScreen(themeController: widget.themeController),
       'seguimiento' =>
         SeguimientoScreen(themeController: widget.themeController),
-      'leyes' => PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '⚖️',
-          titulo: 'Leyes'),
-      'calculadoras' => PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '🧮',
-          titulo: 'Calculadoras'),
-      'chatbot' => PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '💬',
-          titulo: 'Chatbot'),
+      'leyes' =>
+        LeyesScreen(themeController: widget.themeController),
+      'calculadoras' => CalculadorasScreen(
+          themeController: widget.themeController),
+      'chatbot' =>
+        ChatbotScreen(themeController: widget.themeController),
       _ => null,
     };
     if (pantalla != null && mounted) {

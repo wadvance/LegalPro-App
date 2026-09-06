@@ -1,0 +1,98 @@
+{
+ "key": "decretos",
+ "titulo": "Decretos Importantes de la República de Panamá",
+ "descripcion": "Decretos ejecutivos y reglamentarios de especial relevancia para la práctica jurídica en Panamá.",
+ "info": {
+  "anio": "1970",
+  "ultimaReforma": "2021",
+  "importancia": "Reglamentación detallada de leyes principales",
+  "conceptosClave": [
+   "Reglamentos",
+   "Ejecutivos",
+   "Decretos de Gabinete",
+   "Normas Técnicas"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "DC-1",
+   "articulo": 1,
+   "titulo": "Decreto Ejecutivo 170 de 1993 - Reglamento de la Ley de Sociedades",
+   "contenido": "Este decreto reglamenta la constitución, funcionamiento y disolución de sociedades anónimas. Establece los requisitos para la inscripción de actos societarios en el Registro Público y las formalidades de las asambleas de accionistas.",
+   "libro": "Derecho Societario",
+   "categoria": "Reglamentos Societarios"
+  },
+  {
+   "id": "DC-2",
+   "articulo": 2,
+   "titulo": "Decreto Ejecutivo 305 de 2010 - Reglamento de Fondos de Inversión",
+   "contenido": "Regula la constitución, administración y supervisión de los fondos de inversión en Panamá. Establece los requisitos de capital mínimo, diversificación de inversiones, y las obligaciones de los gestores y custodios.",
+   "libro": "Derecho Financiero",
+   "categoria": "Reglamentos Financieros"
+  },
+  {
+   "id": "DC-3",
+   "articulo": 3,
+   "titulo": "Decreto de Gabinete 238 de 1970 - Código de Trabajo",
+   "contenido": "El Decreto de Gabinete 238 adoptó el texto del Código de Trabajo de Panamá, que regula las relaciones laborales individuales y colectivas, los contratos de trabajo, la jornada laboral, las vacaciones, el salario mínimo y la seguridad social.",
+   "libro": "Derecho Laboral",
+   "categoria": "Reglamentos Laborales"
+  },
+  {
+   "id": "DC-4",
+   "articulo": 4,
+   "titulo": "Decreto Ejecutivo 69 de 2007 - Reglamento de Inmigración",
+   "contenido": "Reglamenta la Ley de Migración estableciendo los procedimientos para la obtención de visas, residencias temporales y permanentes, permisos de trabajo, y las sanciones por incumplimiento de las normas migratorias.",
+   "libro": "Migración",
+   "categoria": "Reglamentos Migratorios"
+  },
+  {
+   "id": "DC-5",
+   "articulo": 5,
+   "titulo": "Decreto Ejecutivo 57 de 2021 - Reglamento de Facturación Electrónica",
+   "contenido": "Establece las especificaciones técnicas y procedimientos para la emisión, recepción y almacenamiento de facturas electrónicas. Define los sujetos obligados, los plazos de implementación y las sanciones por incumplimiento.",
+   "libro": "Tributario",
+   "categoria": "Reglamentos Tributarios"
+  },
+  {
+   "id": "DC-6",
+   "articulo": 6,
+   "titulo": "Decreto Ejecutivo 447 de 2004 - Reglamento de Propiedad Industrial",
+   "contenido": "Reglamenta la Ley de Propiedad Industrial estableciendo los procedimientos para el registro de marcas, patentes, diseños industriales, modelos de utilidad y secretos empresariales ante la DIGERPI.",
+   "libro": "Propiedad Intelectual",
+   "categoria": "Reglamentos de PI"
+  },
+  {
+   "id": "DC-7",
+   "articulo": 7,
+   "titulo": "Decreto Ejecutivo 36 de 2016 - Reglamento de Protección de Datos Personales",
+   "contenido": "Reglamenta la Ley 81 de 2019 de protección de datos personales. Establece los principios de tratamiento de datos, derechos del titular, obligaciones de los responsables y encargados, y el procedimiento sancionatorio.",
+   "libro": "Derecho Digital",
+   "categoria": "Reglamentos de Datos"
+  },
+  {
+   "id": "DC-8",
+   "articulo": 8,
+   "titulo": "Decreto Ejecutivo 147 de 2021 - Reglamento de la Ley de Contratación Pública",
+   "contenido": "Reglamenta los procedimientos de selección de contratistas, los requisitos de participación, la evaluación de ofertas, la adjudicación y ejecución de contratos públicos, y el registro de proveedores del Estado.",
+   "libro": "Contratación Pública",
+   "categoria": "Reglamentos de Contratación"
+  },
+  {
+   "id": "DC-9",
+   "articulo": 9,
+   "titulo": "Decreto Ejecutivo 15 de 2019 - Reglamento de Prevención de Blanqueo de Capitales",
+   "contenido": "Establece las obligaciones de debida diligencia, identificación del beneficiario final, reporte de operaciones sospechosas, conservación de documentos y programas de cumplimiento para sujetos obligados no financieros.",
+   "libro": "Prevención de Riesgos",
+   "categoria": "Reglamentos de Cumplimiento"
+  },
+  {
+   "id": "DC-10",
+   "articulo": 10,
+   "titulo": "Decreto Ejecutivo 27 de 2015 - Reglamento de la Ley de Fundaciones de Interés Privado",
+   "contenido": "Reglamenta la constitución, registro, administración y extinción de las fundaciones de interés privado. Establece los requisitos del consejo de la fundación, el protector y los derechos de los beneficiarios.",
+   "libro": "Derecho Societario",
+   "categoria": "Reglamentos Societarios"
+  }
+ ]
+}

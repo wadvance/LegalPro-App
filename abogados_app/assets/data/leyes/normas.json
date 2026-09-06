@@ -1,0 +1,244 @@
+{
+ "key": "normas",
+ "titulo": "Normas Internacionales Aplicables en Panamá",
+ "descripcion": "Tratados y convenciones internacionales ratificados por la República de Panamá, que forman parte del ordenamiento jurídico nacional conforme al artículo 4 de la Constitución.",
+ "info": {
+  "anio": "1945",
+  "ultimaReforma": "2018",
+  "importancia": "Instrumentos internacionales que forman parte del derecho panameño",
+  "conceptosClave": [
+   "DDHH",
+   "OEA",
+   "OIT",
+   "TLC",
+   "CDI",
+   "Arbitraje"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "NI-1",
+   "articulo": 1,
+   "titulo": "Convención de Viena sobre el Derecho de los Tratados (1969)",
+   "contenido": "Los tratados internacionales ratificados por Panamá deben interpretarse de buena fe, conforme al sentido corriente de sus términos y teniendo en cuenta su objeto y fin. Panamá adoptó esta Convención en 1982.",
+   "libro": "Derecho Internacional Público",
+   "categoria": "Tratados y Convenciones"
+  },
+  {
+   "id": "NI-2",
+   "articulo": 2,
+   "titulo": "Carta de las Naciones Unidas (1945)",
+   "contenido": "Panamá es miembro fundador de la ONU y se compromete a mantener la paz y seguridad internacionales, fomentar relaciones de amistad entre naciones, y promover el progreso social y los derechos humanos.",
+   "libro": "Derecho Internacional Público",
+   "categoria": "Tratados y Convenciones"
+  },
+  {
+   "id": "NI-3",
+   "articulo": 3,
+   "titulo": "Declaración Universal de Derechos Humanos (1948)",
+   "contenido": "Panamá reconoce los derechos humanos fundamentales: vida, libertad, seguridad, igualdad ante la ley, debido proceso, libertad de expresión, pensamiento, religión, reunión y asociación, trabajo, educación y participación política.",
+   "libro": "Derechos Humanos",
+   "categoria": "Declaraciones y Pactos"
+  },
+  {
+   "id": "NI-4",
+   "articulo": 4,
+   "titulo": "Pacto Internacional de Derechos Civiles y Políticos (1966)",
+   "contenido": "Panamá garantiza los derechos civiles y políticos: derecho a la vida, prohibición de tortura, libertad personal, libertad de circulación, debido proceso, libertad de pensamiento, reunión, asociación y participación política.",
+   "libro": "Derechos Humanos",
+   "categoria": "Declaraciones y Pactos"
+  },
+  {
+   "id": "NI-5",
+   "articulo": 5,
+   "titulo": "Pacto Internacional de Derechos Económicos, Sociales y Culturales (1966)",
+   "contenido": "Panamá se compromete a garantizar el derecho al trabajo, condiciones laborales justas, seguridad social, protección a la familia, nivel de vida adecuado, salud física y mental, educación y participación cultural.",
+   "libro": "Derechos Humanos",
+   "categoria": "Declaraciones y Pactos"
+  },
+  {
+   "id": "NI-6",
+   "articulo": 6,
+   "titulo": "Convención Americana sobre Derechos Humanos - Pacto de San José (1969)",
+   "contenido": "Panamá es parte de la CADH desde 1978. Reconoce la competencia de la Corte Interamericana de Derechos Humanos. Los derechos y libertades reconocidos deben ser respetados y garantizados por el Estado panameño.",
+   "libro": "Derechos Humanos",
+   "categoria": "Sistema Interamericano"
+  },
+  {
+   "id": "NI-7",
+   "articulo": 7,
+   "titulo": "Convención Interamericana para Prevenir y Sancionar la Tortura",
+   "contenido": "Panamá se obliga a prevenir y sancionar la tortura y otros tratos crueles, inhumanos o degradantes. Los actos de tortura son imprescriptibles y no pueden justificarse en estados de excepción.",
+   "libro": "Derechos Humanos",
+   "categoria": "Sistema Interamericano"
+  },
+  {
+   "id": "NI-8",
+   "articulo": 8,
+   "titulo": "Convención sobre la Eliminación de Todas las Formas de Discriminación contra la Mujer (CEDAW)",
+   "contenido": "Panamá adoptó la CEDAW en 1980. Se compromete a eliminar la discriminación contra la mujer en todas sus formas, garantizar la igualdad de género en el ámbito político, social, económico y cultural.",
+   "libro": "Derechos Humanos",
+   "categoria": "Tratados Específicos"
+  },
+  {
+   "id": "NI-9",
+   "articulo": 9,
+   "titulo": "Convención sobre los Derechos del Niño (1989)",
+   "contenido": "Panamá ratificó la Convención en 1990. Los niños tienen derecho a la vida, nombre, nacionalidad, salud, educación, protección contra el abuso y la explotación, y a expresar su opinión en asuntos que les afecten.",
+   "libro": "Derechos Humanos",
+   "categoria": "Tratados Específicos"
+  },
+  {
+   "id": "NI-10",
+   "articulo": 10,
+   "titulo": "Convención Internacional sobre la Eliminación de Todas las Formas de Discriminación Racial",
+   "contenido": "Panamá condena la discriminación racial y se compromete a adoptar medidas para eliminarla en todas sus formas. Promueve el entendimiento entre todas las razas y grupos étnicos en el territorio nacional.",
+   "libro": "Derechos Humanos",
+   "categoria": "Tratados Específicos"
+  },
+  {
+   "id": "NI-11",
+   "articulo": 11,
+   "titulo": "Convenio 169 de la OIT sobre Pueblos Indígenas y Tribales",
+   "contenido": "Panamá reconoce los derechos de los pueblos indígenas a sus tierras, territorios y recursos naturales. Los pueblos indígenas deben ser consultados sobre decisiones que les afecten mediante procesos de consulta previa.",
+   "libro": "Derechos Humanos",
+   "categoria": "Pueblos Indígenas"
+  },
+  {
+   "id": "NI-12",
+   "articulo": 12,
+   "titulo": "Convenio 98 de la OIT sobre Derechos Sindicales",
+   "contenido": "Los trabajadores panameños gozan de protección contra actos de discriminación antisindical. Se garantiza el derecho de sindicalización y negociación colectiva conforme a los estándares de la OIT.",
+   "libro": "Derecho Laboral",
+   "categoria": "Normas OIT"
+  },
+  {
+   "id": "NI-13",
+   "articulo": 13,
+   "titulo": "Convenio 155 de la OIT sobre Seguridad y Salud en el Trabajo",
+   "contenido": "Panamá adopta una política nacional de seguridad y salud en el trabajo. Los empleadores deben garantizar un ambiente laboral seguro y saludable, y los trabajadores tienen derecho a la información y formación en SST.",
+   "libro": "Derecho Laboral",
+   "categoria": "Normas OIT"
+  },
+  {
+   "id": "NI-14",
+   "articulo": 14,
+   "titulo": "Convenio 182 de la OIT sobre Peores Formas de Trabajo Infantil",
+   "contenido": "Panamá prohíbe y elimina las peores formas de trabajo infantil, incluyendo la esclavitud, la explotación sexual, el trabajo peligroso y el uso de niños en actividades ilícitas.",
+   "libro": "Derecho Laboral",
+   "categoria": "Normas OIT"
+  },
+  {
+   "id": "NI-15",
+   "articulo": 15,
+   "titulo": "Tratado de Libre Comercio Panamá-Estados Unidos (2012)",
+   "contenido": "El TPC entre Panamá y EE.UU. elimina aranceles y barreras comerciales, protege la propiedad intelectual, facilita la inversión mutua, y establece mecanismos de solución de controversias comerciales.",
+   "libro": "Comercio Internacional",
+   "categoria": "Tratados de Libre Comercio"
+  },
+  {
+   "id": "NI-16",
+   "articulo": 16,
+   "titulo": "Acuerdo de Asociación Panamá-EFTA (Suiza, Noruega, Islandia, Liechtenstein)",
+   "contenido": "El acuerdo promueve el libre comercio entre Panamá y los países de la Asociación Europea de Libre Comercio, eliminando aranceles en productos industriales, pesqueros y agrícolas procesados.",
+   "libro": "Comercio Internacional",
+   "categoria": "Tratados de Libre Comercio"
+  },
+  {
+   "id": "NI-17",
+   "articulo": 17,
+   "titulo": "Tratado de Libre Comercio Panamá-Singapur (2006)",
+   "contenido": "El TLC Panamá-Singapur facilita el comercio bilateral, promueve la inversión, protege los derechos de propiedad intelectual y establece reglas de origen y procedimientos aduaneros preferenciales.",
+   "libro": "Comercio Internacional",
+   "categoria": "Tratados de Libre Comercio"
+  },
+  {
+   "id": "NI-18",
+   "articulo": 18,
+   "titulo": "Acuerdo de Alcance Parcial Panamá-Colombia (1993)",
+   "contenido": "El acuerdo establece preferencias arancelarias para productos originarios de ambos países, promueve el comercio bilateral y facilita la integración económica entre Panamá y Colombia.",
+   "libro": "Comercio Internacional",
+   "categoria": "Acuerdos Regionales"
+  },
+  {
+   "id": "NI-19",
+   "articulo": 19,
+   "titulo": "Convenio para Evitar la Doble Tributación Panamá-México (2012)",
+   "contenido": "El CDI entre Panamá y México evita la doble imposición en materia de impuestos sobre la renta, establece reglas de residencia fiscal, y previene la evasión fiscal mediante intercambio de información.",
+   "libro": "Fiscal Internacional",
+   "categoria": "Convenios de Doble Tributación"
+  },
+  {
+   "id": "NI-20",
+   "articulo": 20,
+   "titulo": "Convenio para Evitar la Doble Tributación Panamá-Luxemburgo (2013)",
+   "contenido": "El CDI Panamá-Luxemburgo regula la tributación de rentas empresariales, dividendos, intereses, regalías y ganancias de capital, estableciendo tasas reducidas de retención en la fuente.",
+   "libro": "Fiscal Internacional",
+   "categoria": "Convenios de Doble Tributación"
+  },
+  {
+   "id": "NI-21",
+   "articulo": 21,
+   "titulo": "Convenio para Evitar la Doble Tributación Panamá-Países Bajos (2015)",
+   "contenido": "El acuerdo establece mecanismos para evitar la doble tributación y prevenir la evasión fiscal entre Panamá y los Países Bajos, incluyendo intercambio de información tributaria.",
+   "libro": "Fiscal Internacional",
+   "categoria": "Convenios de Doble Tributación"
+  },
+  {
+   "id": "NI-22",
+   "articulo": 22,
+   "titulo": "Convención Multilateral BEPS (MLI) de la OCDE (2018)",
+   "contenido": "Panamá adoptó el Instrumento Multilateral BEPS para modificar sus CDIs y prevenir la erosión de la base imponible y el traslado de beneficios, en línea con los estándares internacionales.",
+   "libro": "Fiscal Internacional",
+   "categoria": "Estándares OCDE"
+  },
+  {
+   "id": "NI-23",
+   "articulo": 23,
+   "titulo": "Convención de Viena sobre Compraventa Internacional de Mercaderías (CISG)",
+   "contenido": "La CISG regula la formación del contrato de compraventa internacional y los derechos y obligaciones del comprador y vendedor. Panamá la ratificó como parte del derecho comercial uniforme.",
+   "libro": "Comercio Internacional",
+   "categoria": "Derecho Comercial Uniforme"
+  },
+  {
+   "id": "NI-24",
+   "articulo": 24,
+   "titulo": "Convención de Nueva York sobre Reconocimiento y Ejecución de Laudos Arbitrales Extranjeros (1958)",
+   "contenido": "Panamá reconoce y ejecuta los laudos arbitrales extranjeros conforme a la Convención. Solo puede denegarse la ejecución por causales taxativas como incapacidad de partes o violación del debido proceso.",
+   "libro": "Solución de Controversias",
+   "categoria": "Arbitraje Internacional"
+  },
+  {
+   "id": "NI-25",
+   "articulo": 25,
+   "titulo": "Convención Interamericana sobre Arbitraje Comercial Internacional (Convención de Panamá, 1975)",
+   "contenido": "La Convención de Panamá regula el arbitraje comercial internacional en las Américas. El acuerdo arbitral es válido y el laudo es vinculante. Se aplican las reglas de procedimiento elegidas por las partes.",
+   "libro": "Solución de Controversias",
+   "categoria": "Arbitraje Internacional"
+  },
+  {
+   "id": "NI-26",
+   "articulo": 26,
+   "titulo": "Convención de Basilea sobre el Control de los Movimientos Transfronterizos de Desechos Peligrosos",
+   "contenido": "Panamá regula la importación, exportación y tránsito de desechos peligrosos. Se requiere consentimiento fundamentado previo del Estado importador. Se prohíbe la importación de desechos para eliminación.",
+   "libro": "Derecho Ambiental",
+   "categoria": "Tratados Ambientales"
+  },
+  {
+   "id": "NI-27",
+   "articulo": 27,
+   "titulo": "Convención Marco de las Naciones Unidas sobre el Cambio Climático (CMNUCC)",
+   "contenido": "Panamá se compromete a implementar políticas para mitigar el cambio climático, reducir emisiones de gases de efecto invernadero, y promover la adaptación al cambio climático en el territorio nacional.",
+   "libro": "Derecho Ambiental",
+   "categoria": "Tratados Ambientales"
+  },
+  {
+   "id": "NI-28",
+   "articulo": 28,
+   "titulo": "Acuerdo de París sobre Cambio Climático (2015)",
+   "contenido": "Panamá se compromete a reducir sus emisiones de gases de efecto invernadero, presentar contribuciones nacionalmente determinadas, y reportar el progreso en la implementación de medidas climáticas.",
+   "libro": "Derecho Ambiental",
+   "categoria": "Tratados Ambientales"
+  }
+ ]
+}

@@ -1,0 +1,204 @@
+{
+ "key": "familia",
+ "titulo": "Código de la Familia de la República de Panamá",
+ "descripcion": "Ley 3 de 17 de mayo de 1994, que regula las relaciones jurídicas derivadas de la familia, los menores y las instituciones familiares en Panamá.",
+ "info": {
+  "anio": "1994",
+  "ultimaReforma": "2017",
+  "importancia": "Regula las relaciones familiares y la protección de menores",
+  "conceptosClave": [
+   "Matrimonio",
+   "Divorcio",
+   "Filiación",
+   "Patria Potestad",
+   "Alimentos",
+   "Adopción"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "CF-1",
+   "articulo": 1,
+   "titulo": "Objeto del Código de la Familia",
+   "contenido": "El presente Código tiene por objeto regular las relaciones jurídicas derivadas de la familia y de los menores, así como proteger los derechos fundamentales de sus miembros dentro del marco de la Constitución y las leyes panameñas.",
+   "libro": "Libro I",
+   "categoria": "Disposiciones Generales"
+  },
+  {
+   "id": "CF-2",
+   "articulo": 2,
+   "titulo": "Protección Estatal de la Familia",
+   "contenido": "El Estado protege a la familia como institución fundamental de la sociedad panameña. La familia debe fundarse en el respeto mutuo, la solidaridad, la igualdad de derechos y deberes entre sus integrantes, y el interés superior del menor.",
+   "libro": "Libro I",
+   "categoria": "Disposiciones Generales"
+  },
+  {
+   "id": "CF-3",
+   "articulo": 3,
+   "titulo": "Interés Superior del Menor",
+   "contenido": "En todas las decisiones que afecten a un menor, ya sean tomadas por autoridades públicas, tribunales o instituciones privadas, se considerará primordialmente el interés superior del niño, niña o adolescente.",
+   "libro": "Libro I",
+   "categoria": "Disposiciones Generales"
+  },
+  {
+   "id": "CF-10",
+   "articulo": 10,
+   "titulo": "Matrimonio Civil",
+   "contenido": "El matrimonio civil es la unión voluntaria entre un hombre y una mujer, con aptitud legal, para hacer vida en común. Debe celebrarse ante la autoridad competente del Registro Civil con la presencia de dos testigos hábiles.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-11",
+   "articulo": 11,
+   "titulo": "Requisitos del Matrimonio",
+   "contenido": "Para contraer matrimonio se requiere: ser mayor de 18 años, consentimiento libre y voluntario manifestado ante la autoridad competente, y la presencia de dos testigos mayores de edad. Los menores de 18 años requieren autorización de sus padres.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-12",
+   "articulo": 12,
+   "titulo": "Impedimentos Matrimoniales",
+   "contenido": "Son impedimentos para contraer matrimonio: el vínculo matrimonial anterior no disuelto, el parentesco en línea recta por consanguinidad o afinidad, el parentesco colateral hasta el tercer grado, y la falta de consentimiento libre.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-13",
+   "articulo": 13,
+   "titulo": "Divorcio por Mutuo Acuerdo",
+   "contenido": "El divorcio por mutuo acuerdo puede solicitarse después de un año de matrimonio. Los cónyuges deben presentar un acuerdo integral que regule la distribución de bienes, la custodia de los hijos, la pensión alimentaria y la vivienda familiar.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-14",
+   "articulo": 14,
+   "titulo": "Divorcio por Causales",
+   "contenido": "Son causales de divorcio: el adulterio, la sevicia o maltratos graves, las amenazas graves contra la vida o la integridad, el abandono voluntario del hogar, la separación de hecho por más de dos años, y la incompatibilidad de caracteres.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-20",
+   "articulo": 20,
+   "titulo": "Unión de Hecho",
+   "contenido": "La unión de hecho estable y permanente entre un hombre y una mujer, con capacidad legal, que mantengan hogar común por más de cinco años, produce efectos legales similares al matrimonio en cuanto a derechos patrimoniales y sucesorios.",
+   "libro": "Libro II",
+   "categoria": "Matrimonio"
+  },
+  {
+   "id": "CF-30",
+   "articulo": 30,
+   "titulo": "Filiación",
+   "contenido": "La filiación es la relación jurídica entre padres e hijos. Puede ser por naturaleza o por adopción. Todos los hijos tienen iguales derechos y deberes, sin importar su filiación.",
+   "libro": "Libro III",
+   "categoria": "Filiación"
+  },
+  {
+   "id": "CF-31",
+   "articulo": 31,
+   "titulo": "Reconocimiento Voluntario",
+   "contenido": "El reconocimiento de los hijos es un acto voluntario que puede hacerse en el Registro Civil, en testamento, en escritura pública o en declaración judicial. Es irrevocable y no admite modalidades.",
+   "libro": "Libro III",
+   "categoria": "Filiación"
+  },
+  {
+   "id": "CF-32",
+   "articulo": 32,
+   "titulo": "Investigación Judicial de Paternidad",
+   "contenido": "Toda persona tiene derecho a investigar judicialmente su filiación. La acción de investigación de paternidad es imprescriptible y puede ejercerse mediante pruebas biológicas, documentales o testimoniales.",
+   "libro": "Libro III",
+   "categoria": "Filiación"
+  },
+  {
+   "id": "CF-40",
+   "articulo": 40,
+   "titulo": "Patria Potestad",
+   "contenido": "La patria potestad comprende el conjunto de derechos y obligaciones que corresponden a los padres respecto de sus hijos menores de edad, incluyendo el cuidado, la protección, la educación, la representación legal y la administración de sus bienes.",
+   "libro": "Libro IV",
+   "categoria": "Patria Potestad"
+  },
+  {
+   "id": "CF-41",
+   "articulo": 41,
+   "titulo": "Suspensión de la Patria Potestad",
+   "contenido": "La patria potestad se suspende por: demencia declarada judicialmente, ausencia injustificada por más de seis meses, maltrato grave al hijo, abandono del hogar conyugal, y condena penal a prisión por más de tres años.",
+   "libro": "Libro IV",
+   "categoria": "Patria Potestad"
+  },
+  {
+   "id": "CF-42",
+   "articulo": 42,
+   "titulo": "Custodia Compartida",
+   "contenido": "En caso de separación o divorcio, la custodia de los hijos se determinará considerando primordialmente el interés superior del menor. Se favorecerá la custodia compartida cuando sea posible y beneficiosa para el menor.",
+   "libro": "Libro IV",
+   "categoria": "Patria Potestad"
+  },
+  {
+   "id": "CF-50",
+   "articulo": 50,
+   "titulo": "Obligación Alimentaria",
+   "contenido": "Los padres deben alimentos a sus hijos y los hijos a sus padres cuando estos no puedan mantenerse por sí mismos. La obligación alimentaria comprende alimentación, vivienda, vestido, educación, salud, recreación y formación integral.",
+   "libro": "Libro V",
+   "categoria": "Alimentos"
+  },
+  {
+   "id": "CF-51",
+   "articulo": 51,
+   "titulo": "Fijación de la Cuota Alimentaria",
+   "contenido": "La cuota alimentaria se fija considerando las necesidades del alimentario y las posibilidades económicas del obligado. No podrá exceder del 50% del ingreso del obligado. El juez puede ajustarla periódicamente.",
+   "libro": "Libro V",
+   "categoria": "Alimentos"
+  },
+  {
+   "id": "CF-52",
+   "articulo": 52,
+   "titulo": "Proceso de Alimentos",
+   "contenido": "El proceso de alimentos es preferente y sumario. El juez puede ordenar el pago provisional de alimentos desde la admisión de la demanda. El incumplimiento reiterado puede dar lugar a sanciones penales.",
+   "libro": "Libro V",
+   "categoria": "Alimentos"
+  },
+  {
+   "id": "CF-60",
+   "articulo": 60,
+   "titulo": "Adopción",
+   "contenido": "La adopción es una institución que tiene por objeto proporcionar una familia idónea y permanente al menor que carece de ella. La adopción se constituye por resolución judicial y es irrevocable.",
+   "libro": "Libro VI",
+   "categoria": "Adopción"
+  },
+  {
+   "id": "CF-61",
+   "articulo": 61,
+   "titulo": "Requisitos de los Adoptantes",
+   "contenido": "Para adoptar se requiere: ser mayor de 25 años, tener capacidad legal plena, estar en condiciones morales y económicas adecuadas, tener diferencia de edad de al menos 15 años con el adoptado, y ser evaluado por el equipo psicosocial.",
+   "libro": "Libro VI",
+   "categoria": "Adopción"
+  },
+  {
+   "id": "CF-70",
+   "articulo": 70,
+   "titulo": "Protección de Menores en Riesgo",
+   "contenido": "El Estado protegerá a los menores en situación de riesgo social mediante medidas de protección que incluyen: orientación a la familia, apoyo socioeconómico, colocación familiar, acogimiento residencial y adopción cuando sea necesario.",
+   "libro": "Libro VII",
+   "categoria": "Protección de Menores"
+  },
+  {
+   "id": "CF-71",
+   "articulo": 71,
+   "titulo": "Maltrato y Abuso Infantil",
+   "contenido": "Todo acto de maltrato físico, psicológico, sexual o negligencia contra un menor será sancionado conforme a la ley. La autoridad competente debe intervenir de oficio y garantizar la protección inmediata del menor.",
+   "libro": "Libro VII",
+   "categoria": "Protección de Menores"
+  },
+  {
+   "id": "CF-72",
+   "articulo": 72,
+   "titulo": "Violencia Doméstica",
+   "contenido": "La violencia intrafamiliar o doméstica es todo acto de agresión física, psicológica o sexual cometido por un miembro de la familia contra otro. Las víctimas tienen derecho a medidas de protección inmediatas.",
+   "libro": "Libro VII",
+   "categoria": "Protección de Menores"
+  }
+ ]
+}

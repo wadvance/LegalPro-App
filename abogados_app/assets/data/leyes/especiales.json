@@ -1,0 +1,259 @@
+{
+ "key": "especiales",
+ "titulo": "Leyes Especiales de la República de Panamá",
+ "descripcion": "Compilación de leyes especiales panameñas que regulan materias específicas como sociedades, fundaciones, fideicomisos, zonas francas y propiedad intelectual.",
+ "info": {
+  "anio": "1927",
+  "ultimaReforma": "2022",
+  "importancia": "Leyes sectoriales de gran relevancia práctica",
+  "conceptosClave": [
+   "Sociedades",
+   "Fundaciones",
+   "Fideicomiso",
+   "Propiedad Industrial",
+   "Datos Personales"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "LE-1",
+   "articulo": 1,
+   "titulo": "Ley General de Sociedades (Ley 32 de 1927)",
+   "contenido": "La sociedad anónima se constituye mediante escritura pública inscrita en el Registro Público. El capital social se divide en acciones nominativas. La responsabilidad de los accionistas se limita al valor de sus acciones.",
+   "libro": "Derecho Societario",
+   "categoria": "Sociedades Anónimas"
+  },
+  {
+   "id": "LE-2",
+   "articulo": 2,
+   "titulo": "Sociedades de Responsabilidad Limitada (SRL)",
+   "contenido": "La SRL se constituye con un mínimo de dos socios y un máximo de veinte. El capital se divide en cuotas de participación nominativas. Los socios responden hasta el monto de sus aportaciones.",
+   "libro": "Derecho Societario",
+   "categoria": "Sociedades de Responsabilidad Limitada"
+  },
+  {
+   "id": "LE-3",
+   "articulo": 3,
+   "titulo": "Sociedades por Acciones Simplificadas (SAS)",
+   "contenido": "La SAS puede constituirse por una o más personas naturales o jurídicas mediante documento privado. El capital social se divide en acciones. Los accionistas gozan de limitación de responsabilidad.",
+   "libro": "Derecho Societario",
+   "categoria": "Sociedades por Acciones Simplificadas"
+  },
+  {
+   "id": "LE-4",
+   "articulo": 4,
+   "titulo": "Fundación de Interés Privado (Ley 25 de 1995)",
+   "contenido": "La fundación de interés privado se constituye mediante escritura pública o testamento, con un patrimonio afecto a un fin lícito. Carece de beneficiarios determinados y es administrada por un consejo de la fundación.",
+   "libro": "Derecho Societario",
+   "categoria": "Fundaciones de Interés Privado"
+  },
+  {
+   "id": "LE-5",
+   "articulo": 5,
+   "titulo": "Fideicomiso Panameño (Ley 1 de 1984)",
+   "contenido": "El fideicomiso es un acto por el cual el fideicomitente transfiere bienes a un fiduciario para que los administre en beneficio de un fideicomisario. El fiduciario debe ser una entidad autorizada por la Superintendencia de Bancos.",
+   "libro": "Derecho Financiero",
+   "categoria": "Fideicomiso"
+  },
+  {
+   "id": "LE-6",
+   "articulo": 6,
+   "titulo": "Títulos de Capitalización",
+   "contenido": "Los títulos de capitalización son valores mobiliarios que combinan la inversión con un componente de ahorro programado. Son emitidos por entidades autorizadas y reguladas por la Superintendencia del Mercado de Valores.",
+   "libro": "Derecho Financiero",
+   "categoria": "Mercado de Valores"
+  },
+  {
+   "id": "LE-7",
+   "articulo": 7,
+   "titulo": "Ley de Propiedad Industrial (Ley 35 de 1996)",
+   "contenido": "Se concede patente de invención por 20 años a toda creación técnica nueva, con nivel inventivo y aplicación industrial. La marca de fábrica se registra por 10 años renovables. Se protegen los secretos industriales.",
+   "libro": "Propiedad Intelectual",
+   "categoria": "Propiedad Industrial"
+  },
+  {
+   "id": "LE-8",
+   "articulo": 8,
+   "titulo": "Derecho de Autor (Ley 64 de 2012)",
+   "contenido": "El derecho de autor protege las obras literarias, artísticas y científicas por la vida del autor más 70 años después de su muerte. Incluye derechos morales irrenunciables y derechos patrimoniales transferibles.",
+   "libro": "Propiedad Intelectual",
+   "categoria": "Derecho de Autor"
+  },
+  {
+   "id": "LE-9",
+   "articulo": 9,
+   "titulo": "Ley de Zonas Francas (Ley 25 de 1992)",
+   "contenido": "Las zonas francas son áreas delimitadas donde se permiten actividades de manufactura, ensamblaje, procesamiento y servicios con beneficios fiscales. Las empresas usuarias gozan de exención total de ISR, ITBMS y aranceles.",
+   "libro": "Comercio Exterior",
+   "categoria": "Zonas Francas"
+  },
+  {
+   "id": "LE-10",
+   "articulo": 10,
+   "titulo": "Régimen de Zonas Francas Comerciales",
+   "contenido": "Las zonas francas comerciales permiten la importación, almacenamiento, reempaque y reexportación de mercancías sin pago de tributos. Las ventas al mercado nacional están sujetas al pago de los impuestos correspondientes.",
+   "libro": "Comercio Exterior",
+   "categoria": "Zonas Francas"
+  },
+  {
+   "id": "LE-11",
+   "articulo": 11,
+   "titulo": "Ciudad del Saber (Ley 6 de 1998)",
+   "contenido": "La Ciudad del Saber es un parque tecnológico y de conocimientos que promueve la investigación, la innovación y la educación superior. Las entidades allí establecidas gozan de incentivos fiscales y aduaneros.",
+   "libro": "Comercio Exterior",
+   "categoria": "Zonas Francas"
+  },
+  {
+   "id": "LE-12",
+   "articulo": 12,
+   "titulo": "Sedes de Empresas Multinacionales - SEM (Ley 41 de 2007)",
+   "contenido": "Las SEM son empresas que establecen su sede regional o centro de servicios en Panamá para prestar servicios a empresas del mismo grupo en el extranjero. Gozan de exención del ISR, exención de ITBMS y facilidades migratorias.",
+   "libro": "Comercio Exterior",
+   "categoria": "Sedes de Empresas Multinacionales"
+  },
+  {
+   "id": "LE-13",
+   "articulo": 13,
+   "titulo": "Multinacionales para Servicios de Exportación - EMMA",
+   "contenido": "Las empresas EMMA están autorizadas para prestar servicios manufactureros y logísticos desde Panamá hacia el exterior. Gozan de los mismos beneficios fiscales que las SEM y pueden contratar trabajadores extranjeros sin restricciones.",
+   "libro": "Comercio Exterior",
+   "categoria": "Sedes de Empresas Multinacionales"
+  },
+  {
+   "id": "LE-14",
+   "articulo": 14,
+   "titulo": "Ley de Turismo (Ley 54 de 2018)",
+   "contenido": "La ley fomenta el desarrollo turístico mediante incentivos fiscales para hoteles, resorts, centros de convenciones y proyectos turísticos. Incluye exención del ISR por 15 años e ITBMS para la construcción de nuevos hoteles.",
+   "libro": "Turismo",
+   "categoria": "Incentivos Turísticos"
+  },
+  {
+   "id": "LE-15",
+   "articulo": 15,
+   "titulo": "Ley de Cine (Ley 23 de 2016)",
+   "contenido": "La producción cinematográfica nacional goza de incentivos fiscales equivalentes al 25% del gasto de producción realizado en Panamá. Los proyectos deben ser calificados por la Comisión Fílmica de Panamá.",
+   "libro": "Cultura",
+   "categoria": "Incentivos Culturales"
+  },
+  {
+   "id": "LE-16",
+   "articulo": 16,
+   "titulo": "Ley de Energía Eléctrica (Ley 6 de 1997)",
+   "contenido": "El mercado eléctrico panameño se organiza en generación, transmisión, distribución y comercialización. La generación y comercialización son actividades competitivas. La transmisión y distribución son actividades reguladas.",
+   "libro": "Energía",
+   "categoria": "Regulación Eléctrica"
+  },
+  {
+   "id": "LE-17",
+   "articulo": 17,
+   "titulo": "Ley de Energías Renovables (Ley 44 de 2011)",
+   "contenido": "Se fomenta la generación de energía renovable mediante incentivos fiscales: exención del ISR por 10 años, exención de aranceles para equipos, y exención del ITBMS para la construcción de plantas de energía renovable.",
+   "libro": "Energía",
+   "categoria": "Energías Renovables"
+  },
+  {
+   "id": "LE-18",
+   "articulo": 18,
+   "titulo": "Ley de Hidrocarburos (Ley 8 de 1987)",
+   "contenido": "El Estado es propietario de los yacimientos de hidrocarburos en el subsuelo nacional. La exploración y explotación requiere concesión administrativa. El concesionario paga regalías del 20% sobre la producción.",
+   "libro": "Energía",
+   "categoria": "Hidrocarburos"
+  },
+  {
+   "id": "LE-19",
+   "articulo": 19,
+   "titulo": "Ley de Minería (Ley 109 de 2013)",
+   "contenido": "La exploración y explotación minera requiere concesión otorgada por el Ministerio de Comercio. El concesionario paga regalías del 5% sobre el valor de producción. Se requiere estudio de impacto ambiental.",
+   "libro": "Minería",
+   "categoria": "Concesiones Mineras"
+  },
+  {
+   "id": "LE-20",
+   "articulo": 20,
+   "titulo": "Ley de Contratación Pública (Ley 22 de 2006)",
+   "contenido": "La contratación pública se rige por los principios de transparencia, igualdad, publicidad y libre competencia. Los procedimientos incluyen licitación pública, licitación por invitación y contratación directa.",
+   "libro": "Contratación Pública",
+   "categoria": "Contrataciones Estatales"
+  },
+  {
+   "id": "LE-21",
+   "articulo": 21,
+   "titulo": "Ley de Protección de Datos Personales (Ley 81 de 2019)",
+   "contenido": "Toda persona tiene derecho a la protección de sus datos personales. El tratamiento de datos requiere consentimiento del titular. Se crea la Autoridad Nacional de Protección de Datos Personales como ente regulador.",
+   "libro": "Derecho Digital",
+   "categoria": "Protección de Datos"
+  },
+  {
+   "id": "LE-22",
+   "articulo": 22,
+   "titulo": "Ley de Comercio Electrónico (Ley 51 de 2008)",
+   "contenido": "Los documentos electrónicos y las firmas digitales tienen la misma validez jurídica que los documentos físicos y las firmas manuscritas. Se reconoce el valor probatorio de los mensajes de datos.",
+   "libro": "Derecho Digital",
+   "categoria": "Comercio Electrónico"
+  },
+  {
+   "id": "LE-23",
+   "articulo": 23,
+   "titulo": "Ley de Firmas Electrónicas (Ley 82 de 2012)",
+   "contenido": "La firma electrónica certificada tiene la misma validez que la firma manuscrita. Los certificados digitales son emitidos por entidades de certificación acreditadas por la Autoridad Nacional de Innovación Gubernamental.",
+   "libro": "Derecho Digital",
+   "categoria": "Firma Electrónica"
+  },
+  {
+   "id": "LE-24",
+   "articulo": 24,
+   "titulo": "Ley de Blanqueo de Capitales (Ley 23 de 2015)",
+   "contenido": "Las entidades financieras y no financieras deben implementar medidas de debida diligencia, identificación de clientes, reporte de operaciones sospechosas y conservación de documentos para prevenir el blanqueo de capitales.",
+   "libro": "Prevención de Riesgos",
+   "categoria": "Blanqueo de Capitales"
+  },
+  {
+   "id": "LE-25",
+   "articulo": 25,
+   "titulo": "Ley de Transparencia Fiscal Internacional",
+   "contenido": "Panamá adopta el estándar de intercambio automático de información financiera (CRS) de la OCDE. Las entidades financieras deben reportar información de cuentas de personas y entidades extranjeras a la Dirección General de Ingresos.",
+   "libro": "Prevención de Riesgos",
+   "categoria": "Transparencia Fiscal"
+  },
+  {
+   "id": "LE-26",
+   "articulo": 26,
+   "titulo": "Ley de Inmigración (Decreto Ley 3 de 2008)",
+   "contenido": "La migración se regula conforme a categorías migratorias: residentes permanentes, residentes temporales, inversionistas, pensionados y trabajadores. Los extranjeros deben obtener visa según su nacionalidad y propósito.",
+   "libro": "Migración",
+   "categoria": "Régimen Migratorio"
+  },
+  {
+   "id": "LE-27",
+   "articulo": 27,
+   "titulo": "Visa de Inversionista y Residencia por Inversión",
+   "contenido": "El inversionista extranjero puede obtener residencia permanente mediante inversión mínima de B/.300,000 en bienes raíces, valores, o negocio en Panamá. Los pensionados obtienen residencia con pensión mínima de B/.1,000 mensuales.",
+   "libro": "Migración",
+   "categoria": "Régimen Migratorio"
+  },
+  {
+   "id": "LE-28",
+   "articulo": 28,
+   "titulo": "Ley de Notariado y Registro Público (Ley 10 de 1993)",
+   "contenido": "El Registro Público es la institución encargada de la inscripción de actos, contratos, títulos y documentos. Las inscripciones son públicas y producen efectos frente a terceros desde su fecha de presentación.",
+   "libro": "Fe Pública",
+   "categoria": "Registro Público"
+  },
+  {
+   "id": "LE-29",
+   "articulo": 29,
+   "titulo": "Ley de Arbitraje Comercial (Decreto Ley 5 de 1999)",
+   "contenido": "Las controversias comerciales pueden someterse a arbitraje nacional o internacional. El laudo arbitral es vinculante, definitivo y no admite recurso ordinario. El arbitraje se rige por los principios de autonomía de la voluntad.",
+   "libro": "Solución de Conflictos",
+   "categoria": "Arbitraje"
+  },
+  {
+   "id": "LE-30",
+   "articulo": 30,
+   "titulo": "Ley de Mediación y Conciliación (Ley 16 de 2007)",
+   "contenido": "La mediación y conciliación son métodos alternativos de solución de conflictos. El mediador es un tercero neutral que facilita la comunicación entre las partes. El acuerdo de mediación tiene fuerza ejecutiva.",
+   "libro": "Solución de Conflictos",
+   "categoria": "Mediación y Conciliación"
+  }
+ ]
+}

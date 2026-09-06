@@ -1,0 +1,91 @@
+{
+ "key": "competencia",
+ "titulo": "Competencia y Defensa del Consumidor en Panamá",
+ "descripcion": "Normas de libre competencia, protección al consumidor y regulación de prácticas comerciales en la República de Panamá.",
+ "info": {
+  "anio": "2007",
+  "ultimaReforma": "2020",
+  "importancia": "Regula la libre competencia y protección al consumidor",
+  "conceptosClave": [
+   "Monopolio",
+   "ACODECO",
+   "Publicidad",
+   "Garantías",
+   "Consumidor"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "CC-1",
+   "articulo": 1,
+   "titulo": "Ley de Competencia (Ley 45 de 2007)",
+   "contenido": "La ley protege y promueve la libre competencia económica. Prohíbe las prácticas monopolísticas absolutas (acuerdos entre competidores para fijar precios, limitar producción o repartirse mercados) y las prácticas monopolísticas relativas.",
+   "libro": "Libro I",
+   "categoria": "Libre Competencia"
+  },
+  {
+   "id": "CC-2",
+   "articulo": 2,
+   "titulo": "Concentraciones Económicas",
+   "contenido": "Las concentraciones económicas (fusiones, adquisiciones y alianzas) que excedan umbrales definidos deben ser notificadas a la Autoridad de Competencia para su evaluación previa. Se prohíben las concentraciones que reduzcan sustancialmente la competencia.",
+   "libro": "Libro I",
+   "categoria": "Libre Competencia"
+  },
+  {
+   "id": "CC-3",
+   "articulo": 3,
+   "titulo": "Abuso de Posición Dominante",
+   "contenido": "Se prohíbe el abuso de posición dominante en el mercado, incluyendo la imposición de precios predatorios, la discriminación injustificada de clientes, la negativa injustificada de venta y la sujeción de contratos a condiciones accesorias.",
+   "libro": "Libro I",
+   "categoria": "Libre Competencia"
+  },
+  {
+   "id": "CC-4",
+   "articulo": 4,
+   "titulo": "Autoridad de Competencia (ACODECO)",
+   "contenido": "La Autoridad de Protección al Consumidor y Defensa de la Competencia (ACODECO) es la entidad encargada de investigar y sancionar las violaciones a la libre competencia. Puede imponer multas y ordenar medidas correctivas.",
+   "libro": "Libro I",
+   "categoria": "Libre Competencia"
+  },
+  {
+   "id": "CC-5",
+   "articulo": 5,
+   "titulo": "Ley de Protección al Consumidor (Ley 45 de 2007)",
+   "contenido": "Los consumidores tienen derecho a la protección de su salud, seguridad e intereses económicos, a la información veraz y oportuna, a la libertad de elección, a la reparación de daños y a la educación en consumo.",
+   "libro": "Libro II",
+   "categoria": "Defensa del Consumidor"
+  },
+  {
+   "id": "CC-6",
+   "articulo": 6,
+   "titulo": "Publicidad Engañosa",
+   "contenido": "Se prohíbe la publicidad engañosa o abusiva que induzca a error al consumidor sobre las características, precio, calidad o condiciones de los bienes y servicios. La ACODECO puede ordenar el cese de la publicidad engañosa.",
+   "libro": "Libro II",
+   "categoria": "Defensa del Consumidor"
+  },
+  {
+   "id": "CC-7",
+   "articulo": 7,
+   "titulo": "Garantías y Devoluciones",
+   "contenido": "Todo producto debe contar con garantía mínima de seis meses. El consumidor tiene derecho a la reparación gratuita, el cambio del producto o la devolución del precio cuando el producto presente defectos de fabricación.",
+   "libro": "Libro II",
+   "categoria": "Defensa del Consumidor"
+  },
+  {
+   "id": "CC-8",
+   "articulo": 8,
+   "titulo": "Contratos de Adhesión y Cláusulas Abusivas",
+   "contenido": "En los contratos de adhesión, las cláusulas abusivas son nulas de pleno derecho. Se consideran abusivas las que limitan la responsabilidad del proveedor, invierten la carga de la prueba o imponen cargas desproporcionadas al consumidor.",
+   "libro": "Libro II",
+   "categoria": "Defensa del Consumidor"
+  },
+  {
+   "id": "CC-9",
+   "articulo": 9,
+   "titulo": "Procedimiento Sancionatorio de ACODECO",
+   "contenido": "Las denuncias por violación a las normas de competencia o consumo se tramitan mediante procedimiento administrativo que incluye investigación, descargos, audiencia y resolución. Las multas pueden ser de hasta B/.1,000,000.",
+   "libro": "Libro II",
+   "categoria": "Defensa del Consumidor"
+  }
+ ]
+}

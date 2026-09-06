@@ -1,0 +1,83 @@
+{
+ "key": "acuerdos",
+ "titulo": "Acuerdos y Resoluciones Importantes de Panamá",
+ "descripcion": "Acuerdos del Gabinete, resoluciones de entidades reguladoras y otras disposiciones administrativas de relevancia jurídica.",
+ "info": {
+  "anio": "2012",
+  "ultimaReforma": "2022",
+  "importancia": "Resoluciones y acuerdos de entes reguladores",
+  "conceptosClave": [
+   "SMV",
+   "SBP",
+   "ACODECO",
+   "ASEP",
+   "Gabinete"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "AC-1",
+   "articulo": 1,
+   "titulo": "Acuerdo de Gabinete 27 de 2012 - Código de Ética de la Administración Pública",
+   "contenido": "Establece los principios y reglas de conducta ética que deben observar los servidores públicos: transparencia, eficiencia, imparcialidad, responsabilidad, integridad y rendición de cuentas en el ejercicio de la función pública.",
+   "libro": "Derecho Administrativo",
+   "categoria": "Acuerdos de Gabinete"
+  },
+  {
+   "id": "AC-2",
+   "articulo": 2,
+   "titulo": "Resolución SMV 51-2021 - Reglamento del Mercado de Valores",
+   "contenido": "La Superintendencia del Mercado de Valores reglamenta la oferta pública de valores, los requisitos de inscripción de emisores y valores, la información financiera requerida y las normas de conducta de los participantes del mercado.",
+   "libro": "Derecho Financiero",
+   "categoria": "Resoluciones SMV"
+  },
+  {
+   "id": "AC-3",
+   "articulo": 3,
+   "titulo": "Resolución SBP 1-2022 - Normas de Gestión de Riesgos Bancarios",
+   "contenido": "La Superintendencia de Bancos establece los requisitos de capital, liquidez, gestión de riesgos crediticio, operativo y de mercado, así como las normas de gobierno corporativo para las entidades bancarias panameñas.",
+   "libro": "Derecho Financiero",
+   "categoria": "Resoluciones SBP"
+  },
+  {
+   "id": "AC-4",
+   "articulo": 4,
+   "titulo": "Resolución ANATI 123-2020 - Normas sobre Catastro y Valoración de Inmuebles",
+   "contenido": "La Autoridad Nacional de Catastro establece los procedimientos para la valoración catastral de inmuebles, la actualización de datos catastrales y los criterios para la determinación del valor fiscal de las propiedades.",
+   "libro": "Derecho Tributario",
+   "categoria": "Resoluciones ANATI"
+  },
+  {
+   "id": "AC-5",
+   "articulo": 5,
+   "titulo": "Acuerdo del Consejo de Gabinete 118-2013 - Política de Desarrollo Minero",
+   "contenido": "Define la política nacional de desarrollo minero sostenible, estableciendo los requisitos ambientales y sociales para la exploración y explotación minera, y la distribución de regalías entre el Estado y las comunidades.",
+   "libro": "Derecho Minero",
+   "categoria": "Acuerdos de Gabinete"
+  },
+  {
+   "id": "AC-6",
+   "articulo": 6,
+   "titulo": "Resolución AMP 456-2021 - Reglamento de Puertos y Marinas",
+   "contenido": "La Autoridad Marítima de Panamá reglamenta la operación de puertos comerciales, marinas turísticas y terminales especializados, estableciendo normas de seguridad, ambientales y tarifas portuarias.",
+   "libro": "Derecho Marítimo",
+   "categoria": "Resoluciones AMP"
+  },
+  {
+   "id": "AC-7",
+   "articulo": 7,
+   "titulo": "Resolución ASEP 102-2022 - Tarifas de Servicios Públicos",
+   "contenido": "La Autoridad de Servicios Públicos establece las tarifas máximas para los servicios de energía eléctrica, telecomunicaciones, agua potable y saneamiento, mediante metodologías de precio tope y reconocimiento de costos eficientes.",
+   "libro": "Derecho Administrativo",
+   "categoria": "Resoluciones ASEP"
+  },
+  {
+   "id": "AC-8",
+   "articulo": 8,
+   "titulo": "Acuerdo del Consejo de Gabinete 45-2019 - Plan Estratégico de Reactivación Económica",
+   "contenido": "Establece las medidas de reactivación económica post-pandemia: incentivos fiscales para inversiones, simplificación de trámites administrativos, programas de apoyo a PYMES y planes de infraestructura pública.",
+   "libro": "Derecho Económico",
+   "categoria": "Acuerdos de Gabinete"
+  }
+ ]
+}

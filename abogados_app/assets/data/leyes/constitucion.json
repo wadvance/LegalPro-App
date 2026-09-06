@@ -1,0 +1,290 @@
+{
+ "key": "constitucion",
+ "titulo": "Constitución de la República de Panamá",
+ "descripcion": "Constitución Política de 1972, reformada por los Actos Reformatorios de 1983, 1994 y 2004. Es la norma suprema del ordenamiento jurídico panameño.",
+ "info": {
+  "anio": "1972",
+  "ultimaReforma": "2004",
+  "importancia": "Norma suprema del ordenamiento jurídico panameño",
+  "conceptosClave": [
+   "Soberanía",
+   "Derechos Humanos",
+   "División de Poderes",
+   "Garantías Constitucionales"
+  ]
+ },
+ "articulos": [
+  {
+   "id": "CN-1",
+   "articulo": 1,
+   "titulo": "Soberanía",
+   "contenido": "La Nación panameña está organizada en Estado soberano e independiente, cuya denominación es República de Panamá. El poder público emana del pueblo y se ejerce por medio de sus representantes.",
+   "libro": "Título I",
+   "categoria": "Disposiciones Fundamentales"
+  },
+  {
+   "id": "CN-2",
+   "articulo": 2,
+   "titulo": "División de Poderes",
+   "contenido": "El Gobierno de la República de Panamá se ejerce por tres órganos: el Legislativo, el Ejecutivo y el Judicial, coordinados entre sí y con funciones separadas pero armónicas. Ninguno de ellos puede arrogarse funciones que no le corresponden.",
+   "libro": "Título I",
+   "categoria": "Disposiciones Fundamentales"
+  },
+  {
+   "id": "CN-3",
+   "articulo": 3,
+   "titulo": "Territorio Nacional",
+   "contenido": "El territorio de la República de Panamá comprende la superficie terrestre, el mar territorial, la plataforma continental, el subsuelo y el espacio aéreo entre Colombia y Costa Rica. La ley determinará las áreas marítimas y aéreas bajo soberanía nacional.",
+   "libro": "Título I",
+   "categoria": "Disposiciones Fundamentales"
+  },
+  {
+   "id": "CN-4",
+   "articulo": 4,
+   "titulo": "Relaciones Internacionales",
+   "contenido": "Panamá acata las normas del Derecho Internacional y propugna la solución pacífica de las controversias internacionales. Rechaza la guerra como instrumento de solución de conflictos.",
+   "libro": "Título I",
+   "categoria": "Disposiciones Fundamentales"
+  },
+  {
+   "id": "CN-5",
+   "articulo": 5,
+   "titulo": "Nacionalidad Panameña",
+   "contenido": "Son panameños por nacimiento: los nacidos en el territorio nacional, los hijos de padre o madre panameños nacidos en el extranjero, y los adoptados por panameños. Son panameños por naturalización los que adquieran la nacionalidad conforme a la ley.",
+   "libro": "Título II",
+   "categoria": "Nacionalidad"
+  },
+  {
+   "id": "CN-17",
+   "articulo": 17,
+   "titulo": "Derechos y Garantías Fundamentales",
+   "contenido": "Los derechos y garantías que consagra la Constitución se consideran mínimos y no excluyen otros que se refieran a los derechos fundamentales de la persona. Las autoridades están obligadas a protegerlos y hacerlos efectivos.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-18",
+   "articulo": 18,
+   "titulo": "Deberes del Estado",
+   "contenido": "Los servidores públicos están al servicio del Estado y de la comunidad. Responden por la violación de los derechos de las personas y por el incumplimiento de sus deberes.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-19",
+   "articulo": 19,
+   "titulo": "Igualdad ante la Ley",
+   "contenido": "No habrá fueros personales ni discriminación por razón de raza, nacimiento, discapacidad, clase social, sexo, religión o ideas políticas. La ley determinará las sanciones por violación de este principio.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-20",
+   "articulo": 20,
+   "titulo": "Debido Proceso",
+   "contenido": "Toda persona tiene derecho a ser oída en un plazo razonable por un tribunal competente, independiente e imparcial. Nadie puede ser juzgado sino por autoridad competente y conforme a los trámites legales.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-21",
+   "articulo": 21,
+   "titulo": "Libertad Personal",
+   "contenido": "Nadie puede ser detenido sino por mandamiento escrito de autoridad judicial, salvo flagrancia. La detención preventiva no excederá de 48 horas, y dentro de ese término se pondrá al detenido a disposición de la autoridad judicial.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-22",
+   "articulo": 22,
+   "titulo": "Inviolabilidad de la Vivienda",
+   "contenido": "La vivienda es inviolable. Nadie puede penetrar en ella sin consentimiento del morador o sin mandamiento judicial, salvo delito flagrante. Las comunicaciones privadas son inviolables.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-23",
+   "articulo": 23,
+   "titulo": "Habeas Corpus",
+   "contenido": "Toda persona detenida ilegalmente tiene derecho a solicitar Habeas Corpus ante el Tribunal Superior de Justicia. El procedimiento es preferente y sumario, y la autoridad judicial debe resolverlo en un término no mayor de 24 horas.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-24",
+   "articulo": 24,
+   "titulo": "Libertad de Expresión",
+   "contenido": "Toda persona tiene derecho a expresar libremente su pensamiento mediante la palabra, la escritura o cualquier otro medio. No hay censura previa, pero la ley establecerá las responsabilidades por el abuso de este derecho.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-25",
+   "articulo": 25,
+   "titulo": "Libertad de Reunión",
+   "contenido": "Toda persona tiene derecho de reunirse pacíficamente y sin armas para fines lícitos, sin necesidad de permiso previo. En lugares públicos se requerirá aviso previo a la autoridad.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-26",
+   "articulo": 26,
+   "titulo": "Libertad de Asociación",
+   "contenido": "Toda persona tiene derecho a formar asociaciones para fines lícitos, sin necesidad de autorización previa. Las asociaciones deben inscribirse en un registro público.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-27",
+   "articulo": 27,
+   "titulo": "Libertad de Culto",
+   "contenido": "Toda persona puede profesar libremente su religión y practicar sus creencias sin más limitaciones que el orden público y el respeto a la moral. Las iglesias son independientes del Estado.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-28",
+   "articulo": 28,
+   "titulo": "Derecho de Petición",
+   "contenido": "Toda persona tiene derecho a presentar peticiones respetuosas a las autoridades y a obtener pronta resolución. La autoridad debe resolver dentro del término legal, so pena de incurrir en responsabilidad.",
+   "libro": "Título III",
+   "categoria": "Derechos y Garantías"
+  },
+  {
+   "id": "CN-29",
+   "articulo": 29,
+   "titulo": "Derecho a la Propiedad Privada",
+   "contenido": "Se garantiza la propiedad privada adquirida conforme a la ley. La expropiación solo procede por causa de utilidad pública o interés social, mediante indemnización previa y justa.",
+   "libro": "Título III",
+   "categoria": "Derechos Económicos"
+  },
+  {
+   "id": "CN-30",
+   "articulo": 30,
+   "titulo": "Libertad de Trabajo",
+   "contenido": "Toda persona tiene derecho al trabajo y a dedicarse a la actividad económica de su preferencia, sin más limitaciones que las establecidas por la ley. Nadie puede ser obligado a trabajar gratuitamente.",
+   "libro": "Título III",
+   "categoria": "Derechos Económicos"
+  },
+  {
+   "id": "CN-40",
+   "articulo": 40,
+   "titulo": "Derecho a la Salud",
+   "contenido": "Toda persona tiene derecho a la salud. El Estado garantiza el acceso universal a los servicios de salud pública, y la ley determinará la forma de prestarlos.",
+   "libro": "Título III",
+   "categoria": "Derechos Sociales"
+  },
+  {
+   "id": "CN-41",
+   "articulo": 41,
+   "titulo": "Derecho a la Educación",
+   "contenido": "La educación es un derecho de la persona y un deber del Estado. La educación primaria es obligatoria y gratuita. El Estado fomentará la educación científica, técnica y profesional.",
+   "libro": "Título III",
+   "categoria": "Derechos Sociales"
+  },
+  {
+   "id": "CN-42",
+   "articulo": 42,
+   "titulo": "Libertad Sindical",
+   "contenido": "Los trabajadores tienen derecho a la sindicalización voluntaria y a la negociación colectiva. La ley regulará el ejercicio de estos derechos y garantizará el fuero sindical.",
+   "libro": "Título III",
+   "categoria": "Derechos Sociales"
+  },
+  {
+   "id": "CN-100",
+   "articulo": 100,
+   "titulo": "Organo Legislativo",
+   "contenido": "El Organo Legislativo está constituido por la Asamblea Nacional, elegida por votación popular directa para un período de cinco años. La Asamblea se compone de diputados en número proporcional a la población.",
+   "libro": "Título V",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-101",
+   "articulo": 101,
+   "titulo": "Funciones de la Asamblea Nacional",
+   "contenido": "Corresponde a la Asamblea Nacional: expedir leyes, aprobar el presupuesto del Estado, ratificar tratados internacionales, elegir a los magistrados de la Corte Suprema, y ejercer control político sobre el Órgano Ejecutivo.",
+   "libro": "Título V",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-102",
+   "articulo": 102,
+   "titulo": "Iniciativa Legislativa",
+   "contenido": "Las leyes pueden ser iniciadas por los diputados, el Presidente de la República, la Corte Suprema de Justicia, y por iniciativa popular mediante petición firmada por el 1% del electorado.",
+   "libro": "Título V",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-150",
+   "articulo": 150,
+   "titulo": "Organo Ejecutivo",
+   "contenido": "El Organo Ejecutivo está constituido por el Presidente de la República y los Ministros de Estado. El Presidente es elegido por votación popular directa para un período de cinco años sin reelección inmediata.",
+   "libro": "Título VI",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-151",
+   "articulo": 151,
+   "titulo": "Funciones del Presidente",
+   "contenido": "El Presidente de la República ejerce la jefatura del Estado y del Gobierno, representa a la Nación, dirige la administración pública, sanciona y promulga las leyes, y nombra a los Ministros de Estado.",
+   "libro": "Título VI",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-200",
+   "articulo": 200,
+   "titulo": "Organo Judicial",
+   "contenido": "El Organo Judicial está constituido por la Corte Suprema de Justicia, los tribunales superiores y los juzgados. La función jurisdiccional se ejerce con independencia y los jueces son independientes en el ejercicio de sus funciones.",
+   "libro": "Título VII",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-201",
+   "articulo": 201,
+   "titulo": "Corte Suprema de Justicia",
+   "contenido": "La Corte Suprema de Justicia es el máximo tribunal de la República. Está integrada por nueve magistrados designados por el Presidente de la República con aprobación de la Asamblea Nacional, para períodos de diez años.",
+   "libro": "Título VII",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-202",
+   "articulo": 202,
+   "titulo": "Jurisdicción de la Corte Suprema",
+   "contenido": "La Corte Suprema conoce de los recursos de casación, habeas corpus, amparo de garantías constitucionales, inconstitucionalidad de leyes, y los conflictos entre órganos del Estado.",
+   "libro": "Título VII",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-203",
+   "articulo": 203,
+   "titulo": "Amparo de Garantías Constitucionales",
+   "contenido": "Toda persona puede interponer acción de amparo de garantías constitucionales contra cualquier orden, acto o disposición de autoridad que viole los derechos constitucionales. El procedimiento es preferente y sumario.",
+   "libro": "Título VII",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-204",
+   "articulo": 204,
+   "titulo": "Acción de Inconstitucionalidad",
+   "contenido": "Cuando una ley o decreto viole un precepto constitucional, cualquier persona puede solicitar su declaratoria de inconstitucionalidad ante la Corte Suprema. La decisión de la Corte tiene efecto general y es definitiva.",
+   "libro": "Título VII",
+   "categoria": "Organización del Estado"
+  },
+  {
+   "id": "CN-300",
+   "articulo": 300,
+   "titulo": "División Política",
+   "contenido": "La República se divide políticamente en provincias, estas en distritos y estos en corregimientos. La ley fijará su número, límites y organización. La creación de nuevas provincias requiere aprobación legislativa.",
+   "libro": "Título IX",
+   "categoria": "Organización Territorial"
+  },
+  {
+   "id": "CN-301",
+   "articulo": 301,
+   "titulo": "Régimen Municipal",
+   "contenido": "Los municipios son autónomos política, administrativa y económicamente. Su gobierno corresponde al alcalde y al concejo municipal, elegidos por votación popular para períodos de cinco años.",
+   "libro": "Título IX",
+   "categoria": "Organización Territorial"
+  }
+ ]
+}
