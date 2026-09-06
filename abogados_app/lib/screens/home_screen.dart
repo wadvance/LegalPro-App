@@ -196,6 +196,49 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream:
+                FirestoreService.notificaciones(_user.uid),
+            builder: (_, snap) {
+              var n = 0;
+              if (snap.hasData) {
+                n = snap.data!.docs
+                    .where((d) => d.data()['leida'] != true)
+                    .length;
+              }
+              return Stack(
+                children: [
+                  IconButton(
+                    onPressed: () =>
+                        widget.navegar('notificaciones'),
+                    icon: const Text('🔔',
+                        style: TextStyle(fontSize: 20)),
+                    tooltip: 'Notificaciones',
+                  ),
+                  if (n > 0)
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding:
+                            const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius:
+                              BorderRadius.circular(9),
+                        ),
+                        child: Text('$n',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
           IconButton(
             onPressed: widget.onInstalar,
             icon: const Text('📥',

@@ -170,7 +170,8 @@ class _SeguimientoScreenState extends State<SeguimientoScreen> {
                                       Timestamp.now(),
                                 },
                               );
-                              if (!ctx.mounted || !mounted) return;
+                              if (!ctx.mounted) return;
+                              if (!mounted) return;
                               if (!r.ok) {
                                 ay.alerta(context, 'Error',
                                     r.error ?? 'No se pudo guardar');
@@ -182,6 +183,17 @@ class _SeguimientoScreenState extends State<SeguimientoScreen> {
                                 setState(
                                     () => _selDatos = nuevos);
                                 Navigator.pop(ctx);
+                                await FirestoreService.notificar(
+                                  uid: _user.uid,
+                                  tipo: 'movimiento',
+                                  titulo:
+                                      'Nuevo movimiento en Exp. #${_selDatos?['numero'] ?? ''}',
+                                  mensaje:
+                                      '$tipo: ${descripcion.text.trim()}',
+                                  expedienteId: _selId!,
+                                  numero:
+                                      '${_selDatos?['numero'] ?? ''}',
+                                );
                               }
                               setModal(() => guardando = false);
                             },

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../services/push_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/instalacion.dart';
 import 'calculadoras_screen.dart';
@@ -12,6 +15,7 @@ import 'expedientes_screen.dart';
 import 'gps_screen.dart';
 import 'home_screen.dart';
 import 'ia_legal_screen.dart';
+import 'notificaciones_screen.dart';
 import 'leyes_screen.dart';
 import 'reportes_screen.dart';
 import 'seguimiento_screen.dart';
@@ -34,6 +38,11 @@ class _MainTabsState extends State<MainTabs> {
     super.initState();
     _installController = InstallController()
       ..addListener(() => setState(() {}));
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      PushService.inicializar();
+      PushService.escuchar(uid);
+    }
   }
 
   @override
@@ -70,6 +79,8 @@ class _MainTabsState extends State<MainTabs> {
         ChatbotScreen(themeController: widget.themeController),
       'ia' =>
         IaLegalScreen(themeController: widget.themeController),
+      'notificaciones' => NotificacionesScreen(
+          themeController: widget.themeController),
       _ => null,
     };
     if (pantalla != null && mounted) {

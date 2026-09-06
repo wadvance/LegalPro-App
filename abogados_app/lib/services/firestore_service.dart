@@ -137,6 +137,38 @@ class FirestoreService {
     );
   }
 
+  // ---------- Notificaciones ----------
+
+  static Future<void> notificar({
+    required String uid,
+    required String tipo,
+    required String titulo,
+    required String mensaje,
+    String expedienteId = '',
+    String numero = '',
+  }) async {
+    try {
+      await _db.collection('notificaciones').add({
+        'abogadoId': uid,
+        'tipo': tipo,
+        'titulo': titulo,
+        'mensaje': mensaje,
+        'expedienteId': expedienteId,
+        'numero': numero,
+        'leida': false,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (_) {}
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> notificaciones(
+      String uid) {
+    return _db
+        .collection('notificaciones')
+        .where('abogadoId', isEqualTo: uid)
+        .snapshots();
+  }
+
   static Stream<QuerySnapshot<Map<String, dynamic>>> proximasCitas(
       String uid) {
     // Sin índices compuestos: se filtra y ordena en el cliente.
