@@ -13,6 +13,7 @@ import 'cobros_screen.dart';
 import 'empresas_screen.dart';
 import 'expedientes_screen.dart';
 import 'gps_screen.dart';
+import 'documentos_screen.dart';
 import 'home_screen.dart';
 import 'ia_legal_screen.dart';
 import 'notificaciones_screen.dart';
@@ -80,6 +81,8 @@ class _MainTabsState extends State<MainTabs> {
       'ia' =>
         IaLegalScreen(themeController: widget.themeController),
       'notificaciones' => NotificacionesScreen(
+          themeController: widget.themeController),
+      'documentos' => DocumentosScreen(
           themeController: widget.themeController),
       _ => null,
     };

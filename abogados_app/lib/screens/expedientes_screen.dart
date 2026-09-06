@@ -416,20 +416,41 @@ class _ExpedientesScreenState extends State<ExpedientesScreen> {
                                     const SizedBox(height: 6),
                                     Text(
                                         '${data['tipo'] ?? ''} · ${desc.length > 80 ? '${desc.substring(0, 80)}…' : desc}'),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: TextButton(
-                                        onPressed: () =>
-                                            PdfService.reporteCaso(
-                                                context, data),
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: c.primary
-                                              .withValues(alpha: 0.1),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              PdfService.reporteCaso(
+                                                  context, data,
+                                                  imprimir: true),
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: c
+                                                .primary
+                                                .withValues(
+                                                    alpha: 0.1),
+                                          ),
+                                          child: Text('🖨️ Imprimir',
+                                              style: TextStyle(
+                                                  color:
+                                                      c.primary)),
                                         ),
-                                        child: Text('📄 PDF',
-                                            style: TextStyle(
-                                                color: c.primary)),
-                                      ),
+                                        const SizedBox(width: 8),
+                                        TextButton(
+                                          onPressed: () =>
+                                              PdfService.reporteCaso(
+                                                  context, data),
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: c.primary
+                                                .withValues(alpha: 0.1),
+                                          ),
+                                          child: Text('📄 PDF',
+                                              style: TextStyle(
+                                                  color:
+                                                      c.primary)),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

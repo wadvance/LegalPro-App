@@ -48,20 +48,44 @@ class PdfService {
     );
   }
 
+  static Future<pw.Document> _armar(
+      String titulo, List<pw.Widget> cuerpo) async {
+    final doc = pw.Document();
+    doc.addPage(pw.MultiPage(
+      build: (_) => [_encabezado(titulo), ...cuerpo, _pie()],
+    ));
+    return doc;
+  }
+
   static Future<void> _compartir(
       BuildContext context, String titulo, String nombreArchivo,
       List<pw.Widget> cuerpo) async {
     try {
-      final doc = pw.Document();
-      doc.addPage(pw.MultiPage(
-        build: (_) => [_encabezado(titulo), ...cuerpo, _pie()],
-      ));
+      final doc = await _armar(titulo, cuerpo);
       await Printing.sharePdf(
           bytes: await doc.save(), filename: '$nombreArchivo.pdf');
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No se pudo generar el PDF')),
+        );
+      }
+    }
+  }
+
+  /// Abre el diálogo de impresión del sistema.
+  static Future<void> _imprimir(
+      BuildContext context, String titulo, String nombreArchivo,
+      List<pw.Widget> cuerpo) async {
+    try {
+      final doc = await _armar(titulo, cuerpo);
+      await Printing.layoutPdf(
+          name: nombreArchivo,
+          onLayout: (_) async => doc.save());
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No se pudo imprimir')),
         );
       }
     }
@@ -80,20 +104,51 @@ class PdfService {
     );
   }
 
+  static List<pw.Widget> cuerpoExpediente(
+      Map<String, dynamic> exp) {
+    return [
+      _fila('Número', '${exp['numero'] ?? ''}'),
+      _fila('Cliente', '${exp['clienteNombre'] ?? ''}'),
+      _fila('Tipo', '${exp['tipo'] ?? ''}'),
+      _fila('Estado', '${exp['estado'] ?? ''}'),
+      _fila('Descripción', '${exp['descripcion'] ?? ''}'),
+    ];
+  }
+
   static Future<void> reporteCaso(
-      BuildContext context, Map<String, dynamic> exp) async {
-    await _compartir(
-      context,
-      'Expediente #${exp['numero'] ?? ''}',
-      'Expediente_${exp['numero'] ?? 'SN'}',
-      [
-        _fila('Número', '${exp['numero'] ?? ''}'),
-        _fila('Cliente', '${exp['clienteNombre'] ?? ''}'),
-        _fila('Tipo', '${exp['tipo'] ?? ''}'),
-        _fila('Estado', '${exp['estado'] ?? ''}'),
-        _fila('Descripción', '${exp['descripcion'] ?? ''}'),
-      ],
-    );
+      BuildContext context, Map<String, dynamic> exp,
+      {bool imprimir = false}) async {
+    final titulo = 'Expediente #${exp['numero'] ?? ''}';
+    final nombre = 'Expediente_${exp['numero'] ?? 'SN'}';
+    if (imprimir) {
+      await _imprimir(context, titulo, nombre, cuerpoExpediente(exp));
+    } else {
+      await _compartir(
+          context, titulo, nombre, cuerpoExpediente(exp));
+    }
+  }
+
+  static Future<void> documento(
+      BuildContext context,
+      {required String titulo,
+      required String tipo,
+      required String contenido,
+      bool imprimir = false}) async {
+    final cuerpo = <pw.Widget>[
+      _fila('Tipo', tipo),
+      pw.SizedBox(height: 8),
+      ...contenido.split('\n').map((linea) => pw.Padding(
+            padding: const pw.EdgeInsets.only(bottom: 6),
+            child: pw.Text(linea, textAlign: pw.TextAlign.justify),
+          )),
+    ];
+    final limpio = titulo.replaceAll(RegExp(r'[^A-Za-z0-9]+'), '_');
+    final nombre = limpio.isEmpty ? 'Documento' : limpio;
+    if (imprimir) {
+      await _imprimir(context, titulo, nombre, cuerpo);
+    } else {
+      await _compartir(context, titulo, nombre, cuerpo);
+    }
   }
 
   static Future<void> factura(

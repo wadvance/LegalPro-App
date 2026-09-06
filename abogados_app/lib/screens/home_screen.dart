@@ -404,6 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ('⚖️', 'Leyes', const Color(0xFF1A237E), 'leyes'),
       ('💬', 'Chatbot', const Color(0xFF00897B), 'chatbot'),
       ('🤖', 'IA Legal', const Color(0xFF6A1B9A), 'ia'),
+      ('📝', 'Documentos', const Color(0xFF00695C), 'documentos'),
       ('📊', 'Reportes', const Color(0xFF5D4037), 'reportes'),
     ];
     return Column(
