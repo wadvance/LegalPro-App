@@ -46,6 +46,7 @@ dependencies:
   printing: ^5.15.0
   intl: ^0.20.3
   pdf: ^3.13.0
+  flutter_local_notifications: ^22.3.0
 
   # MySQL connector for database connectivity
 dev_dependencies:
