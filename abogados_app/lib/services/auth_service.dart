@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 
 /// Equivale a firebase/auth.js de la app original.
@@ -105,23 +106,39 @@ class AuthService {
 
   static Future<({bool ok, String? error})> loginWithGoogle() async {
     try {
-      final googleUser = await GoogleSignIn.instance.authenticate();
-      final googleAuth = googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-          idToken: googleAuth.idToken);
-      final cred = await _auth.signInWithCredential(credential);
-      if (cred.user != null) {
-        await _asegurarPerfil(cred.user!);
+      if (kIsWeb) {
+        // En web se usa el popup directo de Firebase (requiere el
+        // proveedor Google activo y el dominio autorizado en la consola).
+        final cred =
+            await _auth.signInWithPopup(GoogleAuthProvider());
+        if (cred.user != null) {
+          await _asegurarPerfil(cred.user!);
+        }
+      } else {
+        await GoogleSignIn.instance.initialize();
+        final googleUser = await GoogleSignIn.instance.authenticate();
+        final googleAuth = googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+            idToken: googleAuth.idToken);
+        final cred = await _auth.signInWithCredential(credential);
+        if (cred.user != null) {
+          await _asegurarPerfil(cred.user!);
+        }
       }
       return (ok: true, error: null);
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'popup-closed-by-user' ||
+          e.code == 'cancelled') {
+        return (ok: false, error: '');
+      }
       return (ok: false, error: '${e.code}: ${e.message}');
     } catch (e) {
       // El usuario cerró el popup: no mostrar error.
-      if ('$e'.contains('canceled')) {
+      if ('$e'.contains('canceled') ||
+          '$e'.contains('popup-closed-by-user')) {
         return (ok: false, error: '');
       }
-      return (ok: false, error: 'Error al iniciar sesión con Google');
+      return (ok: false, error: 'Error al iniciar sesión con Google: $e');
     }
   }
 
