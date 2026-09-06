@@ -88,6 +88,8 @@ class FirestoreService {
     int citasPendientes,
     double cobrosDelMes
   })> dashboard(String uid) async {
+    // Consultas con un solo filtro (sin índices compuestos) y
+    // agregación en cliente para máxima compatibilidad.
     final clientes = await _db
         .collection('clientes')
         .where('abogadoId', isEqualTo: uid)
@@ -101,42 +103,46 @@ class FirestoreService {
     final citas = await _db
         .collection('citas')
         .where('abogadoId', isEqualTo: uid)
-        .where('estado', isEqualTo: 'pendiente')
-        .count()
         .get();
+    var pendientes = 0;
+    for (final d in citas.docs) {
+      if ('${d.data()['estado'] ?? ''}' == 'pendiente') pendientes++;
+    }
 
-    final inicioMes = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    final ahora = DateTime.now();
     final cobros = await _db
         .collection('cobros')
         .where('abogadoId', isEqualTo: uid)
-        .where('createdAt',
-            isGreaterThanOrEqualTo: Timestamp.fromDate(inicioMes))
         .get();
     double total = 0;
     for (final d in cobros.docs) {
-      final m = d.data()['monto'];
-      if (m is num) {
-        total += m.toDouble();
-      } else if (m is String) {
-        total += double.tryParse(m) ?? 0;
+      final data = d.data();
+      final creado = (data['createdAt'] as Timestamp?)?.toDate();
+      if (creado != null &&
+          creado.year == ahora.year &&
+          creado.month == ahora.month) {
+        final m = data['monto'];
+        if (m is num) {
+          total += m.toDouble();
+        } else if (m is String) {
+          total += double.tryParse(m) ?? 0;
+        }
       }
     }
     return (
       totalClientes: clientes.count ?? 0,
       totalExpedientes: expedientes.count ?? 0,
-      citasPendientes: citas.count ?? 0,
+      citasPendientes: pendientes,
       cobrosDelMes: total,
     );
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> proximasCitas(
       String uid) {
+    // Sin índices compuestos: se filtra y ordena en el cliente.
     return _db
         .collection('citas')
         .where('abogadoId', isEqualTo: uid)
-        .where('estado', isEqualTo: 'pendiente')
-        .orderBy('fecha')
-        .limit(5)
         .snapshots();
   }
 }

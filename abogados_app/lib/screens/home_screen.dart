@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../theme/app_theme.dart';
+import '../utils/ayudas.dart' as ay;
 
 /// Replica src/screens/HomeScreen.js (header, métricas, citas, accesos).
 class HomeScreen extends StatefulWidget {
@@ -274,7 +275,17 @@ class _HomeScreenState extends State<HomeScreen> {
         if (!snap.hasData || snap.data!.docs.isEmpty) {
           return const SizedBox.shrink();
         }
-        final citas = snap.data!.docs;
+        final citas = snap.data!.docs.where((d) {
+          return '${d.data()['estado'] ?? ''}' == 'pendiente';
+        }).toList()
+          ..sort((a, b) {
+            final fa = ay.fechaDe(a.data()['fecha']);
+            final fb = ay.fechaDe(b.data()['fecha']);
+            if (fa == null || fb == null) return 0;
+            return fa.compareTo(fb);
+          });
+        final top = citas.take(5).toList();
+        if (top.isEmpty) return const SizedBox.shrink();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -292,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            ...citas.map((d) {
+            ...top.map((d) {
               final data = d.data();
               final titulo =
                   '${data['titulo'] ?? data['clienteNombre'] ?? 'Cita'}';

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import 'citas_screen.dart';
 import 'clientes_screen.dart';
+import 'cobros_screen.dart';
+import 'expedientes_screen.dart';
 import 'home_screen.dart';
 import 'placeholder_screen.dart';
 
@@ -25,18 +28,9 @@ class _MainTabsState extends State<MainTabs> {
     final pantallas = [
       HomeScreen(themeController: widget.themeController, irATab: _irA),
       ClientesScreen(themeController: widget.themeController),
-      PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '📁',
-          titulo: 'Expedientes'),
-      PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '📅',
-          titulo: 'Citas'),
-      PlaceholderScreen(
-          themeController: widget.themeController,
-          icono: '💰',
-          titulo: 'Cobros'),
+      ExpedientesScreen(themeController: widget.themeController),
+      CitasScreen(themeController: widget.themeController),
+      CobrosScreen(themeController: widget.themeController),
       PlaceholderScreen(
           themeController: widget.themeController,
           icono: '📍',
