@@ -1,5 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:http/http.dart' as http;
+
+// ============================================================
+// CONFIGURA AQUI LA URL DE TU API (archivo api.php en Alwaysdata)
+// Ejemplo: 'https://TU_USUARIO.alwaysdata.net/api.php'
+// Tambien la puedes cambiar dentro de la app en el campo "URL de la API".
+// ============================================================
+const String kApiBaseUrl = 'https://TU_USUARIO.alwaysdata.net/api.php';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App Moderno',
+      title: 'LegalPro App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -31,96 +41,135 @@ class DatabaseScreen extends StatefulWidget {
 }
 
 class _DatabaseScreenState extends State<DatabaseScreen> {
-late String _estadoConexion = 'Desconectado';
-  late List<Map<String, dynamic>> _registros = [];
+  final TextEditingController _apiController =
+      TextEditingController(text: kApiBaseUrl);
+
+  String _estadoConexion = 'Desconectado';
+  String _mensaje = 'Configura la URL de tu API de Alwaysdata para empezar.';
+  List<Map<String, String>> _registros = [];
   bool _cargando = false;
 
-  final String _host = 'mysql.alwaysdata.net';
-  final String _baseDatos = 'tu_base_de_datos';
-  final String _usuario = 'tu_usuario';
-  final String _password = 'tu_contraseña';
+  String get _apiUrl => _apiController.text.trim();
 
   @override
-  void initState() {
-    super.initState();
-    _probarConexion();
+  void dispose() {
+    _apiController.dispose();
+    super.dispose();
   }
 
   Future<void> _probarConexion() async {
+    if (_apiUrl.isEmpty || _apiUrl.contains('TU_USUARIO')) {
+      setState(() {
+        _estadoConexion = 'Falta configurar';
+        _mensaje =
+            'Pega la URL de tu api.php de Alwaysdata en el campo "URL de la API". Ver la carpeta abogados_app/api/README.md.';
+      });
+      return;
+    }
+
     setState(() {
       _cargando = true;
       _estadoConexion = 'Conectando...';
+      _mensaje = 'Contactando $_apiUrl...';
     });
 
     try {
-      final conn = await MySqlConnection.connect(
-        ConnectionSettings(
-          host: _host,
-          user: _usuario,
-          password: _password,
-          db: _baseDatos,
-        ),
-      );
-
+      final uri = Uri.parse('$_apiUrl?action=list');
+      final resp = await http.get(uri).timeout(const Duration(seconds: 15));
+      if (resp.statusCode != 200) {
+        throw Exception('HTTP ${resp.statusCode}');
+      }
+      final body = jsonDecode(resp.body) as Map<String, dynamic>;
+      if (body['ok'] != true) {
+        throw Exception(body['error'] ?? 'La API devolvio un error.');
+      }
+      final datos = (body['data'] as List?) ?? [];
+      if (!mounted) return;
       setState(() {
         _estadoConexion = 'Conectado';
+        _mensaje = 'Conexion exitosa con la API y MySQL en Alwaysdata.';
+        _registros = datos.map((e) {
+          final m = e as Map;
+          return {
+            'id': '${m['id'] ?? ''}',
+            'nombre': '${m['nombre'] ?? 'Sin nombre'}',
+            'valor': '${m['valor'] ?? ''}',
+          };
+        }).toList();
       });
-
-      await _cargarRegistros(conn);
-      await conn.query('SELECT 1');
-      conn.close();
-    } finally {
+    } on TimeoutException {
+      if (!mounted) return;
       setState(() {
-        _cargando = false;
-      });
-    }
-  }
-
-  Future<void> _cargarRegistros(MySqlConnection conn) async {
-    try {
-      final resultado = await conn.query('SELECT * FROM tus_tabla LIMIT 10');
-      setState(() {
-        _registros = resultado.fields.isNotEmpty
-            ? List.generate(resultado.length, (index) {
-                final map = <String, dynamic>{};
-                for (int i = 0; i < resultado.fields.length; i++) {
-                  final nombre = resultado.fields[i].name.toString();
-                  final valor = resultado.elementAt(index)[i].toString();
-                  map[nombre] = valor.isEmpty ? '' : valor;
-                }
-                return map;
-              })
-            : [];
+        _estadoConexion = 'Sin respuesta';
+        _mensaje =
+            'La API tardo mas de 15 segundos. Revisa la URL y que api.php este subido en Alwaysdata.';
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
-        _estadoConexion = 'Error al cargar datos: $e';
+        _estadoConexion = 'Error de conexion';
+        _mensaje = 'No se pudo conectar: $e';
       });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _cargando = false;
+        });
+      }
     }
   }
 
   Future<void> _insertarRegistro() async {
-    final conn = await MySqlConnection.connect(
-      ConnectionSettings(
-        host: _host,
-        user: _usuario,
-        password: _password,
-        db: _baseDatos,
-      ),
-    );
+    if (_apiUrl.isEmpty || _apiUrl.contains('TU_USUARIO')) {
+      setState(() {
+        _estadoConexion = 'Falta configurar';
+        _mensaje = 'Primero configura la URL de tu API.';
+      });
+      return;
+    }
+
+    setState(() {
+      _cargando = true;
+    });
 
     try {
-      await conn.query(
-        'INSERT INTO tus_tabla (nombre, valor) VALUES (?, ?)',
-        ['Registro desde Flutter', DateTime.now().toIso8601String()],
-      );
+      final uri = Uri.parse(_apiUrl);
+      final resp = await http
+          .post(
+            uri,
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({
+              'nombre': 'Registro desde Flutter',
+              'valor': DateTime.now().toIso8601String(),
+            }),
+          )
+          .timeout(const Duration(seconds: 15));
+      if (resp.statusCode != 200) {
+        throw Exception('HTTP ${resp.statusCode}');
+      }
+      final body = jsonDecode(resp.body) as Map<String, dynamic>;
+      if (body['ok'] != true) {
+        throw Exception(body['error'] ?? 'La API devolvio un error.');
+      }
       await _probarConexion();
-    } catch (e) {
+    } on TimeoutException {
+      if (!mounted) return;
       setState(() {
-        _estadoConexion = 'Error al insertar: $e';
+        _estadoConexion = 'Sin respuesta';
+        _mensaje = 'La API tardo mas de 15 segundos al insertar.';
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _estadoConexion = 'Error al insertar';
+        _mensaje = 'No se pudo insertar: $e';
       });
     } finally {
-      await conn.close();
+      if (mounted) {
+        setState(() {
+          _cargando = false;
+        });
+      }
     }
   }
 
@@ -128,7 +177,7 @@ late String _estadoConexion = 'Desconectado';
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conexión MySQL'),
+        title: const Text('Conexion MySQL'),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
@@ -137,9 +186,9 @@ late String _estadoConexion = 'Desconectado';
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildTarjetaEstado(),
+            _buildTarjetaApi(),
             const SizedBox(height: 24),
-            _buildTarjetaInfo(),
+            _buildTarjetaEstado(),
             const SizedBox(height: 24),
             _buildBotonesAccion(),
             const SizedBox(height: 24),
@@ -150,7 +199,7 @@ late String _estadoConexion = 'Desconectado';
     );
   }
 
-  Widget _buildTarjetaEstado() {
+  Widget _buildTarjetaApi() {
     return Card(
       elevation: 2,
       child: Padding(
@@ -159,7 +208,35 @@ late String _estadoConexion = 'Desconectado';
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Estado de Conexión',
+              'URL de la API (Alwaysdata)',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: _apiController,
+              keyboardType: TextInputType.url,
+              decoration: const InputDecoration(
+                hintText: 'https://TU_USUARIO.alwaysdata.net/api.php',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTarjetaEstado() {
+    final conectado = _estadoConexion == 'Conectado';
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Estado de Conexion',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 8),
@@ -169,59 +246,18 @@ late String _estadoConexion = 'Desconectado';
                   width: 12,
                   height: 12,
                   decoration: BoxDecoration(
-                    color: _estadoConexion == 'Conectado' ? Colors.green : Colors.red,
+                    color: conectado ? Colors.green : Colors.red,
                     shape: BoxShape.circle,
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(_estadoConexion),
+                Expanded(child: Text(_estadoConexion)),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTarjetaInfo() {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Información de la Base de Datos',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
             const SizedBox(height: 8),
-            _buildFilaInfo('Host', _host),
-            _buildFilaInfo('Base de Datos', _baseDatos),
-            _buildFilaInfo('Usuario', _usuario),
-            _buildFilaInfo('Estado', _estadoConexion),
+            Text(_mensaje),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildFilaInfo(String etiqueta, String valor) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.baseline,
-        textBaseline: TextBaseline.alphabetic,
-        children: [
-          Text(
-            '$etiqueta: ',
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-          ),
-          Text(
-            valor,
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
-          ),
-        ],
       ),
     );
   }
@@ -250,7 +286,7 @@ late String _estadoConexion = 'Desconectado';
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       )
-                    : const Text('Probar Conexión'),
+                    : const Text('Probar Conexion'),
               ),
             ),
             const SizedBox(width: 12),
@@ -284,32 +320,33 @@ late String _estadoConexion = 'Desconectado';
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 8),
-            _cargando
-                ? const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
-                  )
-                : _registros.isEmpty
-                    ? const Text(
-                        'No hay datos. Usa "Insertar Registro" o consulta tu base.',
-                      )
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _registros.length,
-                        itemBuilder: (context, index) {
-                          final registro = _registros[index];
-                          return ListTile(
-                            title: Text(
-                              registro['nombre'] ?? 'Sin nombre',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              'ID: ${registro['id']} | Valor: ${registro['valor']}',
-                            ),
-                          );
-                        },
-                      ),
+            if (_cargando)
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              )
+            else if (_registros.isEmpty)
+              const Text(
+                'No hay datos. Configura tu API y usa "Insertar Registro".',
+              )
+            else
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _registros.length,
+                itemBuilder: (context, index) {
+                  final registro = _registros[index];
+                  return ListTile(
+                    title: Text(
+                      registro['nombre'] ?? 'Sin nombre',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'ID: ${registro['id']} | Valor: ${registro['valor']}',
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
